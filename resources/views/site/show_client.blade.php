@@ -317,7 +317,6 @@
                     $city = App\Models\City::where('id', $data->city_id)->first();
                 @endphp
 
-
             </div>
 
             <div class="row mt-lg-4">

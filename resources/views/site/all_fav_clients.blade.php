@@ -247,6 +247,7 @@
                             @else
                             @endif--}}
                             <div class="visitors-table-container">
+                                <strong style="color: #b72dd2">عدد المعجبون بك: {{$to_data->count()}}</strong>
                                 <table class="visitors-table">
                                     <thead class="visitors-table-header">
                                     <tr class="all">
@@ -267,7 +268,7 @@
                                             </td>
                                             <td class="age">{{$item->user->age}}</td>
                                             <td class="country">{{$item->user->city?->title_ar}}</td>
-                                            <td class="date">{{date('Y-m-d', strtotime($item->updated_at))}}</td>
+                                            <td class="date">{{$item->created_at->format('Y-m-d')}}</td>
                                         </tr>
                                     @empty
                                         <tr class="li">
@@ -369,10 +370,11 @@
                                 </div>
                             </div>
                             <div class="visitors-table-container">
+                                <strong style="color: #b72dd2">عدد المعجب بهم: {{$data->count()}}</strong>
                                 <table class="visitors-table">
                                     <thead class="visitors-table-header">
                                     <tr class="all">
-                                        <th style="margin-right: 40px" class="name">الاسasdم</th>
+                                        <th style="margin-right: 40px" class="name">الاسم</th>
                                         <th class="age">العمر</th>
                                         <th class="country">المدينة</th>
                                         <th class="date">تاريخ الزيارة</th>
@@ -389,7 +391,7 @@
                                             </td>
                                             <td class="age">{{$item->to->age}}</td>
                                             <td class="country">{{$item->to->city?->title_ar}}</td>
-                                            <td class="date">{{date('Y-m-d', strtotime($item->updated_at))}}</td>
+                                            <td class="date">{{$item->created_at->format('Y-m-d')}}</td>
                                         </tr>
                                     @empty
                                         <tr class="li">

@@ -264,10 +264,12 @@ class mainController extends Controller
         Favourite::where('to_id', '!=', auth()->id())->where('user_id', auth()->id())->update(['seen' => '1']);
 
         $data = Favourite::has('user')->has('to')->where('to_id', '!=', auth()->id())
-            ->where('user_id', auth()->id())->orderBy('updated_at', 'desc')
+            ->where('user_id', auth()->id())
             ->where('show_in_list', '1')
+            ->latest()
             ->get();
-        $to_data = Favourite::has('user')->has('to')->where('user_id', '!=', auth()->id())->where('to_id', auth()->id())->orderBy('updated_at', 'desc')->get();
+        $to_data = Favourite::has('user')->has('to')->where('user_id', '!=', auth()->id())->where('to_id', auth()->id())
+        ->latest()->get();
 
         //$favourites = Favourite::where('to_id', '!=', auth()->id())->where('user_id', auth()->id())->orderBy('updated_at', 'desc')->pluck('to_id')->toArray();
         //$to_favourites = Favourite::where('user_id', '!=', auth()->id())->where('to_id', auth()->id())->orderBy('updated_at', 'desc')->pluck('user_id')->toArray();
@@ -333,8 +335,8 @@ class mainController extends Controller
         }
 
         Visitor::where('to_id', auth()->id())->update(['seen' => '1']);
-        $data = Visitor::has('user')->has('to')->where('to_id', '!=', auth()->id())->where('user_id', auth()->id())->orderBy('updated_at', 'desc')->get();
-        $to_data = Visitor::has('user')->has('to')->where('user_id', '!=', auth()->id())->where('to_id', auth()->id())->orderBy('updated_at', 'desc')->get();
+        $data = Visitor::has('user')->has('to')->where('to_id', '!=', auth()->id())->where('user_id', auth()->id())->latest()->get();
+        $to_data = Visitor::has('user')->has('to')->where('user_id', '!=', auth()->id())->where('to_id', auth()->id())->latest()->get();
         //dd($data, $to_data);
         //inRandomOrder()
         /*$query = User::query();
@@ -423,7 +425,7 @@ class mainController extends Controller
             'package' => $package,
             'btn-text' => 'شاهد الأعضاء',
             'url' => url('search'),
-            'user' => $user->first_name,
+            'user' => $user,
         ];
         send_notify($user->id, $data['header'], $data['header'], $data['url']);
         $user->notify(new SubscripePackageNotification($data));
@@ -868,6 +870,17 @@ class mainController extends Controller
     #home page
     public function home()
     {
+        // foreach(User::all() as $user){
+        //     if($user->city != null){
+        //         $city = City::where('title_ar', $user->city)->first();
+        //         if($city != null){
+        //             $user->city_id = $city->id;
+        //             $user->country_id = 1;
+        //             $user->save();
+        //         }
+        //     }
+        // }
+        // dd('done');
         if (auth()->check() && auth()->user()->user_type == 'client') {
             $blocked = User_block_list::where('user_id', auth()->id())->pluck('to_id')->toArray();
             $blocked_from = User_block_list::where('to_id', auth()->id())->pluck('user_id')->toArray();
@@ -972,9 +985,6 @@ class mainController extends Controller
 
 
         }
-        #city
-        $city = City::whereId($request->city_id)->first();
-        $request->request->add(['country_id' => isset($city) ? $city->country_id : null]);
         if ($request->has('goals'))
             $request->request->add(['goals' => implode(',', $request->goals)]);
         #update client

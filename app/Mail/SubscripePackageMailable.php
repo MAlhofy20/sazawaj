@@ -28,7 +28,7 @@ class SubscripePackageMailable extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'أشتراك جديد',
+            subject: 'اشتراك جديد',
         );
     }
 
