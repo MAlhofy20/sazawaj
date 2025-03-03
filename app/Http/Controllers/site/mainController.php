@@ -2,48 +2,48 @@
 
 namespace App\Http\Controllers\site;
 
-use App\Http\Controllers\Controller;
-use App\Models\Contact;
-use App\Models\Country;
-use App\Models\Role;
+use Auth;
+use Session;
+use Carbon\Carbon;
 use App\Models\City;
 use App\Models\Page;
-use App\Models\Media_file;
-use App\Models\Speaker;
-use App\Models\Slider;
-use App\Models\Package;
-use App\Models\Mail_list;
-use App\Models\User_image;
-use App\Models\Branch;
-use App\Models\Service;
-use App\Models\Favourite;
-use App\Models\Visitor;
-use App\Models\User_block_list;
+use App\Models\Role;
 use App\Models\Room;
-use App\Models\Room_chat;
-use App\Models\Device;
 use App\Models\User;
-use App\Models\Notification as userNotification;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Branch;
+use App\Models\Device;
+use App\Models\Slider;
+use App\Models\Contact;
+use App\Models\Country;
+use App\Models\Package;
+use App\Models\Service;
+use App\Models\Speaker;
+use App\Models\Visitor;
 use App\Mail\replayMail;
-use Session;
-use Auth;
-use Mail;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\ProfilePictureChangeNotification;
-use App\Notifications\ProfilePictureCheckNotification;
-use App\Notifications\AddToFavouriteNotification;
-use App\Notifications\ProfileSeenNotification;
-use App\Notifications\SubscripePackageNotification;
-use App\Notifications\NewMessageNotification;
-use App\Notifications\NewContactUsMessageNotification;
-use App\Notifications\NewAccountNotification;
-use App\Mail\VerificationCodeMailable;
-
+use App\Models\Favourite;
+use App\Models\Mail_list;
+use App\Models\Room_chat;
+use App\Models\Media_file;
+use App\Models\User_image;
+use Illuminate\Http\Request;
+use App\Models\User_block_list;
+use App\Http\Controllers\Controller;
 use function GuzzleHttp\json_encode;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\VerificationCodeMailable;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NewAccountNotification;
+use App\Notifications\NewMessageNotification;
+use App\Notifications\ProfileSeenNotification;
+use App\Models\Notification as userNotification;
+use App\Notifications\AddToFavouriteNotification;
+use App\Notifications\SubscripePackageNotification;
+use App\Notifications\NewContactUsMessageNotification;
+use App\Notifications\ProfilePictureCheckNotification;
+
+use App\Notifications\ProfilePictureChangeNotification;
 
 class mainController extends Controller
 {
@@ -1251,7 +1251,8 @@ class mainController extends Controller
                 //$request->request->add(['avatar_edit' => upload_image($request->file('photo'), 'public/images/users'), 'edit_seen' => '0']);
             #city
             $avatar = $request->gender == 'female' ? '/public/female.png' : '/public/male.png';
-            $city = City::whereId($request->city_id)->first();
+            $city = City::where('title_ar', $request->city)->first();
+            $request->request->add(['city_id' => isset($city) ? $city->id : null]);
             $request->request->add(['country_id' => isset($city) ? $city->country_id : null]);
 
             if ($request->has('goals'))
@@ -1267,20 +1268,6 @@ class mainController extends Controller
             $request->request->add(['password' => '123456', 'user_type' => 'client', 'active' => 0, 'blocked' => 0, 'compelete' => 0, 'avatar' => $avatar, 'role_id' => Role::first()->id]);
             $request->session()->put('registration_data', $request->request);
         }
-        //  else {
-        //     if ($request->hasFile('photo'))
-        //         $avatar = upload_image($request->file('photo'), 'public/images/users');
-        //     else
-        //         $avatar = $request->gender == 'female' ? '/public/female.png' : '/public/male.png';
-
-        //     if ($request->has('goals'))
-        //         $request->request->add(['goals' => implode(',', $request->goals)]);
-        //     if ($request->has('communications'))
-        //         $request->request->add(['communications' => implode(',', $request->communications)]);
-        //     #store new client
-
-
-        // }
 
         if (isset($stepQuery) && $stepQuery == '3') {
             $validatedData = $request->validate([
@@ -1299,54 +1286,10 @@ class mainController extends Controller
 
             // Merge the final step data with existing session data
             $finalRegistrationData = array_merge($existingData, $validatedData);
+
             // convert the nested array in one single array
             $finalRegistrationData = makeNonNested($finalRegistrationData);
             $user = User::create(collect($finalRegistrationData)->except(['_token', 'device_id', 'step', 'user', 'password_confirmation', 'photo', 'device_id', 'password_confirmation', 'photos'])->toArray());
-            #send mail to user
-            /*$body  = "<p>مرحبًا " . $user->name . "</p>";
-            $body .= "<p>نحن سعداء بانضمامك إلى زواج تبوك، المجتمع الذي يجمع بين الأشخاص لبناء علاقات جديدة واستكشاف فرص التعارف</p>";
-            $body .= "<p>لقد قمت باتخاذ خطوة رائعة نحو لقاء أشخاص جدد وتوسيع دائرة معارفك. الآن، يمكنك البدء في تصفح الملفات الشخصية، مراسلة الأعضاء، وربما تجد الشخص الذي تبحث عنه!</p>";
-            $body .= "<p>إليك بعض النصائح لتبدأ **</p>";
-            $body .= "<p>تحديث ملفك الشخصي: أضف صورة شخصية مميزة وشارك القليل عن نفسك -</p>";
-            $body .= "<p>كن نشطًا: استكشف الأعضاء الآخرين وابدأ محادثات جديدة -</p>";
-            $body .= "<p>احترم الآخرين: حافظ على بيئة آمنة ومحترمة للجميع -</p>";
-            $body .= "<p>نحن هنا لدعمك في كل خطوة إذا كان لديك أي استفسار أو تحتاج إلى مساعدة، لا تتردد في التواصل معنا -</p>";
-            $body .= "<p>مع أطيب التحيات</p>";
-            $body .= "<p>فريق زواج تبوك</p>";
-            $msg   = "<html><head><title></title></head><body style='text-align: right'>" . $body . "</body></html>";
-            //send_mail_html($user->email, $msg);*/
-
-        //     $body = "<p>مرحبًا " . $user->name . "</p>";
-        //     $body .= "<p>نحن سعداء بانضمامك إلى زواج تبوك، المجتمع الذي يجمع بين الأشخاص لبناء علاقات جديدة واستكشاف فرص التعارف.</p>";
-        //     $body .= "<p>لقد قمت باتخاذ خطوة رائعة نحو لقاء أشخاص جدد وتوسيع دائرة معارفك. الآن، يمكنك البدء في تصفح الملفات الشخصية، مراسلة الأعضاء، وربما تجد الشخص الذي تبحث عنه!</p>";
-        //     $body .= "<p>إليك بعض النصائح لتبدأ:</p>";
-        //     $body .= "<ul>
-        //     <li>تحديث ملفك الشخصي: أضف صورة شخصية مميزة وشارك القليل عن نفسك.</li>
-        //     <li>كن نشطًا: استكشف الأعضاء الآخرين وابدأ محادثات جديدة.</li>
-        //     <li>احترم الآخرين: حافظ على بيئة آمنة ومحترمة للجميع.</li>
-        //   </ul>";
-        //     $body .= "<p>نحن هنا لدعمك في كل خطوة. إذا كان لديك أي استفسار أو تحتاج إلى مساعدة، لا تتردد في التواصل معنا.</p>";
-
-        //     $activationLink = url('site-active/' . $user->id);  // تعديل هذا ليناسب رابط التفعيل الخاص بك
-        //     $buttonHTML = "<p style='text-align: center;'>
-        //          <a href='$activationLink' style='
-        //              background-color: #4CAF50;
-        //              color: white;
-        //              padding: 15px 20px;
-        //              text-align: center;
-        //              text-decoration: none;
-        //              display: inline-block;
-        //              font-size: 16px;
-        //              border-radius: 5px;
-        //          '>تفعيل الحساب</a>
-        //        </p>";
-
-        //     $body .= $buttonHTML;  // إضافة الزر بعد النص
-        //     $body .= "<p>مع أطيب التحيات،</p>";
-        //     $body .= "<p>فريق زواج تبوك</p>";
-
-        //     $msg = "<html><head><title></title></head><body dir='rtl' style='text-align: right'>" . $body . "</body></html>";
-            //send_mail_html($user->email, $msg);
             #login
             Auth::login($user);
             $header = "<p>يسرنا أن نرحب بك في موقع سعودي زواج،</p>";
@@ -1419,7 +1362,7 @@ class mainController extends Controller
     'title' => "أهلاً بك: {$user->name}",
 'body' => "اسم المستخدم الخاص بك: {$user->username}\n",
     'code' => $code,
-    'user' => $user->first_name
+    'user' => $user
 ];
 
             Mail::to($user->email)->send(new VerificationCodeMailable($data));

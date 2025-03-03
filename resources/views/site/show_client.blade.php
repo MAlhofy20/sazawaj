@@ -326,7 +326,7 @@
                         <table class="info-table">
                             <tr>
                                 <td>المدينة:</td>
-                                <td>{{ $data->city }}</td>
+                                <td>{{ $data->city?->title_ar }}</td>
                             </tr>
                             <tr>
                                 <td>الجنسية:</td>

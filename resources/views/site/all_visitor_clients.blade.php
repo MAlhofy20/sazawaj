@@ -195,7 +195,7 @@
                                                 <a href="{{url('show_client/' . $item->user_id)}}">{{$item->user->name}}</a>
                                             </td>
                                             <td class="visitor-cell">{{$item->user->age}}</td>
-                                            <td class="visitor-cell">{{$item->user->city}}</td>
+                                            <td class="visitor-cell">{{$item->user->city?->title_ar}}</td>
                                             <td class="visitor-cell">{{date('Y-m-d', strtotime($item->updated_at))}}</td>
                                         </tr>
                                     @empty
@@ -333,7 +333,7 @@
                                                 <a href="{{url('show_client/' . $item->to_id)}}">{{$item->to->name}}</a>
                                             </td>
                                             <td class="visitor-cell">{{$item->to->age}}</td>
-                                            <td class="visitor-cell">{{$item->to->city}}</td>
+                                            <td class="visitor-cell">{{$item->to->city?->title_ar}}</td>
                                             <td class="visitor-cell">{{date('Y-m-d', strtotime($item->updated_at))}}</td>
                                         </tr>
                                     @empty
