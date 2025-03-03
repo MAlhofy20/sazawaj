@@ -46,9 +46,9 @@
 }
 
 @keyframes underlineGlow {
-    0% { left: -50%; opacity: 0.6; }
-    50% { left: 50%; opacity: 1; }
-    100% { left: 150%; opacity: 0.6; }
+    0% { left: -50%; opacountry: 0.6; }
+    50% { left: 50%; opacountry: 1; }
+    100% { left: 150%; opacountry: 0.6; }
 }
 
         .visitors-table-container {
@@ -74,12 +74,7 @@
                 align-items: center;
             flex: 1;
         }
-        .visitors-table-body .visitor-row:nth-child(even) {
-            background-color: #fff;
-        }
-        .visitors-table-body .visitor-row:hover {
-            background-color: #ede2ab;
-        }
+
         @media (max-width: 768px) {
             .visitors-table .visitor-cell img{
                 width: 50px;
@@ -97,6 +92,72 @@
                 padding: 0;
             }
         }
+                   /* ahmed alhofy */
+        /* ahmed alhofy */
+        .all{
+            padding: 10px;
+            background: linear-gradient(hsl(290, 80%, 55%) 50%, hsl(290, 65%, 50%) 50%);
+            background-color: #c930e8;
+        }
+        .ul{
+            margin-bottom: 30px;
+        }
+        .li{
+            line-height: 50px;
+            color: #1a1a1a;
+            background-color: #ede2ab;
+            border-bottom: 2px solid #fff;
+            font-size: 105%;
+            position: relative;
+            transition: background-color .3s ease-in-out;
+        }
+        .portrait{
+            margin-left: 6px;
+            width: 37.5px;
+            height: 50px;
+            vertical-align: bottom;
+            background-color: #faf5e1;
+            overflow: hidden;
+        }
+        .name{
+            width: 30%;
+        }
+        .age{
+            width: 20%;
+        }
+        .country{
+            display: inline-block;
+        width: 25%;
+    }
+        .date{
+            font-size: 90%;
+
+        }
+        .li:hover {
+            cursor: pointer;
+            background-color: #e4d481;
+        }
+        @media(max-width:767px){
+            .country{
+                display: none;
+            }
+            .age{
+                margin-left: 50px;
+            }
+        }
+        @media(max-width:530px){
+            .age{
+                display: none;
+            }
+            .date{
+                margin-right: 75px;
+            }
+            .li{
+                padding: 0 !important;
+            }
+        }
+        /* ahmed alhofy */
+        /* ahmed alhofy */
     </style>
 
 @endsection
@@ -188,26 +249,28 @@
                             <div class="visitors-table-container">
                                 <table class="visitors-table">
                                     <thead class="visitors-table-header">
-                                    <tr>
-                                        <th class="visitors-header-cell">الاسم</th>
-                                        <th class="visitors-header-cell">العمر</th>
-                                        <th class="visitors-header-cell">المدينة</th>
-                                        <th class="visitors-header-cell">تاريخ الزيارة</th>
+                                    <tr class="all">
+                                        <th style="margin-right: 40px" class="name">الاسم</th>
+                                        <th class="age">العمر</th>
+                                        <th class="country">المدينة</th>
+                                        <th class="date">تاريخ الزيارة</th>
                                     </tr>
                                     </thead>
                                     <tbody class="visitors-table-body">
                                     @forelse($to_data as $item)
-                                        <tr class="visitor-row">
-                                            <td class="visitor-cell">
+                                        <tr class="li">
+                                            <td class=" portrait">
                                                 <img src="{{url('' . $item->user->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
+                                            </td>
+                                            <td class="name">
                                                 <a href="{{url('show_client/' . $item->user_id)}}">{{$item->user->name}}</a>
                                             </td>
-                                            <td class="visitor-cell">{{$item->user->age}}</td>
-                                            <td class="visitor-cell">{{$item->user->city?->title_ar}}</td>
-                                            <td class="visitor-cell">{{date('Y-m-d', strtotime($item->updated_at))}}</td>
+                                            <td class="age">{{$item->user->age}}</td>
+                                            <td class="country">{{$item->user->city?->title_ar}}</td>
+                                            <td class="date">{{date('Y-m-d', strtotime($item->updated_at))}}</td>
                                         </tr>
                                     @empty
-                                        <tr>
+                                        <tr class="li">
                                             <td colspan="4"> لا يوجد نتائج</td>
                                         </tr>
                                     @endforelse
@@ -308,26 +371,28 @@
                             <div class="visitors-table-container">
                                 <table class="visitors-table">
                                     <thead class="visitors-table-header">
-                                    <tr>
-                                        <th class="visitors-header-cell">الاسم</th>
-                                        <th class="visitors-header-cell">العمر</th>
-                                        <th class="visitors-header-cell">المدينة</th>
-                                        <th class="visitors-header-cell">تاريخ الزيارة</th>
+                                    <tr class="all">
+                                        <th style="margin-right: 40px" class="name">الاسasdم</th>
+                                        <th class="age">العمر</th>
+                                        <th class="country">المدينة</th>
+                                        <th class="date">تاريخ الزيارة</th>
                                     </tr>
                                     </thead>
-                                    <tbody class="visitors-table-body">
+                                    <tbody class="visitors-table-body ul">
                                     @forelse($data as $item)
-                                        <tr class="visitor-row">
-                                            <td class="visitor-cell">
+                                        <tr class="li">
+                                            <td class=" portrait">
                                                 <img src="{{url('' . $item->to->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
+                                            </td>
+                                            <td class="name">
                                                 <a href="{{url('show_client/' . $item->to_id)}}">{{$item->to->name}}</a>
                                             </td>
-                                            <td class="visitor-cell">{{$item->to->age}}</td>
-                                            <td class="visitor-cell">{{$item->to->city?->title_ar}}</td>
-                                            <td class="visitor-cell">{{date('Y-m-d', strtotime($item->updated_at))}}</td>
+                                            <td class="age">{{$item->to->age}}</td>
+                                            <td class="country">{{$item->to->city?->title_ar}}</td>
+                                            <td class="date">{{date('Y-m-d', strtotime($item->updated_at))}}</td>
                                         </tr>
                                     @empty
-                                        <tr>
+                                        <tr class="li">
                                             <td colspan="4"> لا يوجد نتائج</td>
                                         </tr>
                                     @endforelse
