@@ -149,7 +149,7 @@
                 overflow: hidden;
             }
         }
-        
+
         @media (max-width: 480px) {
             .messages-container {
                 background: #fcf8e3;
@@ -168,7 +168,7 @@
                 align-items: center;
                 position: relative;
             }
-            
+
             .message-cell {
                 max-width: 100px;
                 overflow: hidden;
@@ -206,9 +206,9 @@
                 justify-content: center;
             }
             .select-room-btn {
-              position: relative; 
-              right: 55px; 
-              bottom: 50px; 
+              position: relative;
+              right: 55px;
+              bottom: 50px;
               display: block;
             }
             .message-footer {
@@ -232,12 +232,12 @@
           .select-room-btn {
               right: 180px;
           }
-          
+
         }
-        
+
         @media (min-width: 481px) {
             .messages-container {
-                
+
                 padding: 20px;
                 border-radius: 5px;
             }
@@ -250,7 +250,7 @@
                 text-align: right;
             }
             .messages-table th {
-                
+
             }
             .profile-img {
                 width: 50px;
@@ -258,11 +258,11 @@
                 border-radius: 50%;
             }
             .select-room {
-                margin-right: 20px; 
-                width: 20px; 
+                margin-right: 20px;
+                width: 20px;
                 height: 20px;
             }
-            
+
             .mobile-view { display: none; }
             #select-all-mobile-btn { display: none !important;}
         }
@@ -427,7 +427,7 @@
                 }else{
                     document.getElementById('delete-btn').removeAttribute('disabled');
                 }
-            
+
         }else{
             let checked = 0;
                 for(var counter = 0 ; counter < checkboxes.length; counter ++ ){
@@ -442,10 +442,10 @@
                     document.getElementById('delete-btn').setAttribute('disabled',true);
                 }
         }
-        
+
     });
     //----------desktop-select-buttons-----------------------------------------------//
-    let selectbtns = document.querySelectorAll(".select-room-btn-desktop") 
+    let selectbtns = document.querySelectorAll(".select-room-btn-desktop")
     selectbtns.forEach(selectbtn => {
         selectbtn.addEventListener('change', function () {
             if( document.getElementById('delete-btn').hasAttribute('disabled'))
@@ -478,7 +478,7 @@
         let size = checkboxesMobile.length;
         if( document.getElementById('delete-btn').hasAttribute('disabled'))
         {
-            
+
                 for(var counter = 0 ; counter < size; counter ++ ){
                     if(checkboxesMobile[counter].checked == true ){
                         checked = 1;
@@ -491,7 +491,7 @@
                 }else{
                     document.getElementById('delete-btn').removeAttribute('disabled');
                 }
-            
+
         }else{
                 for(var counter = 0 ; counter < size; counter ++ ){
                     if(checkboxesMobile[counter].checked == true ){
@@ -505,7 +505,7 @@
                     document.getElementById('delete-btn').setAttribute('disabled',true);
                 }
         }
-        
+
     });
     //----------mobile-select-buttons-----------------------------------------------//
     let selectbtnsMobile = document.querySelectorAll(".select-room-btn-mobile")
@@ -531,6 +531,6 @@
             }
         });
     });
-    
+
 </script>
 @endsection

@@ -1077,6 +1077,7 @@ label {
     border-radius: 10px;
     overflow: hidden;
     background-color: #fff;
+    margin: 60px auto;
 }
 
 .chat-header {
@@ -1614,7 +1615,7 @@ tbody {
 
 tr {
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
     font-size: 18px;
     width: 100%;
@@ -1905,7 +1906,7 @@ tr {
 
     html[dir='rtl'] .sidebar.noo {
         transform: none;
-        
+
     }
 
     html[dir='ltr'] .sidebar.noo {
@@ -2446,20 +2447,17 @@ width: 100%;
     border-left: 1px solid #EDE2AB;
 }
 .visitors-table .visitor-cell img{
-    width: 75px;
-    height: 75px;
+    width: 37.5px;
+    height: 50px;
     object-fit: inherit;
-    border-radius: 50%;
     margin-inline-end: 5px;
-    border: 1px solid var(--sec);
+
 }
 .visitors-table .visitor-cell img{
-    width: 75px;
-    height: 75px;
+    width: 37.5px;
+    height: 50px;
     object-fit: inherit;
-    border-radius: 50%;
     margin-inline-end: 5px;
-    border: 1px solid var(--sec);
 }
 .new-members .nav-tabs .nav-link.active{
     color: var(--main);
@@ -3316,7 +3314,7 @@ mark, .mark{
 
 .date {
     font-size: 1.2rem;
-    color: #555;
+
 }
 
 .remaining-days {
