@@ -319,72 +319,55 @@
 
 
             </div>
-<style>
-    li {
-        margin-bottom: 10px;
-        display: flex;
-    }
-    .ul{
-        display:flex;
-        flex-direction: column;
-    }
-    .ul li .title{
-        color: #ca31e8;
-        font-weight: bold;
-        font-size: 20px;
-        width: 49%;
-        display:inline-block;
-    }
-    .ul li .anser{
-        font-size: 20px;
-        width: 49%;
-        display:inline-block;
-    }
-</style>
+
             <div class="row mt-lg-4">
-                <div class="col-lg-5">
+                <div class="col-lg-12 col-md-12">
                     <div class="profile-desc">
-                        <ul class="info-table ul">
-                            <li>
-                                <span class="title">المدينة:</span>
-                                <span class="anser">{{ $data->city }}</span>
-                            </li>
-                            <li>
-                                <span class="title">الجنسية:</span>
-                                <span class="anser">{{ $data->nationality }}</span>
-                            </li>
-                            <li>
-                                <span class="title">العمر:</span>
-                                <span class="anser">{{ $data->age }}</span>
-                            </li>
-                            <li>
-                                <span class="title">الحالة:</span>
-                                <span class="anser">{{ $data->social_level }}</span>
-                            </li>
-                            <li>
-                                <span class="title">لديك ابناء:</span>
-                                <span class="anser">{{ $data->has_sons ? 'نعم' : 'لا' }}</span>
-                            </li>
-                            <li>
-                                <span class="title">التحصيل العلمي:</span>
-                                <span class="anser">{{ $data->level }}</span>
-                            </li>
-                            <li>
-                                <span class="title">المهنة:</span>
-                                <span class="anser">{{ $data->job }}</span>
-                            </li>
-                        </ul>
+                        <table class="info-table">
+                            <tr>
+                                <td>المدينة:</td>
+                                <td>{{ $data->city }}</td>
+                            </tr>
+                            <tr>
+                                <td>الجنسية:</td>
+                                <td>{{ $data->nationality }}</td>
+                            </tr>
+                            <tr>
+                                <td>العمر:</td>
+                                <td>{{ $data->age }}</td>
+                            </tr>
+                            <tr>
+                                <td>الحالة:</td>
+                                <td>{{ $data->social_level }}</td>
+                            </tr>
+                        </table>
+                        <table class="info-table">
+                            <tr>
+                                <td>لديك ابناء:</td>
+                                <td>{{ $data->has_sons ? 'نعم' : 'لا' }}</td>
+                            </tr>
+                            <tr>
+                                <td>التحصيل العلمي:</td>
+                                <td>{{ $data->level }}</td>
+                            </tr>
+                            <tr>
+                                <td>المهنة:</td>
+                                <td>{{ $data->job }}</td>
+                            </tr>
+                        </table>
                     </div>
 
 
                 </div>
-                <div class="col-lg-6  ">
-                    <div class="profile-desc profile-desc-with mt-3 mb-3 ">
+                <div class="col-lg-12 col-md-12 ">
+                    <div class="profile-desc profile-desc-with mt-5 ">
                         <p class="section-title">تحدث عن نفسك</p>
                         <p>{{ $data->desc_ar }}</p>
                     </div>
 
-                    <div class="hold-profile-info_no_width  ">
+                </div>
+                <div class="col-lg-12 col-md-12">
+                    <div class="hold-profile-info_no_width mt-5 mb-5">
 
                         <div class="profile-desc">
                             <p class="section-title">صف الشخص الذي تبحث عنه</p>

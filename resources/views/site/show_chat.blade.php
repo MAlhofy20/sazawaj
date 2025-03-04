@@ -223,93 +223,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="complaint" onclick="showPopup()">اذا ارادت الشكوي</div>
-
-<!-- نافذة البوب أب -->
-<div id="popup" class="showpopup">
-    <div class="d-flex flex-column">
-        <label style="color: #2492a8" for="complaint">اضف الشكوه</label>
-        <textarea style="border: 1px solid; border-radius: 10px; padding: 10px; " id="complaint" type="text"></textarea>
-        <button style="background-color: #2492a8; color: white; border-color: #2492a8" class="btn   d-flex justify-content-center align-items-center mt-3 mx-auto px-4 py-2 fs-5 rounded-3">ارسل</button>
-    </div>
-</div>
-
-<!-- الـ Overlay -->
-<div id="overlay" onclick="hidePopup()"></div>
-
-<style>
-    /* زر الشكوى */
-    .complaint {
-        color: red;
-        padding: 10px;
-        background: #0e798f40;
-        border-radius: 20px;
-        cursor: pointer;
-        width: fit-content;
-        position: relative;
-        margin: 10px;
-        transition: transform 0.3s ease-in-out;
-    }
-
-    /* الـ Overlay */
-    #overlay {
-        position: fixed;
-        opacity: 0;
-        visibility: hidden;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background-color: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(10px);
-        z-index: 8888;
-        transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-    }
-
-    /* النافذة المنبثقة */
-    .showpopup {
-        background-color: white;
-        max-width: 400px;
-        position: fixed;
-        border-radius: 24px;
-        padding: 36px;
-        bottom: 50%;
-        left: 50%;
-        z-index: 999999;
-        opacity: 0;
-        visibility: hidden;
-        transform: translate(-50%, 50%);
-        transition: all 0.5s ease-in-out;
-        box-shadow: 0 0 2px 0 black;
-    }
-
-    /* إظهار البوب أب والـ Overlay عند التفعيل */
-    .showpopup.open {
-        opacity: 1;
-        visibility: visible;
-        transform: translate(-50%, 0);
-    }
-
-    #overlay.now {
-        opacity: 1;
-        visibility: visible;
-    }
-</style>
-
-<script>
-    function showPopup() {
-        document.getElementById("popup").classList.add("open");
-        document.getElementById("overlay").classList.add("now");
-    }
-
-    function hidePopup() {
-        document.getElementById("popup").classList.remove("open");
-        document.getElementById("overlay").classList.remove("now");
-    }
-</script>
-
-
-
             <div class="chat-container">
                 <div class="chat-header">
                     <div class="member-name">
@@ -402,7 +315,7 @@
 
 
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-6 col-12">
                                             <button class="main-btn " onclick="checkMessage();">ارسل</button>
                             </div>
                         </div>
