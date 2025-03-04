@@ -317,7 +317,6 @@
                     $city = App\Models\City::where('id', $data->city_id)->first();
                 @endphp
 
-
             </div>
 
             <div class="row mt-lg-4">
@@ -326,7 +325,7 @@
                         <table class="info-table">
                             <tr>
                                 <td>المدينة:</td>
-                                <td>{{ $data->city }}</td>
+                                <td>{{ $data->city?->title_ar }}</td>
                             </tr>
                             <tr>
                                 <td>الجنسية:</td>

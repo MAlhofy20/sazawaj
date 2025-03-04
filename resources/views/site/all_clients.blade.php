@@ -53,11 +53,11 @@
                                                                 <div class="icon">
                                                                     <i class="fa-solid fa-location-dot"></i></div>
                                                                 <div class="text">
-                                                                    الدولة
+                                                                    المدينة
                                                                 </div>
                                                             </div>
                                                             <div class="value">
-                                                                {{$item->country}}
+                                                                {{$item->city?->title_ar}}
                                                             </div>
                                                         </div>
                                                         <div class="desc-content-register mb-2">
@@ -87,7 +87,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
         </div>

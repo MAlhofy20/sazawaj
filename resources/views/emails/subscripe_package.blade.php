@@ -17,7 +17,7 @@
 
         <!-- Part 1: Congratulations Message -->
         <div style="background-color: #fffae6; padding: 20px; border-radius: 10px; margin-bottom: 15px;">
-            <h2 style="color: #d4af37; font-size: 24px;">🎉 تهانينا {{ $data['user'] }}! 🎉</h2>
+            <h2 style="color: #d4af37; font-size: 24px;">🎉 تهانينا {{ $data['user']->first_name }}! 🎉</h2>
             <p style="color: #444; font-size: 18px;">{{ $data['header'] }}</p>
         </div>
 
@@ -32,10 +32,10 @@
         <div style="background-color: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; align-items: center; justify-content: center;">
             <h2 style="color: #6f42c1;">تاريخ العضوية</h2>
             <p style="color: #444;">
-                <strong>تاريخ بداية الباقة:</strong> {{ date('d-m-Y', strtotime(auth()->user()->package_date)) }}
+                <strong>تاريخ بداية الباقة:</strong> {{ date('d-m-Y', strtotime($data['user']->package_date)) }}
             </p>
             <p style="color: #444;">
-                <strong>تاريخ انتهاء الباقة:</strong> {{ date('d-m-Y', strtotime(auth()->user()->package_end_date)) }}
+                <strong>تاريخ انتهاء الباقة:</strong> {{ date('d-m-Y', strtotime($data['user']->package_end_date)) }}
             </p>
         </div>
 

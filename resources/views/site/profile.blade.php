@@ -520,10 +520,10 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="nationality">المدينة</label>
-                                                <select class="form-control" id="country" name="country">
+                                                <select class="form-control" id="city" name="city_id">
                                                     <option value="">اختر</option>
-                                                    @foreach(App\Models\City::orderBy('id')->get() as $item)
-                                                        <option value="{{$item->title_ar}}" {{auth()->user()->country == $item->title_ar ? 'selected' : ''}}>{{$item->title}}</option>
+                                                    @foreach(App\Models\City::orderBy('title_ar')->get() as $item)
+                                                        <option value="{{$item->id}}" {{auth()->user()->city_id == $item->id ? 'selected' : ''}}>{{$item->title}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

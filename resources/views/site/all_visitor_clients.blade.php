@@ -239,6 +239,7 @@
 </div>
 
                             <div class="visitors-table-container">
+                                <strong style="color: #b72dd2">عدد الزائرون: {{$to_data->count()}}</strong>
                                 <table class="visitors-table">
                                     <thead class="visitors-table-header">
                                     <tr class= "all">
@@ -258,8 +259,8 @@
                                                 <a  href="{{url('show_client/' . $item->user_id)}}">{{$item->user->name}}</a>
                                             </td>
                                             <td class=" age">{{$item->user->age}}</td>
-                                            <td class="country">{{$item->user->city}}</td>
-                                            <td class="date">{{date('Y-m-d', strtotime($item->updated_at))}}</td>
+                                            <td class="country">{{$item->user->city?->title_ar}}</td>
+                                            <td class="date">{{$item->created_at->format('Y-m-d')}}</td>
                                         </tr>
                                     @empty
                                         <tr class="li">
@@ -379,6 +380,8 @@
 
 
                             <div class="visitors-table-container">
+                            <strong style="color: #b72dd2">عدد الذين زرتهم: {{$data->count()}}</strong>
+
                                 <table class="visitors-table">
                                     <thead class="visitors-table-header">
                                     <tr class= "all">
@@ -398,8 +401,8 @@
                                                 <a  href="{{url('show_client/' . $item->to_id)}}">{{$item->to->name}}</a>
                                             </td>
                                             <td class="age">{{$item->to->age}}</td>
-                                            <td class="country">{{$item->to->city}}</td>
-                                            <td class="date">{{date('Y-m-d', strtotime($item->updated_at))}}</td>
+                                            <td class="country">{{$item->to->city?->title_ar}}</td>
+                                            <td class="date">{{$item->created_at->format('Y-m-d')}}</td>
                                         </tr>
                                     @empty
                                         <tr>
