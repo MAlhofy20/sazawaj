@@ -52,7 +52,6 @@
 }
 
         .visitors-table-container {
-            margin: 20px auto;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -99,9 +98,7 @@
             background: linear-gradient(hsl(290, 80%, 55%) 50%, hsl(290, 65%, 50%) 50%);
             background-color: #c930e8;
         }
-        .ul{
-            margin-bottom: 30px;
-        }
+
         .li{
             line-height: 50px;
             color: #1a1a1a;
@@ -110,6 +107,10 @@
             font-size: 105%;
             position: relative;
             transition: background-color .3s ease-in-out;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            width: 100%;
         }
         .portrait{
             margin-left: 6px;
@@ -214,12 +215,12 @@
                 <a style="border:none !important; z-index: 2;" class="u-hover--sparkle position-relative nav-link" id="premium-members-tab" data-toggle="tab" href="#premium-members" role="tab" aria-controls="premium-members" aria-selected="false">المعجب بهم</a>
             </li>
         </ul>
-        <div class="container">
+        <div class="">
             <h2 class="sec-tit text-center">
                 <!--الأعضاء-->
             </h2>
             <div class="new-members-items">
-                <div class="container mt-4">
+                <div class=" mt-4">
                     <!-- Tabs navigation -->
 
 
@@ -369,38 +370,50 @@
                                 </div>
                             </div>
                             <div class="visitors-table-container">
-                                <table class="visitors-table">
-                                    <thead class="visitors-table-header">
-                                    <tr class="all">
-                                        <th style="margin-right: 40px" class="name">الاسasdم</th>
-                                        <th class="age">العمر</th>
-                                        <th class="country">المدينة</th>
-                                        <th class="date">تاريخ الزيارة</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody class="visitors-table-body ul">
-                                    @forelse($data as $item)
-                                        <tr class="li">
-                                            <td class=" portrait">
-                                                <img src="{{url('' . $item->to->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
-                                            </td>
-                                            <td class="name">
-                                                <a href="{{url('show_client/' . $item->to_id)}}">{{$item->to->name}}</a>
-                                            </td>
-                                            <td class="age">{{$item->to->age}}</td>
-                                            <td class="country">{{$item->to->country}}</td>
-                                            <td class="date">{{date('Y-m-d', strtotime($item->updated_at))}}</td>
-                                        </tr>
-                                    @empty
-                                        <tr class="li">
-                                            <td colspan="4"> لا يوجد نتائج</td>
-                                        </tr>
-                                    @endforelse
-                                    <!-- أضف المزيد من الصفوف هنا -->
-                                    </tbody>
-                                </table>
+                            <div class="visitors-table-container">
+                                <div class="visitors-table">
+                                    <ul class="visitors-table-header">
+                                    <li style="    display: flex;
+                                        justify-content: start;
+                                        align-items: center;
+                                        font-size: 18px;
+                                        width: 100%;"
+                                        class= "all">
+                                        <span style="text-align: inherit; margin-right: 40px" class="name">الاسم</span>
+                                        <span style="text-align: inherit;" class="age">العمر</span>
+                                        <span style="text-align: inherit;" class="country">المدينة</span>
+                                        <span style="text-align: inherit;" class="">تاريخ الزيارة</span>
+                                    </li>
+                                    </ul>
+                                    <ul class="visitors-table-body ul">
+                                        @forelse($data as $item)
+                                            <li class="li">
+                                                <a href="{{ url('show_client/' . $item->to_id) }}" class="visitor-link">
+                                                    <span class="portrait">
+                                                        <img src="{{ url($item->to->avatar) }}" alt="الصورة" class="visitor-image" width="100" height="75">
+                                                    </span>
+                                                    <span class="name">{{ $item->to->name }}</span>
+                                                    <span class="age">{{ $item->to->age }}</span>
+                                                    <span class="country">{{ $item->to->city }}</span>
+                                                    <span class="">{{ date('Y-m-d', strtotime($item->updated_at)) }}</span>
+                                                </a>
+                                            </li>
+                                        @empty
+                                            <li class="text-center">لا يوجد نتائج</li>
+                                        @endforelse
+                                        </ul>
+                                </div>
                             </div>
+                            <style>
+                                        .visitor-link {
+                                            display: flex;
+                                            align-items: center;
 
+                                            text-decoration: none;
+                                            color: inherit;
+                                            width: 100%;
+                                        }
+                                    </style>
                             {{--<div class="mt-4">
                                 <div class="mt-4">
                                     <div class="row justify-content-center">

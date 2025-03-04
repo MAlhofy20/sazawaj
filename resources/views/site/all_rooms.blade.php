@@ -69,13 +69,11 @@
         }
 
         .visitors-header-cell, .visitor-cell {
-            padding: 12px;
-            font-size: 18px;
             font-weight: bold;
             text-align: center;
             flex: 1;
             display: flex;
-
+            justify-content: center;
         }
         .visitors-header-cell input[type=checkbox] {
             display: flex !important;
@@ -150,7 +148,7 @@
             }
         }
 
-        @media (max-width: 480px) {
+        /* @media (max-width: 480px) {
             .messages-container {
                 background: #fcf8e3;
                 padding: 20px;
@@ -225,7 +223,7 @@
                 margin-top: 10px;
             }
             .desktop-view { display: none; }
-        }
+        } */
 
         @supports (-webkit-overflow-scrolling: touch) {
           /* CSS specific to iOS devices */
@@ -285,7 +283,7 @@
                 <a class="nav-link active" id="general-members-tab" data-toggle="tab" href="#general-members" role="tab" aria-controls="general-members" aria-selected="true">الرسائل</a>
             </li>
         </ul>
-        <div class="container">
+        <div class="">
             <h2 class="sec-tit text-center">
                 <!--الأعضاء-->
             </h2>
@@ -305,7 +303,78 @@
         <div class="underline"></div>
     </div>
 </div>
+<style>
+        /* ahmed alhofy */
+        /* ahmed alhofy */
+        .all{
+            padding: 10px;
+            background: linear-gradient(hsl(290, 80%, 55%) 50%, hsl(290, 65%, 50%) 50%);
+            background-color: #c930e8;
+        }
+        .ul{
+            margin-bottom: 30px;
+        }
+        .li{
+            color: #1a1a1a;
+            background-color: #ede2ab;
+            border-bottom: 2px solid #fff;
+            font-size: 105%;
+            position: relative;
+            transition: background-color .3s ease-in-out;
+            display: flex;
+            justify-content: start;
+            width: 100%;
+            align-items: center;
+        }
+        .portrait{
+            margin-left: 6px;
+            width: 37.5px;
+            height: 50px;
+            vertical-align: bottom;
+            background-color: #faf5e1;
+            overflow: hidden;
+        }
 
+        .name{
+            width: 30%;
+        }
+        .age{
+            width: 20%;
+        }
+        .country{
+            display: inline-block;
+        width: 25%;
+    }
+        .date{
+            font-size: 90%;
+
+        }
+        .li:hover {
+            cursor: pointer;
+            background-color: #e4d481;
+        }
+        @media(max-width:767px){
+            .country{
+                display: none;
+            }
+            .age{
+                margin-left: 50px;
+            }
+        }
+        @media(max-width:530px){
+            .age{
+                display: none;
+            }
+            .date{
+                margin-right: 75px;
+            }
+            .li{
+                padding: 0 !important;
+            }
+        }
+        /* ahmed alhofy */
+        /* ahmed alhofy */
+</style>
                             <div class="visitors-table-container">
                             <form id="delete-form" method="POST" action="{{ route('delete_rooms') }}">
                                 @csrf
@@ -314,59 +383,60 @@
                                 </div>
                                 <!-- Desktop View -->
                                 <div class="desktop-view">
-                                    <table class="visitors-table messages-table">
-                                        <thead class="visitors-table-header">
-                                        <tr>
-                                            <th class="visitors-header-cell"></th>
-                                            <th class="visitors-header-cell">الاسم</th>
-                                            <th class="visitors-header-cell">الرسالة</th>
-                                            <th class="visitors-header-cell">تاريخ الرسالة</th>
-                                            <th class="visitors-header-cell">عرض</th>
-                                            <th class="visitors-header-cell"><input type="checkbox" class="select-room" id="select-all"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="visitors-table-body" id="message-list">
+                                    <div class="visitors-table messages-table">
+                                        <ul class="visitors-table-header">
+                                        <li style=" display: flex;
+                                            justify-content: start;
+                                            align-items: center;
+                                            font-size: 18px;
+                                            width: 100%;"
+                                            class= "all">
+                                            <span style="text-align: inherit; margin-right: 40px" class="name">الاسم</span>
+                                            <span class="visitors-header-cell">الرسالة</span>
+                                            <span class="visitors-header-cell">تاريخ الرسالة</span>
+                                            <span style="cursor:pointer;" class="visitors-header-cell"><input type="checkbox" class="select-room" id="select-all"></span>
+                                        </li>
+                                        </ul>
+                                        <ul style="width: 100%;" class="visitors-table-body ul" id="message-list">
                                         @forelse($data as $item)
                                             @php
                                                 $id   = auth()->id() == $item->user_id ? (int) $item->saler_id : (int) $item->user_id;
                                                 $user = App\Models\User::whereId($id)->first();
                                             @endphp
-                                            <tr class="visitor-row">
-                                                <td class="visitor-cell">
-                                                    <img src="{{url('' . $user->avatar)}}" alt="" class="visitor-cell-img" width="100px" height="75px">
+                                            <li class="li">
+                                                <span class="portrait">
+                                                    <img src="{{url('' . $user->avatar)}}" alt="" class="visitor-cell-img" width="100" height="75">
                                                     {{--<a href="{{url('show_client/' . $item->user_id)}}">{{$item->user->name}}</a>--}}
-                                                </td>
-                                                <td class="visitor-cell">
-                                                    <span style="color:blue;">{{isset($user) ? $user->first_name : ''}}</span>
-                                                </td>
-                                                <td class="visitor-cell">
+                                                </span>
+
+                                                <span class="name">
+                                                    {{isset($user) ? $user->first_name : ''}}
+                                                </span>
+                                                <span class="visitor-cell">
                                                     <span class="visitor-cell-msg">{{!is_null($item->chats_desc) && last_room_chat($item->id)['type'] == 'text' ? last_room_chat($item->id)['last_message'] : 'رسالة صوتية'}}</span>
-                                                </td>
-                                                <td class="visitor-cell">
+                                                </span>
+                                                <span class="visitor-cell">
                                                     <span>
                                                             {{--{{!is_null($item->chats_desc) ? last_room_chat($item->id)['duration'] : ''}}--}}
                                                        {{ !is_null($item->chats_desc) && isset(last_room_chat($item->id)['duration_format']) ? last_room_chat($item->id)['duration_format'] : '' }}
                                                     </span>
-                                                </td>
-                                                <td class="visitor-cell">
-                                                    <a href="{{url('show_room/' . $item->id)}}" class="btn btn-info">عرض</a>
-                                                </td>
-                                                <td class="visitor-cell">
-                                                    <input  type="checkbox" name="room_ids[]" value="{{ $item->id }}" class="select-room select-room-btn select-room-btn-desktop">
-                                                </td>
-                                            </tr>
+                                                </span>
+                                                <span class="visitor-cell">
+                                                    <input style="cursor:pointer;" type="checkbox" name="room_ids[]" value="{{ $item->id }}" class="select-room select-room-btn select-room-btn-desktop">
+                                                </span>
+                                            </li>
                                         @empty
-                                            <tr>
-                                                <td colspan="4"> لا يوجد نتائج</td>
-                                            </tr>
+                                            <li>
+                                                <span colspan="4"> لا يوجد نتائج</span>
+                                            </li>
                                         @endforelse
                                         <!-- أضف المزيد من الصفوف هنا -->
-                                        </tbody>
-                                    </table>
+                                        </ul>
+                                    </div>
                                 </div>
 
                                 <!-- Mobile View -->
-                                <div class="mobile-view">
+                                <!-- <div class="mobile-view">
                                     @forelse($data as $item)
                                         @php
                                             $id   = auth()->id() == $item->user_id ? (int) $item->saler_id : (int) $item->user_id;
@@ -388,7 +458,7 @@
                                     @empty
                                         <p>لا يوجد نتائج</p>
                                     @endforelse
-                                </div>
+                                </div> -->
 
                                 <div class="delete-button">
                                     <button type="submit" class="btn btn-danger" id="delete-btn" disabled>حذف المحدد</button>
