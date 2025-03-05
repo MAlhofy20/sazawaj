@@ -214,12 +214,12 @@
                 <a style="border:none !important; z-index: 2;" class="u-hover--sparkle position-relative nav-link" id="premium-members-tab" data-toggle="tab" href="#premium-members" role="tab" aria-controls="premium-members" aria-selected="false">المعجب بهم</a>
             </li>
         </ul>
-        <div class="container">
+        <div class="">
             <h2 class="sec-tit text-center">
                 <!--الأعضاء-->
             </h2>
             <div class="new-members-items">
-                <div class="container mt-4">
+                <div class=" mt-4">
                     <!-- Tabs navigation -->
 
 
@@ -259,12 +259,12 @@
                                     </thead>
                                     <tbody class="visitors-table-body">
                                     @forelse($to_data as $item)
-                                        <tr class="li">
+                                        <tr class="li" onclick="window.location.href='{{url('show_client/' . $item->user_id)}}'">
                                             <td class=" portrait">
                                                 <img src="{{url('' . $item->user->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
                                             </td>
                                             <td class="name">
-                                                <a href="{{url('show_client/' . $item->user_id)}}">{{$item->user->name}}</a>
+                                                {{$item->user->name}}
                                             </td>
                                             <td class="age">{{$item->user->age}}</td>
                                             <td class="country">{{$item->user->city?->title_ar}}</td>
@@ -382,12 +382,12 @@
                                     </thead>
                                     <tbody class="visitors-table-body ul">
                                     @forelse($data as $item)
-                                        <tr class="li">
+                                        <tr class="li" onclick="window.location.href='{{url('show_client/' . $item->to_id)}}'">
                                             <td class=" portrait">
                                                 <img src="{{url('' . $item->to->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
                                             </td>
                                             <td class="name">
-                                                <a href="{{url('show_client/' . $item->to_id)}}">{{$item->to->name}}</a>
+                                                {{$item->to->name}}
                                             </td>
                                             <td class="age">{{$item->to->age}}</td>
                                             <td class="country">{{$item->to->city?->title_ar}}</td>

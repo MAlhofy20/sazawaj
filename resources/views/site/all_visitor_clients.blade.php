@@ -214,13 +214,13 @@
                 <a style="border:none !important; z-index: 2;" class="u-hover--sparkle position-relative nav-link" id="premium-members-tab" data-toggle="tab" href="#premium-members" role="tab" aria-controls="premium-members" aria-selected="false">الذين زرتهم</a>
             </li>
         </ul>
-        <div class="container">
+        <div class="">
             <h2 class="sec-tit text-center">
                 <!--الأعضاء-->
             </h2>
             <div class="new-members-items">
 
-                <div class="container mt-4">
+                <div class=" mt-4">
                     <!-- Tabs navigation -->
 
 
@@ -230,13 +230,13 @@
 
                         <!-- General members content -->
                         <div class="tab-pane fade show active" id="general-members" role="tabpanel" aria-labelledby="general-members-tab">
-<div class="d-flex justify-content-center my-4">
-    <div class="page-title">
-        <i class="fas fa-eye icon"></i>
-        <span class="title-text">الزائرون</span>
-        <div class="underline"></div>
-    </div>
-</div>
+                            <div class="d-flex justify-content-center my-4">
+                                <div class="page-title">
+                                    <i class="fas fa-eye icon"></i>
+                                    <span class="title-text">الزائرون</span>
+                                    <div class="underline"></div>
+                                </div>
+                            </div>
 
                             <div class="visitors-table-container">
                                 <strong style="color: #b72dd2">عدد الزائرون: {{$to_data->count()}}</strong>
@@ -251,13 +251,11 @@
                                     </thead>
                                     <tbody class="visitors-table-body ul">
                                     @forelse($to_data as $item)
-                                        <tr class="li">
+                                        <tr class="li" onclick="window.location.href='{{url('show_client/' . $item->to_id)}}'">
                                             <td class=" portrait">
                                                 <img src="{{url('' . $item->user->avatar)}}" alt="" class="visitor-image" width="100px" height="50px">
                                             </td>
-                                            <td class="name">
-                                                <a  href="{{url('show_client/' . $item->user_id)}}">{{$item->user->name}}</a>
-                                            </td>
+                                            <td class="name">{{$item->user->name}}</td>
                                             <td class=" age">{{$item->user->age}}</td>
                                             <td class="country">{{$item->user->city?->title_ar}}</td>
                                             <td class="date">{{$item->created_at->format('Y-m-d')}}</td>
@@ -393,12 +391,12 @@
                                     </thead>
                                     <tbody class="visitors-table-body ul">
                                     @forelse($data as $item)
-                                        <tr class=" li">
+                                        <tr class=" li" onclick="window.location.href='{{url('show_client/' . $item->to_id)}}'">
                                             <td class=" portrait">
                                                 <img src="{{url('' . $item->to->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
                                             </td>
                                             <td class="name">
-                                                <a  href="{{url('show_client/' . $item->to_id)}}">{{$item->to->name}}</a>
+                                                {{$item->to->name}}
                                             </td>
                                             <td class="age">{{$item->to->age}}</td>
                                             <td class="country">{{$item->to->city?->title_ar}}</td>
