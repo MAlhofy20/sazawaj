@@ -522,7 +522,7 @@ label, select, input[type=radio], input[type=checkbox], input[type=file], input[
                                     <select id="city" name="city">
                                         <option value="" selected>(اختار)</option>
                                         @foreach(App\Models\City::orderBy('title_ar')->get() as $item)
-                                            <option value="{{$item->title_ar}}" {{isset($user) && $user->city == $item->title_ar ? 'selected' : ''}}>{{$item->title}}</option>
+                                            <option value="{{$item->title_ar}}" {{isset($user) && $user->city_id == $item->id ? 'selected' : ''}}>{{$item->title}}</option>
                                     @endforeach
                                     <!-- أضف المزيد من الدول هنا -->
                                     </select>

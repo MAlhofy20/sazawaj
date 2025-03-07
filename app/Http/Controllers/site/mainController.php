@@ -553,9 +553,9 @@ class mainController extends Controller
             $chat_message = Room_chat::create($request->except(['lang', 'file_path']));
 
             if (isset($user)) {
-                foreach (Device::where('user_id', $user->id)->pluck('device_id') as $token) {
-                    sendFCMNotificationToWeb($token, ['title' => auth()->user()->name, 'body' => $request->message], url('show_chat/' . $room->id));
-                }
+                // foreach (Device::where('user_id', $user->id)->pluck('device_id') as $token) {
+                //     sendFCMNotificationToWeb($token, ['title' => auth()->user()->name, 'body' => $request->message], url('show_chat/' . $room->id));
+                // }
 
                 // $name = auth()->user()->name;
                 // $message = $request->message;
@@ -574,9 +574,9 @@ class mainController extends Controller
             $chat_message = Room_chat::create($request->except(['lang', 'file_path']));
 
             if (isset($user)) {
-                foreach (Device::where('user_id', $user->id)->pluck('device_id') as $token) {
-                    sendFCMNotificationToWeb($token, ['title' => auth()->user()->name, 'body' => 'رسالة صوتية'], url('show_chat/' . $room->id));
-                }
+                // foreach (Device::where('user_id', $user->id)->pluck('device_id') as $token) {
+                //     sendFCMNotificationToWeb($token, ['title' => auth()->user()->name, 'body' => 'رسالة صوتية'], url('show_chat/' . $room->id));
+                // }
 
                 // $name = auth()->user()->name;
                 $message = 'رسالة صوتية';

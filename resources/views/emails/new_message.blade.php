@@ -33,7 +33,7 @@
                 <h2 style="color: #6f42c1; font-size: 20px;">بيانات المرسل</h2>
                 <p><strong>الاسم:</strong> {{ $data['sender']->first_name }}</p>
                 <p><strong>الجنسية:</strong> {{ $data['sender']->nationality }}</p>
-                <p><strong>الإقامة:</strong> {{ $data['sender']->city }}</p>
+                <p><strong>الإقامة:</strong> {{ $data['sender']->city?->title_ar }}</p>
                 <p><strong>العمر:</strong> {{ $data['sender']->age }}</p>
             </div>
         </div>

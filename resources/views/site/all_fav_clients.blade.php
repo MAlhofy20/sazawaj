@@ -251,7 +251,7 @@
                                 <table class="visitors-table">
                                     <thead class="visitors-table-header">
                                     <tr class="all">
-                                        <th style="margin-right: 40px" class="name">الاسم</th>
+                                        <th style="margin-right: 40px; text-wrap-mode: nowrap;" class="name">الاسم</th>
                                         <th class="age">العمر</th>
                                         <th class="country">المدينة</th>
                                         <th class="date">تاريخ الزيارة</th>
@@ -263,7 +263,7 @@
                                             <td class=" portrait">
                                                 <img src="{{url('' . $item->user->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
                                             </td>
-                                            <td class="name">
+                                            <td style="text-wrap-mode: nowrap;" class="name">
                                                 {{$item->user->name}}
                                             </td>
                                             <td class="age">{{$item->user->age}}</td>
@@ -271,6 +271,7 @@
                                             <td class="date">{{$item->created_at->format('Y-m-d')}}</td>
                                         </tr>
                                     @empty
+
                                         <tr class="li">
                                             <td colspan="4"> لا يوجد نتائج</td>
                                         </tr>
@@ -374,7 +375,7 @@
                                 <table class="visitors-table">
                                     <thead class="visitors-table-header">
                                     <tr class="all">
-                                        <th style="margin-right: 40px" class="name">الاسم</th>
+                                        <th style="margin-right: 40px; text-wrap-mode: nowrap;" class="name">الاسم</th>
                                         <th class="age">العمر</th>
                                         <th class="country">المدينة</th>
                                         <th class="date">تاريخ الزيارة</th>

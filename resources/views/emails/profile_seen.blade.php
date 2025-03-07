@@ -31,7 +31,7 @@
                 <h2 style="color: #6f42c1; font-size: 20px;">بيانات الزائر</h2>
                 <p style="margin: 5px 0;"><strong>الاسم:</strong> {{ $data['visitor']->first_name }}</p>
                 <p style="margin: 5px 0;"><strong>الجنسية:</strong> {{ $data['visitor']->nationality }}</p>
-                <p style="margin: 5px 0;"><strong>الإقامة:</strong> {{ $data['visitor']->city }}</p>
+                <p style="margin: 5px 0;"><strong>الإقامة:</strong> {{ $data['visitor']->city?->title_ar }}</p>
                 <p style="margin: 5px 0;"><strong>العمر:</strong> {{ $data['visitor']->age }}</p>
             </div>
         </div>
