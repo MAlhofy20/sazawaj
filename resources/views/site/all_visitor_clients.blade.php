@@ -243,7 +243,7 @@
                                 <table class="visitors-table">
                                     <thead class="visitors-table-header">
                                     <tr class= "all">
-                                        <th style="margin-right: 40px" class="name">الاسم</th>
+                                        <th style="margin-right: 40px;text-wrap-mode: nowrap;" class="name">الاسم</th>
                                         <th class="age">العمر</th>
                                         <th class="country">المدينة</th>
                                         <th class="date">تاريخ الزيارة</th>
@@ -255,7 +255,7 @@
                                             <td class=" portrait">
                                                 <img src="{{url('' . $item->user->avatar)}}" alt="" class="visitor-image" width="100px" height="50px">
                                             </td>
-                                            <td class="name">{{$item->user->name}}</td>
+                                            <td style="text-wrap-mode: nowrap;" class="name">{{$item->user->name}}</td>
                                             <td class=" age">{{$item->user->age}}</td>
                                             <td class="country">{{$item->user->city?->title_ar}}</td>
                                             <td class="date">{{$item->created_at->format('Y-m-d')}}</td>
@@ -376,14 +376,13 @@
     </div>
 </div>
 
-
                             <div class="visitors-table-container">
                             <strong style="color: #b72dd2">عدد الذين زرتهم: {{$data->count()}}</strong>
 
                                 <table class="visitors-table">
                                     <thead class="visitors-table-header">
                                     <tr class= "all">
-                                        <th style="margin-right: 40px" class="name">الاسم</th>
+                                        <th style="margin-right: 40px;text-wrap-mode: nowrap;" class="name">الاسم</th>
                                         <th class="age">العمر</th>
                                         <th class="country">المدينة</th>
                                         <th class="date">تاريخ الزيارة</th>

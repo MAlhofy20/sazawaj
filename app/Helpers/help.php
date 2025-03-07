@@ -109,25 +109,25 @@ function genrateFireBaseAccessToken()
     //-----Request token, with an http post request------
     $options = array('http' => array(
         'method'  => 'POST',
-        'content' => 'grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion='.$jwt,
+        'content' => 'grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=' . $jwt,
         'header'  => "Content-Type: application/x-www-form-urlencoded"
     ));
     $context  = stream_context_create($options);
     $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "https://oauth2.googleapis.com/token");
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, 'grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=' . $jwt);
-curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    "Content-Type: application/x-www-form-urlencoded",
-]);
-$responseText = curl_exec($ch);
-if (curl_errno($ch)) {
-    echo 'cURL Error: ' . curl_error($ch);
-    exit;
-}
-curl_close($ch);
-$response = json_decode($responseText);
+    curl_setopt($ch, CURLOPT_URL, "https://oauth2.googleapis.com/token");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, 'grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=' . $jwt);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        "Content-Type: application/x-www-form-urlencoded",
+    ]);
+    $responseText = curl_exec($ch);
+    if (curl_errno($ch)) {
+        echo 'cURL Error: ' . curl_error($ch);
+        exit;
+    }
+    curl_close($ch);
+    $response = json_decode($responseText);
 
     $response = json_decode($responseText);
     return isset($response->access_token) ? $response->access_token : '';
@@ -178,56 +178,57 @@ function sendFCMNotificationToWeb($fcmToken = null, $data = [], $url = '')
     ];
 
     $context = stream_context_create($options);
-function sendNotification($projectId, $accessToken, $message) {
-    $url = "https://fcm.googleapis.com/v1/projects/$projectId/messages:send";
+    function sendNotification($projectId, $accessToken, $message)
+    {
+        $url = "https://fcm.googleapis.com/v1/projects/$projectId/messages:send";
 
-    $ch = curl_init();
+        $ch = curl_init();
 
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($message));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "Authorization: Bearer $accessToken",
-        "Content-Type: application/json",
-    ]);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($message));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "Authorization: Bearer $accessToken",
+            "Content-Type: application/json",
+        ]);
 
-    $response = curl_exec($ch);
+        $response = curl_exec($ch);
 
-    if (curl_errno($ch)) {
-        echo 'cURL Error: ' . curl_error($ch);
-        exit;
+        if (curl_errno($ch)) {
+            echo 'cURL Error: ' . curl_error($ch);
+            exit;
+        }
+
+        curl_close($ch);
+
+        return $response;
     }
 
-    curl_close($ch);
-
-    return $response;
-}
-
-// Example usage:
-$message = [
-    "message" => [
-        "token" => $fcmToken,
-        "notification" => [
-            "title" => $title,
-            "body" => $body,
+    // Example usage:
+    $message = [
+        "message" => [
+            "token" => $fcmToken,
+            "notification" => [
+                "title" => $title,
+                "body" => $body,
+            ],
+            "data" => [
+                "action_url" => $action_url,
+            ],
         ],
-        "data" => [
-            "action_url" => $action_url,
-        ],
-    ],
-];
+    ];
 
-$response = sendNotification($projectId, $accessToken, $message);
+    $response = sendNotification($projectId, $accessToken, $message);
 
-// Decode the JSON response:
-$responseDecoded = json_decode($response, true);
+    // Decode the JSON response:
+    $responseDecoded = json_decode($response, true);
 
-if (isset($responseDecoded['name'])) {
-    echo "Notification sent successfully: " . $responseDecoded['name'];
-} else {
-    echo "Failed to send notification. Response: " . $response;
-}
+    if (isset($responseDecoded['name'])) {
+        echo "Notification sent successfully: " . $responseDecoded['name'];
+    } else {
+        echo "Failed to send notification. Response: " . $response;
+    }
 
 
     Log::info(['token' => $fcmToken, 'response' => $response]);
@@ -298,7 +299,8 @@ function sendFCMNotificationToFLUTTER($fcmToken = null, $data = [], $click_actio
 |----------------------------------------------------|
 */
 
-function agoraApi() {
+function agoraApi()
+{
     // Set your Customer ID and Customer Secret
     $customerID = '3b056185db5c42d79f86702049cc8a96';
     $customerSecret = '9a8d7aa30ce546b9a64ba9a28d3224ab';
@@ -334,35 +336,40 @@ function agoraApi() {
     }
 }
 
-function getFavCount() {
+function getFavCount()
+{
     $fav_count = (int) Favourite::where('user_id', auth()->id())->count();
 
     return 2 - $fav_count;
 }
 
-function checkUserPackage($user_id = '') {
+function checkUserPackage($user_id = '')
+{
     $user  = User::whereId($user_id)->first();
     $user  = !isset($user) && auth()->check() ? auth()->user() : User::whereId($user_id)->first();
     $check = (isset($user) && $user->gender == 'female')
-                ||
-             (isset($user) && !empty($user->package_end_date) && !Carbon::parse($user->package_end_date)->isPast());
+        ||
+        (isset($user) && !empty($user->package_end_date) && !Carbon::parse($user->package_end_date)->isPast());
 
     return $check;
 }
 
-function getVisitorData($user_id, $to_id, $field = 'updated_at') {
+function getVisitorData($user_id, $to_id, $field = 'updated_at')
+{
     $data  = Visitor::where('user_id', $user_id)->where('to_id', $to_id)->latest()->first();
 
     return isset($data) ? $data->$field : '';
 }
 
-function getBlockedData($user_id, $to_id, $field = 'updated_at') {
+function getBlockedData($user_id, $to_id, $field = 'updated_at')
+{
     $data  = User_block_list::where('user_id', $user_id)->where('to_id', $to_id)->latest()->first();
 
     return isset($data) ? $data->$field : '';
 }
 
-function getFavouriteData($user_id, $to_id, $field = 'updated_at') {
+function getFavouriteData($user_id, $to_id, $field = 'updated_at')
+{
     $data  = Favourite::where('user_id', $user_id)->where('to_id', $to_id)->latest()->first();
 
     return isset($data) ? $data->$field : '';
@@ -416,7 +423,8 @@ function get_address($lat, $lng)
 }
 
 #show employees today times
-function show_times($provider_id, $date, $duration) {
+function show_times($provider_id, $date, $duration)
+{
     $date       = Carbon::parse($date)->format('Y-m-d');
     $saler      = User::whereId($provider_id)->first();
     $start      = Carbon::parse($date . $saler->start_time);
@@ -447,7 +455,8 @@ function show_times($provider_id, $date, $duration) {
     return $data;
 }
 
-function check_times($provider_id, $date, $startHFormat, $endHFormat, $duration, $count) {
+function check_times($provider_id, $date, $startHFormat, $endHFormat, $duration, $count)
+{
     $notAllowedTimes = User_time_static::whereUserId($provider_id)
         ->where('count', $count)
         ->whereDate('date', Carbon::parse($date))
@@ -659,7 +668,8 @@ function static_path()
 |----------------------------------------------------|
 */
 
-function convertToArabicNumbers($number) {
+function convertToArabicNumbers($number)
+{
     $arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
     return str_replace(range(0, 9), $arabicNumbers, $number);
 }
@@ -776,7 +786,7 @@ function send_mail_php($email, $msg, $title = '(هذا البريد آلي ول�
     //require 'vendor/autoload.php';
 
     // إعداد PHPMailer
-    $mail = new PHPMailer(true); 
+    $mail = new PHPMailer(true);
     try {
         // إعدادات SMTP من ملف .env
         $mail->isSMTP();                                           // استخدام SMTP
@@ -796,7 +806,7 @@ function send_mail_php($email, $msg, $title = '(هذا البريد آلي ول�
 
         // تعيين العنوان بشكل صحيح باستخدام mb_encode_mimeheader
         $mail->Subject = mb_encode_mimeheader($title, 'UTF-8');     // العنوان مع الترميز
-    
+
         // المحتوى (التأكد من تضمين HTML فقط هنا)
         $mail->isHTML(true);                                        // إرسال البريد كـ HTML
         $mail->Body    = '
@@ -845,7 +855,7 @@ function send_mail_html($email, $msg, $from = 'info@pifreelancer.com', $title = 
     //require 'vendor/autoload.php';
 
     // إعداد PHPMailer
-    $mail = new PHPMailer(true); 
+    $mail = new PHPMailer(true);
     try {
         // إعدادات SMTP من ملف .env
         $mail->isSMTP();                                           // استخدام SMTP
@@ -865,10 +875,10 @@ function send_mail_html($email, $msg, $from = 'info@pifreelancer.com', $title = 
 
         // تعيين العنوان بشكل صحيح باستخدام mb_encode_mimeheader
         $mail->Subject = mb_encode_mimeheader($title, 'UTF-8');     // العنوان مع الترميز
-    
+
         // المحتوى (التأكد من تضمين HTML فقط هنا)
         $mail->isHTML(true);                                        // إرسال البريد كـ HTML
-              $mail->Body    = '
+        $mail->Body    = '
         <html>
         <head>
             <meta charset="UTF-8">
@@ -1561,7 +1571,7 @@ function update_device($user, $device_id, $device_type = null)
 }
 
 #send notify
-function send_notify($to_id,$message_ar, $message_en, $url, $header = null, $order_id = null, $order_status = null)
+function send_notify($to_id, $message_ar, $message_en, $url, $header = null, $order_id = null, $order_status = null)
 {
     Notification::create([
         'to_id'        => $to_id,
@@ -1703,7 +1713,7 @@ function send_fcm_to_app($token, $msg_data, $setBadge = 0)
     return true;
 
     $optionBuilder = new OptionsBuilder();
-    $optionBuilder->setTimeToLive(60*20);
+    $optionBuilder->setTimeToLive(60 * 20);
 
     $notificationBuilder = new PayloadNotificationBuilder($msg_data['title']);
     $notificationBuilder->setBody($msg_data['body'])
@@ -2032,7 +2042,7 @@ function generateTimeRange($startTime, $endTime, $intervalMinutes)
 
     $range = [];
 
-    if($end->lt($start)) {
+    if ($end->lt($start)) {
         $end   = Carbon::parse('24:00:00');
         while ($start->lt($end)) {
             $range[] = $start->toTimeString(); // You can customize the format as needed
@@ -2063,7 +2073,7 @@ function generateTimeRangeWithDate($startTime, $endTime, $intervalMinutes, $date
 
     $range = [];
 
-    if($end->lt($start)) {
+    if ($end->lt($start)) {
         $end   = Carbon::parse('24:00:00');
         while ($start->lt($end)) {
             $range[] = [
@@ -2169,7 +2179,7 @@ function user_block_list($user_id, $to_id)
 function check_user_block_list($user_id, $to_id)
 {
     $check = User_block_list::where('user_id', $user_id)->where('to_id', $to_id)->first();
-    if(!isset($check)) $check = User_block_list::where('user_id', $to_id)->where('to_id', $user_id)->first();
+    if (!isset($check)) $check = User_block_list::where('user_id', $to_id)->where('to_id', $user_id)->first();
     return isset($check);
 }
 
@@ -2180,16 +2190,18 @@ function generate_number($count)
 }
 
 #recursive function to convert the nested array into single array
-function makeNonNestedRecursive(array &$outputArray, $key, array $inputArray){
-    foreach($inputArray as $inputKey=>$value){
-        if(is_array($value)){
+function makeNonNestedRecursive(array &$outputArray, $key, array $inputArray)
+{
+    foreach ($inputArray as $inputKey => $value) {
+        if (is_array($value)) {
             makeNonNestedRecursive($outputArray, $key . $inputKey . '_', $value);
-        }else{
+        } else {
             $outputArray[$inputKey] = $value;
         }
     }
 }
-function makeNonNested(array $inputArray){
+function makeNonNested(array $inputArray)
+{
     $outputArray = [];
     makeNonNestedRecursive($outputArray, '', $inputArray);
     return $outputArray;

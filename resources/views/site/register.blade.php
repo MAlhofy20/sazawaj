@@ -559,7 +559,7 @@
                                             <option value="">اختار</option>
                                             @foreach (App\Models\City::orderBy('id')->get() as $item)
                                                 <option value="{{ $item->title_ar }}"
-                                                    {{ isset($user) && $user->city == $item->title_ar ? 'selected' : '' }}>
+                                                    {{ isset($user) && $user->city_id == $item->id ? 'selected' : '' }}>
                                                     {{ $item->title }}</option>
                                             @endforeach
                                         </select>
@@ -1507,11 +1507,11 @@
                                                     <i class="fa-solid fa-location-dot"></i>
                                                 </div>
                                                 <div class="text">
-                                                    الدولة
+                                                    المدينة
                                                 </div>
                                             </div>
                                             <div class="value">
-                                                {{ $item->country }}
+                                                {{ $item->city?->title_ar }}
                                             </div>
                                         </div>
                                         <div class="desc-content-register mb-2">

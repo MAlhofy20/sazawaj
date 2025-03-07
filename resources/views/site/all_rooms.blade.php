@@ -15,6 +15,7 @@
     box-shadow: 0 5px 15px rgba(50, 142, 164, 0.19);
 }
 
+
 /* Icon Styling */
 .icon {
     font-size: 1.8rem;
@@ -384,7 +385,7 @@
                                     <table class="visitors-table messages-table">
                                         <thead class="visitors-table-header">
                                         <tr>
-                                            <th style="margin-right: 40px" class="name">الأسم</th>
+                                            <th style="margin-right: 40px;text-wrap-mode: nowrap;" class="name" >الأسم</th>
                                             <th class="visitors-header-cell">الرسالة</th>
                                             <th  style="font-size: 14px; margin-right: 20px" class=" visitors-header-cell">تاريخ الرسالة</th>
                                             <th class="visitors-header-cell"><input type="checkbox" class="select-room" id="select-all"></th>
@@ -396,12 +397,12 @@
                                                 $id   = auth()->id() == $item->user_id ? (int) $item->saler_id : (int) $item->user_id;
                                                 $user = App\Models\User::whereId($id)->first();
                                             @endphp
-                                            <tr style="cursor:pointer; border-bottom: 1px solid white;" class="visitor-row" onclick="window.location.href='{{url('show_client/' . $item->user_id)}}'"   >
+                                            <tr style="cursor:pointer; border-bottom: 1px solid white;" class="visitor-row" onclick="window.location.href='{{url('show_room/' . $item->id)}}'"   >
                                                 <td class="portrait">
                                                     <img src="{{url('' . $user->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
                                                 </td>
-                                                <td class="name">
-                                                {{$item->user->name}}
+                                                <td style="text-wrap-mode: nowrap;" class="name">
+                                                    <a href="{{url('show_client/' . $item->user_id)}}">{{$item->user->name}}</a>
                                                 </td>
                                                 <!-- <td class="visitor-cell">
                                                     <span style="color:blue;">{{isset($user) ? $user->first_name : ''}}</span>

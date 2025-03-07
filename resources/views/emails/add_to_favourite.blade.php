@@ -29,9 +29,10 @@
             <!-- Info (50%) -->
             <div style="flex: 2; min-width: 180px; padding-right: 15px;">
                 <h2 style="color: #6f42c1; font-size: 20px;">بيانات المعجب</h2>
-                <p style="margin: 5px 0;"><strong>الاسم:</strong> {{ $data['liker']->first_name }}</p>
+                <p style="margin: 5px 0;     text-wrap-mode: nowrap;
+"><strong>الاسم:</strong> {{ $data['liker']->first_name }}</p>
                 <p style="margin: 5px 0;"><strong>الجنسية:</strong> {{ $data['liker']->nationality }}</p>
-                <p style="margin: 5px 0;"><strong>الإقامة:</strong> {{ $data['liker']->city }}</p>
+                <p style="margin: 5px 0;"><strong>الإقامة:</strong> {{ $data['liker']->city?->title_ar }}</p>
                 <p style="margin: 5px 0;"><strong>العمر:</strong> {{ $data['liker']->age }}</p>
             </div>
         </div>
