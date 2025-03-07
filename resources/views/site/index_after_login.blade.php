@@ -155,7 +155,7 @@ label, select, input[type=radio], input[type=checkbox], input[type=file], input[
         .form-search-cont-addition .checkbox-group label input{
             margin-inline-end: 5px;
         }
-  
+
 
     </style>
  @endsection
@@ -320,7 +320,7 @@ label, select, input[type=radio], input[type=checkbox], input[type=file], input[
                                             @else
                                                 <span id="message-icon" class="red-dot" style="display: none;"></span>
                                             @endif
-                                            
+
                                             <a href="{{url('all_rooms')}}">
                                                 <div class="welcome-icon">
                                                     <img loading="lazy" src="{{ site_path() }}/assets/img/emails.png" alt="">
@@ -336,11 +336,11 @@ label, select, input[type=radio], input[type=checkbox], input[type=file], input[
                                         </div>
                                         <div class="hold-welcome-notification wow bounceInRight position-relative" data-wow-delay="0.4s">
                                             @if ($visitorCounter > 0)
-                                                <span id="visitor-icon" class="red-dot"></span>  
+                                                <span id="visitor-icon" class="red-dot"></span>
                                             @else
-                                                <span id="visitor-icon" class="red-dot" style="display: none;"></span>  
-                                            @endif    
-                                          
+                                                <span id="visitor-icon" class="red-dot" style="display: none;"></span>
+                                            @endif
+
                                             <a href="{{url('all_visitor_clients')}}">
                                                 <div class="welcome-icon">
                                                     <img loading="lazy" src="{{ site_path() }}/assets/img/visitor.png" alt="">
@@ -358,8 +358,8 @@ label, select, input[type=radio], input[type=checkbox], input[type=file], input[
                                             @if ($likerCounter > 0)
                                                 <span id="liker-icon" class="red-dot"></span>
                                             @else
-                                                <span id="liker-icon" class="red-dot" style="display: none;"></span> 
-                                            @endif    
+                                                <span id="liker-icon" class="red-dot" style="display: none;"></span>
+                                            @endif
                                             <a href="{{url('all_fav_clients')}}">
                                                 <div class="welcome-icon">
                                                     <img loading="lazy" src="{{ site_path() }}/assets/img/heart.png" alt="">
@@ -449,7 +449,7 @@ label, select, input[type=radio], input[type=checkbox], input[type=file], input[
                                     <div class="col-lg-2 col-md-3 col-4 mb-4 wow bounceInRight" data-wow-delay="0.2s">
                                         <a href="{{url('show_client/' . $item->id)}}">
                                             <div class="member-img">
-                                                
+
                                                   <img loading="lazy" src="{{url('' . $item->avatar)}}" alt="" class="img-fluid" style="border: 4px solid #2492a8; border-radius: 15px; width: 100%; height: 100%;">
                                             </div>
                                         </a>
@@ -459,7 +459,7 @@ label, select, input[type=radio], input[type=checkbox], input[type=file], input[
                         </div>
                     </section>
                     <!-- new member -->
-                    
+
                     <!-- title and des -->
                     <div class="container text-center mt-5">
                         <h2 class="sec-tit" style="color:#2492a8">

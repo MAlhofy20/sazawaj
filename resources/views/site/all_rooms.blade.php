@@ -416,7 +416,7 @@
                                                     </span>
                                                 </td>
                                                 <td class="visitor-cell">
-                                                    <input  type="checkbox" name="room_ids[]" value="{{ $item->id }}" class="select-room select-room-btn select-room-btn-desktop">
+                                                    <input   type="checkbox" name="room_ids[]" value="{{ $item->id }}" class="select-room  select-room-btn select-room-btn-desktop">
                                                 </td>
                                             </tr>
                                         @empty
