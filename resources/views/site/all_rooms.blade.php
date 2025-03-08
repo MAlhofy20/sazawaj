@@ -15,7 +15,6 @@
     box-shadow: 0 5px 15px rgba(50, 142, 164, 0.19);
 }
 
-
 /* Icon Styling */
 .icon {
     font-size: 1.8rem;
@@ -76,6 +75,7 @@
             text-align: center;
             flex: 1;
             display: flex;
+            justify-content: center;
 
         }
         .visitors-header-cell input[type=checkbox] {
@@ -204,12 +204,11 @@
                 display: flex;
                 flex-wrap: wrap;
                 align-content: center;
-                justify-content: center;
+                justify-content: space-between;
             }
             .select-room-btn {
               position: relative;
-              right: 55px;
-              bottom: 50px;
+
               display: block;
             }
             .message-footer {
@@ -318,7 +317,6 @@
                                                 margin-bottom: 30px;
                                             }
                                             .li{
-                                                line-height: 50px;
                                                 color: #1a1a1a;
                                                 background-color: #ede2ab;
                                                 border-bottom: 2px solid #fff;
@@ -378,14 +376,21 @@
                             <form id="delete-form" method="POST" action="{{ route('delete_rooms') }}">
                                 @csrf
                                 <div id="select-all-mobile-btn">
-                                    <spa>حدد الكل</spa><input type="checkbox" class="select-room" id="select-all-mobile">
+                                    <div>
+                                        <p>عدد الرسائل :<span style="color:#2492a8;font-weight:bold">13</span></p>
+                                    </div>
+                                    <div>
+                                        <span>حدد الكل</span>
+                                        <input type="checkbox" class="select-room" id="select-all-mobile">
+                                    </div>
                                 </div>
                                 <!-- Desktop View -->
                                 <div class=>
                                     <table class="visitors-table messages-table">
                                         <thead class="visitors-table-header">
+                                        <thead class="visitors-table-header">
                                         <tr>
-                                            <th style="margin-right: 40px;text-wrap-mode: nowrap;" class="name" >الأسم</th>
+                                            <th style="margin-right: 40px" class="name">الأسم</th>
                                             <th class="visitors-header-cell">الرسالة</th>
                                             <th  style="font-size: 14px; margin-right: 20px" class=" visitors-header-cell">تاريخ الرسالة</th>
                                             <th class="visitors-header-cell"><input type="checkbox" class="select-room" id="select-all"></th>
@@ -397,11 +402,12 @@
                                                 $id   = auth()->id() == $item->user_id ? (int) $item->saler_id : (int) $item->user_id;
                                                 $user = App\Models\User::whereId($id)->first();
                                             @endphp
-                                            <tr style="cursor:pointer; border-bottom: 1px solid white;" class="visitor-row" onclick="window.location.href='{{url('show_room/' . $item->id)}}'"   >
+                                            <tr style="cursor:pointer; border-bottom: 1px solid white;" class="visitor-row"
+                                            onclick="window.location.href='{{url('show_room/' . $item->id)}}'"   >
                                                 <td class="portrait">
                                                     <img src="{{url('' . $user->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
                                                 </td>
-                                                <td style="text-wrap-mode: nowrap;" class="name">
+                                                <td class="name">
                                                     <a href="{{url('show_client/' . $item->user_id)}}">{{$item->user->name}}</a>
                                                 </td>
                                                 <!-- <td class="visitor-cell">
@@ -416,8 +422,8 @@
                                                        {{ !is_null($item->chats_desc) && isset(last_room_chat($item->id)['duration_format']) ? last_room_chat($item->id)['duration_format'] : '' }}
                                                     </span>
                                                 </td>
-                                                <td class="visitor-cell">
-                                                    <input   type="checkbox" name="room_ids[]" value="{{ $item->id }}" class="select-room  select-room-btn select-room-btn-desktop">
+                                                <td class="visitor-cell checkbox">
+                                                    <input  type="checkbox" name="room_ids[]" value="{{ $item->id }}" class="select-room  select-room-btn select-room-btn-desktop">
                                                 </td>
                                             </tr>
                                         @empty

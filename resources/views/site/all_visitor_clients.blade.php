@@ -82,7 +82,7 @@
                 height: 50px;
             }
            .visitors-table-body tr{
-               padding: 10px 0;
+               /* padding: 10px 0; */
            }
             .visitors-header-cell, .visitor-cell{
                 flex-direction: column;
@@ -104,7 +104,6 @@
             margin-bottom: 30px;
         }
         .li{
-            line-height: 50px;
             color: #1a1a1a;
             background-color: #ede2ab;
             border-bottom: 2px solid #fff;
@@ -121,7 +120,7 @@
             overflow: hidden;
         }
         .name{
-            width: 30%;
+            width: 40%;
         }
         .age{
             width: 20%;
