@@ -200,12 +200,7 @@
             .message-content p {
                 margin: 0;
             }
-            #select-all-mobile-btn {
-                display: flex;
-                flex-wrap: wrap;
-                align-content: center;
-                justify-content: space-between;
-            }
+
             .select-room-btn {
               position: relative;
 
@@ -264,9 +259,15 @@
             }
 
             .mobile-view { display: none; }
-            #select-all-mobile-btn { display: none !important;}
+            /* #select-all-mobile-btn { display: none !important;} */
         }
-
+        #select-all-mobile-btn {
+                display: flex;
+                flex-wrap: wrap;
+                align-content: center;
+                padding: 5px 10px;
+                justify-content: space-between;
+            }
     </style>
 @endsection
 
@@ -333,7 +334,7 @@
                                                 overflow: hidden;
                                             }
                                             .name{
-                                                width: 30%;
+                                                width: 20%;
                                             }
                                             .age{
                                                 width: 20%;
@@ -369,6 +370,12 @@
                                                     padding: 0 !important;
                                                 }
                                             }
+                                            @media(max-width:770px){
+                                                .msg{
+                                                    display: none;
+                                                }
+                                            }
+                                            
                                             /* ahmed alhofy */
                                             /* ahmed alhofy */
                                 </style>
@@ -377,7 +384,7 @@
                                 @csrf
                                 <div id="select-all-mobile-btn">
                                     <div>
-                                        <p>عدد الرسائل :<span style="color:#2492a8;font-weight:bold">13</span></p>
+                                        <p style="color:#b72dd2">عدد الرسائل :<span style="font-weight:bold">13</span></p>
                                     </div>
                                     <div>
                                         <span>حدد الكل</span>
@@ -390,8 +397,10 @@
                                         <thead class="visitors-table-header">
                                         <thead class="visitors-table-header">
                                         <tr>
-                                            <th style="margin-right: 40px" class="name">الأسم</th>
-                                            <th class="visitors-header-cell">الرسالة</th>
+                                            <th style="padding-right: 40px" class="name">الأسم</th>
+                                            <th style="visibility:hidden">ايقونه</th>
+
+                                            <th class="msg visitors-header-cell">الرسالة</th>
                                             <th  style="font-size: 14px; margin-right: 20px" class=" visitors-header-cell">تاريخ الرسالة</th>
                                             <th class="visitors-header-cell"><input type="checkbox" class="select-room" id="select-all"></th>
                                         </tr>
@@ -410,10 +419,15 @@
                                                 <td class="name">
                                                     <a href="{{url('show_client/' . $item->user_id)}}">{{$item->user->name}}</a>
                                                 </td>
+                                                <td>
+                                                <i style="color:#2492a8;" class="fa-solid fa-envelope"></i>
+                                                <i style="color:#2492a8;" class="fa-solid fa-envelope-open-text"></i>
+                                                </td>
+                                                
                                                 <!-- <td class="visitor-cell">
                                                     <span style="color:blue;">{{isset($user) ? $user->first_name : ''}}</span>
                                                 </td> -->
-                                                <td class="visitor-cell">
+                                                <td class=" msg visitor-cell">
                                                     <span class="visitor-cell-msg">{{!is_null($item->chats_desc) && last_room_chat($item->id)['type'] == 'text' ? last_room_chat($item->id)['last_message'] : 'رسالة صوتية'}}</span>
                                                 </td>
                                                 <td class="visitor-cell">
