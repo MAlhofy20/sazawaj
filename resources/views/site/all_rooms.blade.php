@@ -375,7 +375,7 @@
                                                     display: none;
                                                 }
                                             }
-                                            
+
                                             /* ahmed alhofy */
                                             /* ahmed alhofy */
                                 </style>
@@ -384,7 +384,7 @@
                                 @csrf
                                 <div id="select-all-mobile-btn">
                                     <div>
-                                        <p style="color:#b72dd2">عدد الرسائل :<span style="font-weight:bold">13</span></p>
+                                        <p style="color:#b72dd2">عدد الرسائل :<span style="font-weight:bold">{{ collect($data)->count() }}</span></p>
                                     </div>
                                     <div>
                                         <span>حدد الكل</span>
@@ -417,13 +417,16 @@
                                                     <img src="{{url('' . $user->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
                                                 </td>
                                                 <td class="name">
-                                                    <a href="{{url('show_client/' . $item->user_id)}}">{{$item->user->name}}</a>
+                                                    <a href="{{url('show_client/' . $item->saler_id)}}">{{$user->name}}</a>
                                                 </td>
                                                 <td>
+                                                @if($item->have_unseen_message)
                                                 <i style="color:#2492a8;" class="fa-solid fa-envelope"></i>
+                                                @else
                                                 <i style="color:#2492a8;" class="fa-solid fa-envelope-open-text"></i>
+                                                @endif
                                                 </td>
-                                                
+
                                                 <!-- <td class="visitor-cell">
                                                     <span style="color:blue;">{{isset($user) ? $user->first_name : ''}}</span>
                                                 </td> -->

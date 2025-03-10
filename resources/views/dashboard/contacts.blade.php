@@ -128,6 +128,20 @@
                                                     </li>
                                                 </ul>
                                             </div>
+                                            <div class="m-3">
+                                                <form action="{{ route('replaycontact', $item->id) }}" id="sendnotifyuserForm" method="POST">
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label for="">
+                                                            ارسال رد عبر البريد
+                                                        </label>
+                                                        <textarea name="message" id="notifyMessage" required cols="30" rows="4" class="form-control"
+                                                            placeholder="اكتب رسالتك ..."></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-sm btn-success save">إرسال</button>
+                                                </form>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -178,6 +192,7 @@
                             </li>
                         </ul>
                     </div>
+
                 </div>
             </div>
         </div>

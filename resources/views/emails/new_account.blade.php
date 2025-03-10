@@ -30,9 +30,11 @@
             <p style="color: #444;">
                 <strong>البريد الألكتروني:</strong> {{ $data['user']->email }}
             </p>
+            @if(isset($data['password']))
             <p style="color: #444;">
                 <strong>كلمة السر:</strong> {{ $data['password'] }}
             </p>
+            @endif
         </div>
 
         <!-- Part 3: Cheering Message + CTA Button -->

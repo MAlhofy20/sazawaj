@@ -15,7 +15,7 @@
     <!-- Main Body -->
     <div style="max-width: 600px; margin: auto; padding: 20px; color: #333; font-size: 18px; text-align: center;">
         <div style="background-color: #fffae6; padding: 20px; border-radius: 10px; margin-bottom: 15px;">
-            <h2 style="color: #d4af37; font-size: 24px;">مرحباً {{ $data['user']->first_name }}</h2>
+            <h2 style="color: #d4af37; font-size: 24px;">مرحباً {{ $data['user']->first_name ?? '' }}</h2>
         </div>
 
         <div style="background-color: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center;">
@@ -23,12 +23,14 @@
         </div>
 
         <div style="background-color: #fff3cd; padding: 20px; border-radius: 10px; margin-bottom: 15px;">
+            @if(isset($data['user']))
             @if (isset($data['btn-text']))
                 <a href="{{ $data['url'] }}" style="display: inline-block; background-color: #4CAF50; color: white; padding: 14px 30px; font-size: 18px; text-decoration: none; border-radius: 5px;">
                     {{ $data['btn-text'] }}
                 </a>
             @else
                 <p style="margin: 5px 0;"> رمز التحقق الخاص بك هو: {{ $data['code']}}</p>
+            @endif
             @endif
         </div>
     </div>

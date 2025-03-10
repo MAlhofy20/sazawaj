@@ -25,6 +25,7 @@ use App\Models\Mail_list;
 use App\Models\Room_chat;
 use App\Models\Media_file;
 use App\Models\User_image;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\User_block_list;
 use App\Http\Controllers\Controller;
@@ -41,8 +42,8 @@ use App\Models\Notification as userNotification;
 use App\Notifications\AddToFavouriteNotification;
 use App\Notifications\SubscripePackageNotification;
 use App\Notifications\NewContactUsMessageNotification;
-use App\Notifications\ProfilePictureCheckNotification;
 
+use App\Notifications\ProfilePictureCheckNotification;
 use App\Notifications\ProfilePictureChangeNotification;
 
 class mainController extends Controller
@@ -1054,21 +1055,44 @@ class mainController extends Controller
         return response()->json(['value' => 1, 'msg' => Translate('تم التعديل بنجاح')]);
     }
 
+    public function resend_active_email(Request $request)
+    {
+        $header = "<p>يسرنا أن نرحب بك في موقع سعودي زواج،</p>";
+        $header .= "<p>إنشاء الحساب هي أول خطوة في مشوار ايجاد شريكك المناسب</p>";
+        $body= "<p>تم إنشاء الخطوات الأولي لحسابك أكمل الخطوة الأخيرة بتفعيل حسابك</p>";
+        $body= "<p>لتتمكن من قراءة الرسايل واكتشاف الموقع</p>";
+        $token = Str::random(16);
+        $user = auth()->user();
+        $user->secret_token = $token;
+        $user->save();
+        $data = [
+            'title' => 'أهلاً بك',
+            'header' => $header,
+            'body' => $body,
+            'btn-text' => 'فعل حسابك',
+            'url' => url('site-active/' . $user->id . '/' . $token),
+            'user' => $user,
+        ];
+        $user->notify(new NewAccountNotification($data));
+        return redirect()->back()->with('success', 'تم ارسال بريد تفعيل جديد');
+    }
+
     #active page
-    public function active($id)
+    public function active($id,$token)
     {
         #get user
-        $user = User::whereId($id)->first();
+        $user = User::where('id', $id)->where('secret_token', $token)->first();
         #check if user exist
         if (!isset($user))
-            return redirect('/');
+            return redirect('/')->with('danger', trans('api.invalidToken'));
         #active user
-        $user->update(['active' => '1']);
+        $user->active = 1;
+        $user->secret_token = null;
+        $user->save();
         #login
         Auth::login($user);
         #Success response
         return redirect('/')->with('success', trans('api.activeSuccess'));
-        //return view('site.active');
     }
 
     #active post
@@ -1306,12 +1330,15 @@ class mainController extends Controller
             $header .= "<p>إنشاء الحساب هي أول خطوة في مشوار ايجاد شريكك المناسب</p>";
             $body= "<p>تم إنشاء الخطوات الأولي لحسابك أكمل الخطوة الأخيرة بتفعيل حسابك</p>";
             $body= "<p>لتتمكن من قراءة الرسايل واكتشاف الموقع</p>";
+            $token = Str::random(16);
+            $user->secret_token = $token;
+            $user->save();
             $data = [
                 'title' => 'أهلاً بك',
                 'header' => $header,
                 'body' => $body,
                 'btn-text' => 'فعل حسابك',
-                'url' => url('site-active/' . $user->id),
+                'url' => url('site-active/' . $user->id . '/' . $token),
                 'user' => $user,
                 'password' => $finalRegistrationData['password'],
             ];

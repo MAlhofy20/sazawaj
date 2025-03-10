@@ -138,14 +138,22 @@ class mainController extends Controller
         $notifications = userNotification::where('to_id', auth()->id())->orderBy('id', 'desc')->paginate(5);
         return view('dashboard.allnotifications')->with('notifications',$notifications);
     }
-    public function markAllNotificationsRead()
+
+    public function admin_notificationsRead(Request $request)
     {
-        $notifications = userNotification::where('to_id', auth()->id())->where('seen', 0)->get();
-        foreach($notifications as $notification)
-        {
+        if($request->id){
+            $notification = userNotification::where('to_id', auth()->id())->where('id', $request->id)->first();
             $notification->seen = 1 ;
-            $notification->update();
+            $notification->save();
+            return response()->json(['value' => 1]);
+        }else{
+            $notifications = userNotification::where('to_id', auth()->id())->where('seen', 0)->get();
+            foreach($notifications as $notification)
+            {
+                $notification->seen = 1 ;
+                $notification->save();
+            }
+            return response()->json(['value' => 1]);
         }
-        return response()->json(['value' => 1]);
     }
 }

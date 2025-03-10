@@ -27,6 +27,11 @@ class Room extends Model
         return $this->hasMany('App\Models\Room_chat');
     }
 
+    public function getHaveUnseenMessageAttribute()
+    {
+        return $this->chats()->where('to_id', auth()->id())->where('seen', 0)->exists();
+    }
+
     // chats_desc
     public function chats_desc()
     {

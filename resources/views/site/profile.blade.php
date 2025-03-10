@@ -193,11 +193,21 @@
     <!--  login  -->
     <section class="register prof">
         <div class="container">
-        @if(auth()->user()->active != '1')
-            <div class="alert-container">
+        @if(auth()->user()->active != '1' && !session()->has('success'))
+            <div class="alert-container" style="  max-width: fit-content;">
               <div class="alert-box">
-                يجب تأكيد صحة عنوان بريدك الإلكتروني، للتعليمات&nbsp;
-                <a href="{{route('site_active',auth()->user()->id)}}" class="alert-link">اضغط هنا</a>
+                يجب تأكيد صحة عنوان بريدك الإلكتروني، لاعادة ارسال بريد التفعيل&nbsp;
+                <form action="{{route('resend_active_email')}}" method="POST">
+                    @csrf
+
+                    <button type="submit" class="bg-light px-2 rounded" style="cursor: pointer;">اضغط هنا</button>
+                </form>
+              </div>
+            </div>
+        @elseif(session()->has('success'))
+            <div class="alert-container" style="  max-width: fit-content;">
+              <div class="alert-box bg-info">
+                برجاء قم بمراجعة بريدك الالكتروني {{ auth()->user()->email }} واضغط على زر التفعيل
               </div>
             </div>
         @endif
