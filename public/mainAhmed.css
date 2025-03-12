@@ -1,0 +1,21 @@
+/* .visitor-row .name{
+    position: relative;
+
+    background-color: black !important;
+}
+
+.visitor-row .name::before{
+    content: '/f0e0';
+    position: absolute;
+    width: 10px ;
+    height: 10px;
+
+}
+ */
+body{
+    display: none;
+}
+
+
+
+

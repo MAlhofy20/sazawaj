@@ -1,6 +1,6 @@
 @foreach($data as $item)
                         <?php $user = App\Models\User::whereId($item->from_id)->first(); ?>
-                        <div class="row">
+                        <div  class="row" style="display: flex; justify-content: {{ $item->from_id == auth()->id() ? 'flex-end' : 'flex-start' }};">
                             <div class="{{$item->from_id == auth()->id() ? 'myMsg' : 'msg'}}">
                                 <p class="member-name {{$item->from_id == auth()->id() ? 'myMsgDesc' : 'msgDesc'}}">
                                     <a href="{{url('show_client/' . $user->id)}}">
@@ -18,7 +18,7 @@
                                         @endif
                                     </span>
                                 </p>
-                                <p class="chat-status {{$item->from_id == auth()->id() ? 'myMsgTime' : 'msgTime'}}">
+                                <p  style="align-self: end; color: #666666; font-size: 12px;" class="chat-status {{$item->from_id == auth()->id() ? 'myMsgTime' : 'msgTime'}}">
                                     <span class="available">{{(string) Carbon\Carbon::parse($item->created_at)->diffForHumans()}}</span>
                                 </p>
                             </div>

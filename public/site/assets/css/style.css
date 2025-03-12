@@ -1088,12 +1088,15 @@ label {
 
 .chat-status {
     display: flex;
-    align-items: center;
+    align-self: end;
+    color: #666666;
+    font-size: 12px;
 }
 
 .chat-status p {
     display: flex;
-    align-items: center;
+    align-items: end;
+    position: relative;
 }
 
 .chat-status p:before {
@@ -1102,6 +1105,9 @@ label {
     height: 10px;
     border-radius: 100%;
     margin-inline-end: 5px;
+    bottom: 7px;
+    right: -20px;
+    position: absolute;
 }
 
 .chat-status p.available:before {
@@ -1134,6 +1140,8 @@ label {
     background-color: #e9eaee;
     padding: 15px;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
 }
 
 .chat-input {
@@ -1525,7 +1533,7 @@ footer {
     width: 100%;
 }
 
-.info-table td {
+.info-table span {
     padding: 5px;
 }
 
@@ -1607,11 +1615,11 @@ footer {
     display: flex;
 }
 
-tbody {
+ul {
     width: 100%;
 }
 
-tr {
+li {
     display: flex;
     justify-content: start;
     align-items: center;
@@ -1619,14 +1627,14 @@ tr {
     width: 100%;
 }
 
-.info-table tbody > tr td:nth-child(1),
+.info-table ul > tr td:nth-child(1),
 .hold-profile-info p strong {
     font-weight: bold;
     color: #b62cd2;
     font-size: 20px;
 }
 
-.info-table tbody > tr td:nth-child(2),
+.info-table ul > tr td:nth-child(2),
 .hold-profile-info p:not(p strong) {
     font-size: 20px;
     color: #000;
@@ -3886,6 +3894,7 @@ mark, .mark{
 
     .chat-status {
         width: 100%;
+
     }
 
     .available {
