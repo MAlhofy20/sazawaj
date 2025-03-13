@@ -73,7 +73,6 @@
             font-size: 18px;
             font-weight: bold;
             text-align: center;
-            flex: 1;
             display: flex;
             justify-content: center;
 
@@ -82,7 +81,7 @@
             display: flex !important;
 
         }
-        tr{
+        li{
             flex-wrap: wrap;
         }
           .visitor-cell .visitor-cell-msg{
@@ -123,26 +122,21 @@
                 height: 45px;
             }
             .new-members  .visitors-header-cell, .visitor-cell {
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                font-size: 12px;
-                width: 25%;
-                padding: 0;
+
             }
             .new-members .visitor-cell .btn.btn-info{
                 padding: 5px ;
                 font-size: 10px;
             }
-            .new-members .visitors-table-body tr{
+            .new-members .visitors-table-body li{
                 padding: 5px 0;
             }
         }
         @media (max-width: 768px) {
-            .visitor-cell .visitor-cell-msg{
+            /* .visitor-cell .visitor-cell-msg{
                 max-width: 55px;
                 overflow: hidden;
-            }
+            } */
         }
         @media (max-width: 320px) {
             .visitor-cell .visitor-cell-msg{
@@ -229,7 +223,10 @@
           }
 
         }
-
+        .messages-table th, .messages-table span {
+                padding: 10px;
+                text-align: right;
+            }
         @media (min-width: 481px) {
             .messages-container {
 
@@ -240,10 +237,7 @@
                 width: 100%;
                 border-collapse: collapse;
             }
-            .messages-table th, .messages-table td {
-                padding: 10px;
-                text-align: right;
-            }
+
             .messages-table th {
 
             }
@@ -252,11 +246,7 @@
                 height: 50px;
                 border-radius: 50%;
             }
-            .select-room {
-                margin-right: 20px;
-                width: 20px;
-                height: 20px;
-            }
+
 
             .mobile-view { display: none; }
             /* #select-all-mobile-btn { display: none !important;} */
@@ -267,6 +257,11 @@
                 align-content: center;
                 padding: 5px 10px;
                 justify-content: space-between;
+            }
+            .select-room {
+                margin-right: 20px;
+                width: 20px;
+                height: 20px;
             }
     </style>
 @endsection
@@ -309,6 +304,11 @@
 <style>
                                             /* ahmed alhofy */
                                             /* ahmed alhofy */
+                                            .visitors-table li {
+                                                display: flex;
+                                                justify-content: space-between;
+                                                width: 100%;
+                                            }
                                             .all{
                                                 padding: 10px;
                                                 background: linear-gradient(hsl(290, 80%, 55%) 50%, hsl(290, 65%, 50%) 50%);
@@ -327,16 +327,67 @@
                                             }
                                             .portrait{
                                                 margin-left: 6px;
-                                                width: 37.5px;
-                                                height: 50px;
+                                                width: 79.5px;
+                                                height: 67px;
                                                 vertical-align: bottom;
                                                 background-color: #faf5e1;
                                                 overflow: hidden;
                                             }
                                             .name{
                                                 width: 20%;
+
+                                            }
+                                            .mainFlexes{
+                                                display: flex;
+                                                justify-content: space-between;
+                                                width: 100%;
+                                            }
+                                            .mainFlexes .flexes{
+                                                display: flex;
+                                                width: 50%;
+                                            }
+                                            .mainFlexes .flexes .cont{
+                                                display: flex
+                                                ;
+                                                    align-items: center;
+                                                    justify-content: space-between;
+                                                    width: 100%;
+                                                }
+                                            .mainFlexes .flexes2{
+                                                display: flex;
+                                                width: 472px;
+                                                align-items: center;
+                                                display: flex;
+                                                    width: 472px;
+                                                    align-items: center;
+                                                    justify-content: end;
+                                                    margin-left: 40px;
+                                            }
+                                            .visitor-row .name{
+                                                flex: 1;
+                                            }
+                                            .visitor-row .msg{
+                                                position: relative;
+                                            }
+
+                                            /* .visitor-row .msg::before{
+                                                content: '\f0e0';
+                                                position: absolute;
+                                                font-family: "Font Awesome 5 Free";
+                                                font-weight: 900;
+                                                color:#2492a8;
+                                            } */
+                                            .visitor-row .msg::before{
+                                                content: '\f658';
+                                                position: absolute;
+                                                font-family: "Font Awesome 5 Free";
+                                                font-weight: 900;
+                                                color:#2492a8;
+                                                right: -20px;
+                                                bottom: 18px;
                                             }
                                             .age{
+
                                                 width: 20%;
                                             }
                                             .country{
@@ -351,7 +402,34 @@
                                                 cursor: pointer;
                                                 background-color: #e4d481;
                                             }
-                                            @media(max-width:767px){
+                                            @media(max-width:992px){
+                                                .visitors-table-header{
+                                                    display: none;
+                                                }
+                                                .mainFlexes .flexes .portrait {
+                                                    width: 80%;
+                                                    height: 106px;
+                                                }
+                                                .mainFlexes .flexes .cont {
+                                                    display: block;
+                                                }
+                                                .visitor-cell {
+                                                    justify-content: end;
+                                                }
+                                                .visitor-row .msg::before{
+                                                    right: 0px;
+                                                }
+                                                .mainFlexes .flexes2{
+                                                    flex-wrap: wrap-reverse;
+                                                    margin-left: 0;
+                                                }
+                                                .checkbox{
+                                                    width: 100%;
+                                                }
+
+
+                                            }
+                                            /* @media(max-width:767px){
                                                 .country{
                                                     display: none;
                                                 }
@@ -374,7 +452,7 @@
                                                 .msg{
                                                     display: none;
                                                 }
-                                            }
+                                            } */
 
                                             /* ahmed alhofy */
                                             /* ahmed alhofy */
@@ -386,71 +464,67 @@
                                     <div>
                                         <p style="color:#b72dd2">عدد الرسائل :<span style="font-weight:bold">{{ collect($data)->count() }}</span></p>
                                     </div>
-                                    <div>
-                                        <span>حدد الكل</span>
-                                        <input type="checkbox" class="select-room" id="select-all-mobile">
-                                    </div>
+
                                 </div>
                                 <!-- Desktop View -->
                                 <div class=>
-                                    <table class="visitors-table messages-table">
+                                    <div class="visitors-table messages-table">
                                         <thead class="visitors-table-header">
-                                        <thead class="visitors-table-header">
-                                        <tr>
-                                            <th style="padding-right: 40px" class="name">الأسم</th>
-                                            <th style="visibility:hidden">ايقونه</th>
+                                            <ul class="visitors-table-header">
+                                                <li>
+                                                    <span style="padding-right: 40px" class="name">الأسم</span>
+                                                    <span style="padding-left: 140px"  class="msg visitors-header-cell">الرسالة</span>
+                                                    <div style="display: flex; margin-left:40px">
+                                                        <span  style="font-size: 14px; margin-left: 20px" class="  visitors-header-cell">تاريخ الرسالة</span>
+                                                        <span class="visitors-header-cell"><input type="checkbox" class="select-room"   id="select-all"></span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        <ul class="visitors-table-body" id="message-list">
+                                            @forelse($data as $item)
+                                                @php
+                                                    $id   = auth()->id() == $item->user_id ? (int) $item->saler_id : (int)  $item->user_id;
+                                                    $user = App\Models\User::whereId($id)->first();
+                                                @endphp
 
-                                            <th class="msg visitors-header-cell">الرسالة</th>
-                                            <th  style="font-size: 14px; margin-right: 20px" class=" visitors-header-cell">تاريخ الرسالة</th>
-                                            <th class="visitors-header-cell"><input type="checkbox" class="select-room" id="select-all"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="visitors-table-body" id="message-list">
-                                        @forelse($data as $item)
-                                            @php
-                                                $id   = auth()->id() == $item->user_id ? (int) $item->saler_id : (int) $item->user_id;
-                                                $user = App\Models\User::whereId($id)->first();
-                                            @endphp
-                                            <tr style="cursor:pointer; border-bottom: 1px solid white;" class="visitor-row"
-                                            onclick="window.location.href='{{url('show_room/' . $item->id)}}'"   >
-                                                <td class="portrait" style="padding: 0px;">
-                                                    <img src="{{url('' . $user->avatar)}}" alt="" class="visitor-image" width="100px" height="75px" style="object-fit: cover;" >
-                                                </td>
-                                                <td class="name">
-                                                    <a href="{{url('show_client/' . $item->saler_id)}}">{{$user->name}}</a>
-                                                </td>
-                                                <td>
-                                                @if($item->have_unseen_message)
-                                                <i style="color:#2492a8;" class="fa-solid fa-envelope"></i>
-                                                @else
-                                                <i style="color:#2492a8;" class="fa-solid fa-envelope-open-text"></i>
-                                                @endif
-                                                </td>
-
-                                                <!-- <td class="visitor-cell">
-                                                    <span style="color:blue;">{{isset($user) ? $user->first_name : ''}}</span>
-                                                </td> -->
-                                                <td class=" msg visitor-cell">
-                                                    <span class="visitor-cell-msg">{{!is_null($item->chats_desc) && last_room_chat($item->id)['type'] == 'text' ? last_room_chat($item->id)['last_message'] : 'رسالة صوتية'}}</span>
-                                                </td>
-                                                <td class="visitor-cell">
-                                                    <span>
-                                                            {{--{{!is_null($item->chats_desc) ? last_room_chat($item->id)['duration'] : ''}}--}}
-                                                       {{ !is_null($item->chats_desc) && isset(last_room_chat($item->id)['duration_format']) ? last_room_chat($item->id)['duration_format'] : '' }}
-                                                    </span>
-                                                </td>
-                                                <td class="visitor-cell checkbox">
-                                                    <input  type="checkbox" name="room_ids[]" value="{{ $item->id }}" class="select-room  select-room-btn select-room-btn-desktop">
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="4"> لا يوجد نتائج</td>
-                                            </tr>
-                                        @endforelse
-                                        <!-- أضف المزيد من الصفوف هنا -->
-                                        </tbody>
-                                    </table>
+                                                
+                                                <li style="cursor:pointer; border-bottom: 1px solid white;" class="visitor-row"
+                                                    onclick="window.location.href='{{url('show_room/' . $item->id)}}'"   >
+                                                    <div class="mainFlexes">
+                                                        <div class="flexes">
+                                                            <span class="portrait">
+                                                                <img src="{{url('' . $user->avatar)}}" alt="" class="visitor-image"         width="100px" height="75px">
+                                                            </span>
+                                                        <div class="cont">
+                                                            <span class="name">
+                                                                <a href="{{url('show_client/' . $item->user_id)}}">{{$item->user->name}}</a>
+                                                            </span>
+                                                            <span class=" msg visitor-cell">
+                                                                <span class="visitor-cell-msg">{{!is_null($item->chats_desc) &&     last_room_chat  ($item->id)['type'] ==  'text' ? last_room_chat($item->id)   ['last_message'] :   'رسالة صوتية'}}</span>
+                                                            </span>
+                                                        </div>
+                                                        </div>
+                                                        <div class="flexes2">
+                                                        <span class="visitor-cell">
+                                                            <span style=" ">
+                                                                    {{--{{!is_null($item->chats_desc) ? last_room_chat($item->id)   ['duration'] : ''}}--}}
+                                                            {{ !is_null($item->chats_desc) && isset(last_room_chat($item->id)    ['duration_format']) ? last_room_chat($item->id)['duration_format'] : '' }}
+                                                            </span>
+                                                        </span>
+                                                        <span class="visitor-cell checkbox">
+                                                            <input  type="checkbox" name="room_ids[]" value="{{ $item->id }}"       class="select-room  select-room-btn select-room-btn-desktop">
+                                                        </span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            @empty
+                                                <tr>
+                                                    <span colspan="4"> لا يوجد نتائج</span>
+                                                </tr>
+                                            @endforelse
+                                            <!-- أضف المزيد من الصفوف هنا -->
+                                        </ul>
+                                    </div>
                                 </div>
 
                                 <!-- Mobile View -->

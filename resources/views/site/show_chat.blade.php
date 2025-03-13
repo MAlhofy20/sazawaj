@@ -3,14 +3,16 @@
 @section('style')
     <style>
         .myMsg {
-            min-width: 13%;
-            max-width: 60%;
-            border-radius: 20px;
-            padding: 5px;
-            margin: 5px;
-            display: inline-block;
-            float: right;
-            background-color: white;
+    width: 40%;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    background-color:wheat;
+
         }
 
         .myMsgDesc {
@@ -26,13 +28,12 @@
         }
 
         .msg {
-            min-width: 13%;
-            max-width: 60%;
-            border-radius: 20px;
-            padding: 5px;
+            width: 40%;
+            border-radius: 10px;
+            padding: 10px;
             margin: 5px;
-            display: inline-block;
-            float: right;
+            display: flex;
+            flex-direction: column;
             background-color: white;
         }
 
@@ -45,7 +46,10 @@
         }
 
         .msgTime {
-            float: left;
+            text-align: end;
+            align-items: end;
+            color: #666666;
+            font-size: 12px;
         }
         .icon-micro {
         display: flex;
@@ -243,7 +247,7 @@
                 <div class="chat-screen" id="roomChats">
                     @foreach($data as $item)
                         <?php $user = App\Models\User::whereId($item->from_id)->first(); ?>
-                        <div class="row">
+                        <div  class="row" style="display: flex; justify-content: {{ $item->from_id == auth()->id() ? 'flex-end' : 'flex-start' }};">
                             <div class="{{$item->from_id == auth()->id() ? 'myMsg' : 'msg'}}">
                                 <p class="member-name {{$item->from_id == auth()->id() ? 'myMsgDesc' : 'msgDesc'}}">
                                     <a href="{{url('show_client/' . $user->id)}}">
@@ -261,7 +265,7 @@
                                         @endif
                                     </span>
                                 </p>
-                                <p class="chat-status {{$item->from_id == auth()->id() ? 'myMsgTime' : 'msgTime'}}">
+                                <p  style="align-self: end; color: #666666; font-size: 12px;" class="chat-status {{$item->from_id == auth()->id() ? 'myMsgTime' : 'msgTime'}}">
                                     <span class="available">{{(string) Carbon\Carbon::parse($item->created_at)->diffForHumans()}}</span>
                                 </p>
                             </div>
@@ -355,9 +359,9 @@
             $('#audio-file').val('');
         });
 
-         setInterval(function() {
-             updateChat();
-         }, 10000);
+        //  setInterval(function() {
+        //      updateChat();
+        //  }, 10000);
 
         function updateChat() {
             $.ajax({
