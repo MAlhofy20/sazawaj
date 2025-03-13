@@ -47,6 +47,19 @@ Route::middleware('lang')->group(function () {
     Route::get('print-order/{id}', [adminOrderController::class ,'print_order'])->name('print_order');
 });
 
+ Route::get('pages/privacy-en', function(){
+            return view('site.privacy-en');
+        });
+        
+         Route::get('pages/condition-en', function(){
+            return view('site.terms-en');
+        });
+        
+        Route::get('pages/security-en', function(){
+            return view('site.security-en');
+        });
+        
+        Route::any('all_packages', [mainController::class, 'all_packages'])->name('site_all_packages');
 /*
 |--------------------------------------------------------------------------
 | Payment Routes
