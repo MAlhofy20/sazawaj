@@ -486,6 +486,8 @@
                                                     $id   = auth()->id() == $item->user_id ? (int) $item->saler_id : (int)  $item->user_id;
                                                     $user = App\Models\User::whereId($id)->first();
                                                 @endphp
+
+                                                
                                                 <li style="cursor:pointer; border-bottom: 1px solid white;" class="visitor-row"
                                                     onclick="window.location.href='{{url('show_room/' . $item->id)}}'"   >
                                                     <div class="mainFlexes">
