@@ -462,7 +462,7 @@
                                 @csrf
                                 <div id="select-all-mobile-btn">
                                     <div>
-                                        <p style="color:#b72dd2">عدد الرسائل :<span style="font-weight:bold">13</span></p>
+                                        <p style="color:#b72dd2">عدد الرسائل :<span style="font-weight:bold">{{ collect($data)->count() }}</span></p>
                                     </div>
 
                                 </div>

@@ -105,7 +105,8 @@ Route::group(['namespace' => 'site'], function () {
         Route::get('register', [mainController::class, 'register'])->name('site_register');
         Route::post('register', [mainController::class, 'post_register'])->name('site_post_register');
         #active
-        Route::get('site-active/{id}', [mainController::class, 'active'])->name('site_active');
+        Route::post('resend_active_email', [mainController::class, 'resend_active_email'])->name('resend_active_email');
+        Route::get('site-active/{id}/{token}', [mainController::class, 'active'])->name('site_active');
         Route::get('site-post-test', [mainController::class, 'post_test'])->name('site_active');
         //Route::get('site-active', [mainController::class, 'active'])->name('site_active');
         //Route::post('site-active', [mainController::class, 'post_active'])->name('site_post_active');
@@ -255,7 +256,7 @@ Route::group(['namespace' => 'admin'], function () {
             #home
             Route::get('admin-panel', [adminMainController::class, 'home'])->name('admin_home');
             Route::get('adminAllNotifications', [adminMainController::class, 'adminAllNotifications'])->name('adminAllNotifications');
-            Route::post('admin_notificationsRead',[adminMainController::class, 'markAllNotificationsRead'])->name('admin_notificationsRead');
+            Route::post('admin_notificationsRead',[adminMainController::class, 'admin_notificationsRead'])->name('admin_notificationsRead');
 
             Route::middleware('hasPermission')->group(function () {
                 /******************************************** settingController Start ********************************************/
@@ -1038,7 +1039,7 @@ Route::group(['namespace' => 'admin'], function () {
 
                 /******************************************** contactController Start ********************************************/
                 Route::get('contacts/{type}',[contactController::class, 'index'])->name('contacts') ->defaults('title', 'تواصل معنا') ->defaults('child', ['deletecontact', 'deletecontacts']);
-
+                Route::post('replaycontact/{id}', [contactController::class, 'replay'])->name('replaycontact');
                 #Delete contact
                 Route::post('delete-contact', [contactController::class, 'delete'])->name('deletecontact') ->defaults('title', 'حذف رسالة') ;
                 #Delete contacts

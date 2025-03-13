@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\Admin_report;
 use App\Models\Contact;
+use App\Models\Admin_report;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewAdminMessageMailable;
 
 class contactController extends Controller
 {
@@ -14,6 +16,24 @@ class contactController extends Controller
     {
         $data = Contact::whereType($type)->orderBy('id', 'desc')->get();
         return view('dashboard.contacts', compact('data', 'type'));
+    }
+
+    #replay
+    public function replay(Request $request, $id)
+    {
+        $contact = Contact::whereId($id)->first();
+        if($contact){
+            $data = [
+                'title' => 'لديك رد من الادارة على رسالتك',
+                'body' => $request->message,
+            ];
+            Mail::to($contact->email)->send(new NewAdminMessageMailable($data));
+        }
+        #add adminReport
+        admin_report('ارسال رد على رسالة من تواصل معنا');
+
+        #success response
+        return back()->with('success', Translate('تم الارسال'));
     }
 
     #delete one
