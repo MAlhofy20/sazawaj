@@ -69,7 +69,7 @@
         }
 
         .visitors-header-cell, .visitor-cell {
-            padding: 12px;
+            padding:12px 12px 0 12px;
             font-size: 18px;
             font-weight: bold;
             text-align: center;
@@ -85,7 +85,8 @@
             flex-wrap: wrap;
         }
           .visitor-cell .visitor-cell-msg{
-            max-width: 100px;
+            /* max-width: 100px; */
+            max-width: 60px;
             overflow: hidden;
             text-overflow: ellipsis;
             -webkit-line-clamp: 2;
@@ -224,7 +225,7 @@
 
         }
         .messages-table th, .messages-table span {
-                padding: 10px;
+                /* padding: 10px; */
                 text-align: right;
             }
         @media (min-width: 481px) {
@@ -327,11 +328,11 @@
                                             }
                                             .portrait{
                                                 margin-left: 6px;
-                                                width: 79.5px;
-                                                height: 67px;
+                                                /* width: 79.5px;
+                                                height: 67px; */
+                                                padding: 0px !important;
                                                 vertical-align: bottom;
                                                 background-color: #faf5e1;
-                                                overflow: hidden;
                                             }
                                             .name{
                                                 width: 20%;
@@ -355,10 +356,8 @@
                                                 }
                                             .mainFlexes .flexes2{
                                                 display: flex;
-                                                width: 472px;
                                                 align-items: center;
                                                 display: flex;
-                                                    width: 472px;
                                                     align-items: center;
                                                     justify-content: end;
                                                     margin-left: 40px;
@@ -368,6 +367,9 @@
                                             }
                                             .visitor-row .msg{
                                                 position: relative;
+                                                display: flex;
+                                                align-items: center;
+                                                gap: 10px;
                                             }
 
                                             /* .visitor-row .msg::before{
@@ -377,15 +379,14 @@
                                                 font-weight: 900;
                                                 color:#2492a8;
                                             } */
-                                            .visitor-row .msg::before{
+                                            /* .visitor-row .msg::before{
                                                 content: '\f658';
                                                 position: absolute;
                                                 font-family: "Font Awesome 5 Free";
                                                 font-weight: 900;
                                                 color:#2492a8;
                                                 right: -20px;
-                                                bottom: 18px;
-                                            }
+                                            } */
                                             .age{
 
                                                 width: 20%;
@@ -393,7 +394,7 @@
                                             .country{
                                                 display: inline-block;
                                             width: 25%;
-    }
+                                        }
                                             .date{
                                                 font-size: 90%;
 
@@ -407,14 +408,17 @@
                                                     display: none;
                                                 }
                                                 .mainFlexes .flexes .portrait {
-                                                    width: 80%;
-                                                    height: 106px;
+                                                    /* width: 80%; */
+                                                    height: fit-content;
                                                 }
                                                 .mainFlexes .flexes .cont {
                                                     display: block;
                                                 }
                                                 .visitor-cell {
                                                     justify-content: end;
+                                                }
+                                                .visitor-cell span{
+                                                    font-size: 14px;
                                                 }
                                                 .visitor-row .msg::before{
                                                     right: 0px;
@@ -426,7 +430,6 @@
                                                 .checkbox{
                                                     width: 100%;
                                                 }
-
 
                                             }
                                             /* @media(max-width:767px){
@@ -487,7 +490,7 @@
                                                     $user = App\Models\User::whereId($id)->first();
                                                 @endphp
 
-                                                
+
                                                 <li style="cursor:pointer; border-bottom: 1px solid white;" class="visitor-row"
                                                     onclick="window.location.href='{{url('show_room/' . $item->id)}}'"   >
                                                     <div class="mainFlexes">
@@ -499,7 +502,9 @@
                                                             <span class="name">
                                                                 <a href="{{url('show_client/' . $item->user_id)}}">{{$item->user->name}}</a>
                                                             </span>
-                                                            <span class=" msg visitor-cell">
+                                                            <span  class=" msg visitor-cell">
+                                                                <i style="color:#2492a8;" class="fa-solid fa-envelope-open-text"></i>
+                                                                <!-- <i class="fa-solid fa-envelope"></i> -->
                                                                 <span class="visitor-cell-msg">{{!is_null($item->chats_desc) &&     last_room_chat  ($item->id)['type'] ==  'text' ? last_room_chat($item->id)   ['last_message'] :   'رسالة صوتية'}}</span>
                                                             </span>
                                                         </div>
