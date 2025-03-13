@@ -413,8 +413,8 @@
                                             @endphp
                                             <tr style="cursor:pointer; border-bottom: 1px solid white;" class="visitor-row"
                                             onclick="window.location.href='{{url('show_room/' . $item->id)}}'"   >
-                                                <td class="portrait">
-                                                    <img src="{{url('' . $user->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
+                                                <td class="portrait" style="padding: 0px;">
+                                                    <img src="{{url('' . $user->avatar)}}" alt="" class="visitor-image" width="100px" height="75px" style="object-fit: cover;" >
                                                 </td>
                                                 <td class="name">
                                                     <a href="{{url('show_client/' . $item->saler_id)}}">{{$user->name}}</a>

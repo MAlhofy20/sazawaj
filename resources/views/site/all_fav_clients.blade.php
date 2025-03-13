@@ -260,10 +260,10 @@
                                     @forelse($to_data as $item)
                                         <tr class="li" onclick="window.location.href='{{url('show_client/' . $item->user_id)}}'">
                                             <td class=" portrait">
-                                                <img src="{{url('' . $item->user->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
+                                                <img src="{{url('' . $item->user->avatar)}}" alt="" class="visitor-image" width="100px" height="75px" style="object-fit: cover;"  style="object-fit: cover;">
                                             </td>
                                             <td  class="name">
-                                                {{$item->user->name}} 
+                                                {{$item->user->name}}
                                             </td>
                                             <td class="age">{{$item->user->age}}</td>
                                             <td class="country">{{$item->user->city?->title_ar}}</td>
@@ -384,7 +384,7 @@
                                     @forelse($data as $item)
                                         <tr class="li" onclick="window.location.href='{{url('show_client/' . $item->to_id)}}'">
                                             <td class=" portrait">
-                                                <img src="{{url('' . $item->to->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
+                                                <img src="{{url('' . $item->to->avatar)}}" alt="" class="visitor-image" width="100px" height="75px" style="object-fit: cover;" >
                                             </td>
                                             <td class="name">
                                                 {{$item->to->name}}

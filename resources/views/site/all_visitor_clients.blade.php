@@ -252,7 +252,7 @@
                                     @forelse($to_data as $item)
                                         <tr class="li" onclick="window.location.href='{{url('show_client/' . $item->to_id)}}'">
                                             <td class=" portrait">
-                                                <img src="{{url('' . $item->user->avatar)}}" alt="" class="visitor-image" width="100px" height="50px">
+                                                <img src="{{url('' . $item->user->avatar)}}" alt="" class="visitor-image" width="100px" height="50px" style="object-fit: cover;">
                                             </td>
                                             <td style="text-wrap-mode: nowrap;" class="name">{{$item->user->name}}</td>
                                             <td class=" age">{{$item->user->age}}</td>
@@ -296,7 +296,7 @@
                                                             </div>
                                                             <div class=" register-sidebar-body">
                                                                 <div class="image">
-                                                                    <img src="{{url('' . $item->user->avatar)}}" alt="{{$item->user->full_name}}">
+                                                                    <img src="{{url('' . $item->user->avatar)}}" alt="{{$item->user->full_name}}" class="visitor-image" width="100px" height="75px" style="object-fit: cover;">
                                                                 </div>
                                                                 <div class="desc">
                                                                     <div class="desc-content-register mb-2">
@@ -391,7 +391,7 @@
                                     @forelse($data as $item)
                                         <tr class=" li" onclick="window.location.href='{{url('show_client/' . $item->to_id)}}'">
                                             <td class=" portrait">
-                                                <img src="{{url('' . $item->to->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
+                                                <img src="{{url('' . $item->to->avatar)}}" alt="" class="visitor-image" width="100px" height="75px" style="object-fit: cover;" >
                                             </td>
                                             <td class="name">
                                                 {{$item->to->name}}
@@ -437,7 +437,7 @@
                                                             </div>
                                                             <div class="register-sidebar-body">
                                                                 <div class="image">
-                                                                    <img src="{{url('' . $item->to->avatar)}}" alt="{{$item->to->full_name}}">
+                                                                    <img src="{{url('' . $item->to->avatar)}}" alt="{{$item->to->full_name}}" class="visitor-image" width="100px" height="75px"  style="object-fit: cover;">
                                                                 </div>
                                                                 <div class="desc">
                                                                     <div class="desc-content-register mb-2">
