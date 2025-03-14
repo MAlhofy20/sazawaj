@@ -3,16 +3,13 @@
 @section('style')
     <style>
         .myMsg {
-    width: 40%;
-    border-radius: 10px;
-    padding: 10px;
-    margin: 5px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    background-color:wheat;
-
+            width: 40%;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 5px;
+            display: flex;
+            flex-direction: column;
+            background-color: white;
         }
 
         .myMsgDesc {
@@ -28,16 +25,26 @@
         }
 
         .msg {
+
             width: 40%;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 5px;
-            display: flex;
-            flex-direction: column;
-            background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    background-color:wheat;
+
         }
 
         .msgDesc {
+                        float: right;
+            color: black;
+            min-width: 51%;
+            max-width: 70%;
+            word-wrap: break-word;
+
             float: right;
             color: black;
             min-width: 51%;
@@ -247,7 +254,7 @@
                 <div class="chat-screen" id="roomChats">
                     @foreach($data as $item)
                         <?php $user = App\Models\User::whereId($item->from_id)->first(); ?>
-                        <div  class="row" style="display: flex; justify-content: {{ $item->from_id == auth()->id() ? 'flex-end' : 'flex-start' }};">
+                        <div  class="row" style="display: flex; justify-content: {{ $item->from_id == auth()->id() ? 'flex-start' : 'flex-end' }};">
                             <div class="{{$item->from_id == auth()->id() ? 'myMsg' : 'msg'}}">
                                 <p class="member-name {{$item->from_id == auth()->id() ? 'myMsgDesc' : 'msgDesc'}}">
                                     <a href="{{url('show_client/' . $user->id)}}">

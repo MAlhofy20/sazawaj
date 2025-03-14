@@ -1,6 +1,6 @@
 @foreach($data as $item)
                         <?php $user = App\Models\User::whereId($item->from_id)->first(); ?>
-                        <div  class="row" style="display: flex; justify-content: {{ $item->from_id == auth()->id() ? 'flex-end' : 'flex-start' }};">
+                        <div  class="row" style="display: flex; justify-content: {{ $item->from_id == auth()->id() ? 'flex-start' : 'flex-end' }};">
                             <div class="{{$item->from_id == auth()->id() ? 'myMsg' : 'msg'}}">
                                 <p class="member-name {{$item->from_id == auth()->id() ? 'myMsgDesc' : 'msgDesc'}}">
                                     <a href="{{url('show_client/' . $user->id)}}">

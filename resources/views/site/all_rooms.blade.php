@@ -463,11 +463,11 @@
                             <div class="visitors-table-container">
                             <form id="delete-form" method="POST" action="{{ route('delete_rooms') }}">
                                 @csrf
-                                <div id="select-all-mobile-btn">
+                                <div id="select-all-mobile-btn" class="d-flex mx-sm-4">
                                     <div>
                                         <p style="color:#b72dd2">عدد الرسائل :<span style="font-weight:bold">{{ collect($data)->count() }}</span></p>
                                     </div>
-
+                                    <span class="visitors-header-cell"><input type="checkbox" class="select-room" id="select-all"></span>
                                 </div>
                                 <!-- Desktop View -->
                                 <div class=>
@@ -499,10 +499,10 @@
                                                                 <img src="{{url('' . $user->avatar)}}" alt="" class="visitor-image"         width="100px" height="75px">
                                                             </span>
                                                         <div class="cont">
-                                                            <span class="name">
-                                                                <a href="{{url('show_client/' . $item->user_id)}}">{{$item->user->name}}</a>
+                                                            <span class="name" style="padding: 12px 12px 0 12px;">
+                                                                <a href="{{url('show_client/' . $item->saler_id)}}">{{$item->saler->name}}</a>
                                                             </span>
-                                                            <span  class=" msg visitor-cell">
+                                                            <span class=" msg visitor-cell" style="justify-self: flex-start;" >
                                                                 <i style="color:#2492a8;" class="fa-solid fa-envelope-open-text"></i>
                                                                 <!-- <i class="fa-solid fa-envelope"></i> -->
                                                                 <span class="visitor-cell-msg">{{!is_null($item->chats_desc) &&     last_room_chat  ($item->id)['type'] ==  'text' ? last_room_chat($item->id)   ['last_message'] :   'رسالة صوتية'}}</span>

@@ -20,7 +20,7 @@
     <meta property="og:description" content="{{ settings('site_name') }}" />
     <meta property="og:site_name" content="{{ settings('site_name') }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="shortcut icon" type="image/png" href="{{ url('' . settings('logo')) }}" />
+    <link rel="shortcut icon" type="image/png" href="/site/assets/normal-favicon.png" />
     <title>{{ settings('site_name') }} | @yield('title')</title>
     <!-- Animate File Css Template -->
     <link rel="stylesheet" href="{{ site_path() }}/assets/css/animate.css" />
@@ -184,14 +184,96 @@
         .has-unread {
             display: block !important;
         }
+
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end; /* Align to the right (RTL) */
+    gap: 15px;
+    padding: 10px;
+    text-align: right;
+}
+
+.footer-links a {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 0px;
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    width: 220px; /* Fixed width for proper alignment */
+}
+
+.footer-links a img {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0; /* Prevents icons from resizing */
+}
+
+.footer-links a span {
+    flex-grow: 1; /* Ensures text aligns in one line */
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+
+/* Hover Effects */
+.footer-links a:hover {
+    color: #b72dd2;
+    transform: scale(1.05);
+}
+
+.footer-links a:hover img {
+    transform: rotate(10deg);
+}
+
+/* 📱 Mobile Responsive: Keep alignment & two columns */
+@media (max-width: 768px) {
+    .footer-links {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .footer-links a {
+        width: 100%; /* Make it responsive inside grid */
+        justify-content: flex-start;
+        gap: 0px;
+    }
+
+    .footer-links a img {
+        width: 20px; /* Slightly smaller icons for mobile */
+        height: 20px;
+    }
+
+    .footer-links a span {
+        text-align: right; /* Ensure text is aligned properly */
+        width: 100%;
+    }
+}
+
+
     </style>
     @yield('style')
 
     {!! settings('google_search') !!}
-    {!! settings('google_statics') !!}
+   
     {!! settings('google_tags') !!}
     {!! settings('google_ads') !!}
     @vite(['resources/js/app.js'])
+    
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-39TXG0SLE4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-39TXG0SLE4');
+</script>
 </head>
 
 <body>
@@ -534,63 +616,53 @@
                 <div class="footer-content">
           <p>تأسست منصة سعودي زواج لتسهيل عملية البحث عن شريك الحياة مع توفير بيئة تجمع بين الأمان والثقة، هدفنا هو تمكين الأفراد من بناء حياة زوجية سعيدة ومستقرة بخطوات بسيطة وخدمة متخصصة.</p>
                 </div>
-                <div class="container-footer2">
-                    <div class="footer-links">
-                        <span>
-                            <a href="{{ route('contact_us', 'contact') }}">
-                                <img src="{{ site_path() }}/assets/img/icons/footer/contact.png" alt="Contact">
-                                راسل الإدارة
-                            </a>
-                        </span>
-                        <span>
-                            <a href="{{ url('questions') }}">
-                                <img src="{{ site_path() }}/assets/img/icons/footer/qa.png" alt="FAQ">
-                                الأسئلة المتداولة
-                            </a>
-                        </span>
-                        <span>
-                            <a href="{{ route('page', 'advices') }}">
-                                <img src="{{ site_path() }}/assets/img/icons/footer/advices.png" alt="Advices">
-                                نصائح واقتراحات
-                            </a>
-                        </span>
-                        <span>
-                            <a href="{{ route('page', 'security') }}">
-                                <img src="{{ site_path() }}/assets/img/icons/footer/warnnings.png"
-                                    alt="Security Warnings">
-                                إرشادات الأمان
-                            </a>
-                        </span>
-                        <span>
-                            <a href="{{ route('page', 'condition') }}">
-                                <img src="{{ site_path() }}/assets/img/icons/footer/contract.png"
-                                    alt="Terms of Use">
-                                شروط الاستخدام
-                            </a>
-                        </span>
-                        <span>
-                            <a href="{{ route('page', 'privacy') }}">
-                                <img src="{{ site_path() }}/assets/img/icons/footer/privacy.png"
-                                    alt="Privacy Policy">
-                                سياسة الخصوصية
-                            </a>
-                        </span>
-                        <span>
-                            <a href="{{ url('media-center/news') }}">
-                                <img src="{{ site_path() }}/assets/img/icons/footer/blog.png" alt="Blog">
-                                المدونة
-                            </a>
-                        </span>
-                    </div>
-                </div>
+                
+<div class="container-footer2">
+<div class="footer-links">
+<a href="{{ route('contact_us', 'contact') }}">
+<img src="{{ site_path() }}/assets/img/icons/footer/contact.png" alt="Contact">
+راسل الإدارة
+</a>
+<a href="{{ url('questions') }}">
+<img src="{{ site_path() }}/assets/img/icons/footer/qa.png" alt="FAQ">
+الأسئلة المتداولة
+</a>
+<a href="{{ route('page', 'advices') }}">
+<img src="{{ site_path() }}/assets/img/icons/footer/advices.png" alt="Advices">
+نصائح واقتراحات
+</a>
+<a href="{{ url('pages/security-en') }}">
+<img src="{{ site_path() }}/assets/img/icons/footer/warnnings.png" alt="Security Warnings">
+إرشادات الأمان
+</a>
+<a href="{{ url('pages/condition-en') }}">
+<img src="{{ site_path() }}/assets/img/icons/footer/contract.png" alt="Terms of Use">
+شروط الاستخدام
+</a>
+<a href="{{ url('pages/privacy-en') }}">
+<img src="{{ site_path() }}/assets/img/icons/footer/privacy.png" alt="Privacy Policy">
+Privacy Policy
+</a>
+<a href="{{ url('media-center/news') }}">
+<img src="{{ site_path() }}/assets/img/icons/footer/blog.png" alt="Blog">
+المدونة
+</a>
+<a href="{{ route('page','about') }}">
+<img src="{{ site_path() }}/assets/img/icons/footer/about.png" alt="About">
+من نحن
+</a>
+
+</div>
+</div>
+
             </div>
 
             <!-- Social Media Links Section -->
             <div class="social-media">
-                <a href="https://twitter.com" target="_blank" class="social-icon twitter"></a>
-                <a href="https://www.tiktok.com" target="_blank" class="social-icon tiktok"></a>
-                <a href="https://www.snapchat.com" target="_blank" class="social-icon snapchat"></a>
-                <a href="https://www.facebook.com" target="_blank" class="social-icon facebook"></a>
+                <a href="https://x.com/sazawaj" target="_blank" class="social-icon twitter"></a>
+                <a href="https://www.tiktok.com/@sazawaj" target="_blank" class="social-icon tiktok"></a>
+                <a href="https://www.snapchat.com/add/sazawaj" target="_blank" class="social-icon snapchat"></a>
+                <a href="https://www.facebook.com/sazawaj/" target="_blank" class="social-icon facebook"></a>
             </div>
 
 
@@ -625,7 +697,7 @@
     // Store original favicon
     let originalFavicon = document.querySelector("link[rel='shortcut icon']").getAttribute("href");
     let notificationFavicon = '{{ url('' . settings('notification-logo')) }}'; // Change to favicon with a red dot
-    //check whether the user having an unread notification
+    //check whether the user having an unread notification 
     $.ajax({
                 type: 'get',
                 url: '{{ route('notificationsCount') }}',
@@ -645,7 +717,7 @@
             });
     window.onload = function() {
         @if(Auth::check())
-
+        
             const user = JSON.parse('{!! json_encode(auth()->user()) !!}');
             Echo.private(`App.Models.User.${user.id}`)
                 .listen('.notification', (data) => {
