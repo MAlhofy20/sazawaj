@@ -256,7 +256,7 @@
                 display: flex;
                 flex-wrap: wrap;
                 align-content: center;
-                padding: 5px 10px;
+                padding: 5px 0;
                 justify-content: space-between;
             }
             .select-room {
@@ -403,6 +403,9 @@
                                                 cursor: pointer;
                                                 background-color: #e4d481;
                                             }
+                                            .marg{
+                                                    margin-left: 40px;
+                                                }
                                             @media(max-width:992px){
                                                 .visitors-table-header{
                                                     display: none;
@@ -430,8 +433,11 @@
                                                 .checkbox{
                                                     width: 100%;
                                                 }
-
+                                                .marg{
+                                                    margin-left: 0;
+                                                }
                                             }
+
                                             /* @media(max-width:767px){
                                                 .country{
                                                     display: none;
@@ -463,11 +469,13 @@
                             <div class="visitors-table-container">
                             <form id="delete-form" method="POST" action="{{ route('delete_rooms') }}">
                                 @csrf
-                                <div id="select-all-mobile-btn" class="d-flex mx-sm-4">
+                                <div id="select-all-mobile-btn" class="d-flex">
                                     <div>
                                         <p style="color:#b72dd2">عدد الرسائل :<span style="font-weight:bold">{{ collect($data)->count() }}</span></p>
                                     </div>
-                                    <span class="visitors-header-cell"><input type="checkbox" class="select-room" id="select-all"></span>
+                                    <span class="marg visitors-header-cell">
+                                        <input type="checkbox" class="select-room" id="select-all">
+                                    </span>
                                 </div>
                                 <!-- Desktop View -->
                                 <div class=>
