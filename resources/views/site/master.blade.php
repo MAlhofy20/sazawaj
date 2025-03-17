@@ -46,6 +46,8 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick-theme.css">
 
     <link rel="stylesheet" href="{{ site_path() }}/assets/css/style.css" />
+    <link rel="stylesheet" href="{{ site_path() }}/assets/css/mainAhmed.css"/>
+
 
 
     {{-- DatePicker --}}
@@ -260,11 +262,11 @@
     @yield('style')
 
     {!! settings('google_search') !!}
-   
+
     {!! settings('google_tags') !!}
     {!! settings('google_ads') !!}
     @vite(['resources/js/app.js'])
-    
+
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-39TXG0SLE4"></script>
 <script>
@@ -616,7 +618,7 @@
                 <div class="footer-content">
           <p>تأسست منصة سعودي زواج لتسهيل عملية البحث عن شريك الحياة مع توفير بيئة تجمع بين الأمان والثقة، هدفنا هو تمكين الأفراد من بناء حياة زوجية سعيدة ومستقرة بخطوات بسيطة وخدمة متخصصة.</p>
                 </div>
-                
+
 <div class="container-footer2">
 <div class="footer-links">
 <a href="{{ route('contact_us', 'contact') }}">
@@ -697,7 +699,7 @@ Privacy Policy
     // Store original favicon
     let originalFavicon = document.querySelector("link[rel='shortcut icon']").getAttribute("href");
     let notificationFavicon = '{{ url('' . settings('notification-logo')) }}'; // Change to favicon with a red dot
-    //check whether the user having an unread notification 
+    //check whether the user having an unread notification
     $.ajax({
                 type: 'get',
                 url: '{{ route('notificationsCount') }}',
@@ -717,7 +719,7 @@ Privacy Policy
             });
     window.onload = function() {
         @if(Auth::check())
-        
+
             const user = JSON.parse('{!! json_encode(auth()->user()) !!}');
             Echo.private(`App.Models.User.${user.id}`)
                 .listen('.notification', (data) => {

@@ -372,21 +372,6 @@
                                                 gap: 10px;
                                             }
 
-                                            /* .visitor-row .msg::before{
-                                                content: '\f0e0';
-                                                position: absolute;
-                                                font-family: "Font Awesome 5 Free";
-                                                font-weight: 900;
-                                                color:#2492a8;
-                                            } */
-                                            /* .visitor-row .msg::before{
-                                                content: '\f658';
-                                                position: absolute;
-                                                font-family: "Font Awesome 5 Free";
-                                                font-weight: 900;
-                                                color:#2492a8;
-                                                right: -20px;
-                                            } */
                                             .age{
 
                                                 width: 20%;
