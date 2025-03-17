@@ -250,7 +250,7 @@
                                     </thead>
                                     <tbody class="visitors-table-body ul">
                                     @forelse($to_data as $item)
-                                        <tr class="li" onclick="window.location.href='{{url('show_client/' . $item->to_id)}}'">
+                                        <tr class="li" onclick="window.location.href='{{url('show_client/' . $item->user->id)}}'">
                                             <td class=" portrait">
                                                 <img src="{{url('' . $item->user->avatar)}}" alt="" class="visitor-image" width="100px" height="50px" style="object-fit: cover;">
                                             </td>
