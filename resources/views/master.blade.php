@@ -38,9 +38,8 @@
         <link rel="stylesheet" href="{{ site_path() }}/assets/css/swiper.css">
         <!-- Main Css File Template -->
         <link rel="stylesheet" href="{{ site_path() }}/assets/css/style.css"/>
-        <link rel="stylesheet" href="{{ site_path() }}/assets/css/mainAhmed.css"/>
-        <link rel="stylesheet" href="{{ asset('mainAhmed.css') }}"/>
 
+        <link rel="stylesheet" href="{{ site_path() }}/assets/css/mainAhmed.css"/>
 
         {{-- DatePicker --}}
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

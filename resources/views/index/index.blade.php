@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ site_path() }}/assets/css/owl.carousel.min.css">
     <link rel="stylesheet" href="{{ site_path() }}/assets/css/jquery.fancybox.css">
     <link rel="stylesheet" href="{{ site_path() }}/assets/css/style.css">
+    <link rel="stylesheet" href="{{ site_path() }}/assets/css/mainAhmed.css">
 </head>
 <body>
 

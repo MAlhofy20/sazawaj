@@ -40,6 +40,8 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick-theme.css">
 
     <link rel="stylesheet" href="{{ site_path() }}/assets/css/style.css" />
+    <link rel="stylesheet" href="{{ site_path() }}/assets/css/mainAhmed.css"/>
+
 
 
     {{-- DatePicker --}}
