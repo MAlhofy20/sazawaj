@@ -32,19 +32,19 @@
                     @endif
 
                     <div class="financial-details">
-                        <h2>المبلغ المطلوب</h2>
-                        <p class="price">$100</p>
-                        <p class="payment-deadline">يجب دفع المبلغ في خلال 8-33 يوماً القادمة</p>
-                        <p class="additional-info-text">يجب دفع المبلغ كاملاً عبر الحساب البنكي المذكور أدناه.</p>
+                        <h2>{{$package->title_ar}}</ا2>
+                        <div class="<!--desc-->">{!! $package->desc_ar !!}</div>
                     </div>
 
-                    <div class="important-note">
+                    <!-- <div class="important-note">
                         <p class="note-header">طرق الدفع:</p>
                         <p class="note-content">لاستفسار آخر: إذا كان الشخص مشترك، يمكنه الاتصال بالموقع لمزيد من التفاصيل. إذا كان المستخدم لا يمكنه دفع المبلغ في الوقت المحدد، يجب التواصل مع الإدارة لتحديد مواعيد دفع بديلة.</p>
-                    </div>
+                    </div> -->
 
                     <div class="instructions">
-                        <p class="instructions-text">الاشتراك لا يكون مفعلًا حتى يقوم المشترك بالدفع الكامل للمبلغ المطلوب قبل تاريخ الانتهاء المحدد.</p>
+                        <p class="instructions-text">
+                            لمراجعة الباقات <a href="{{ url('all_packages') }}">اضغط هنا</a>
+                        </p>
                     </div>
                 </div>
 

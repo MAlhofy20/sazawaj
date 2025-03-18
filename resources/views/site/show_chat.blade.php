@@ -146,6 +146,7 @@
             .myMsg {
                 min-width: 50%;
                 max-width: 90%;
+                width: 100%;
             }
             .myMsgDesc {
                 min-width: 51%;
@@ -154,6 +155,7 @@
             .msg {
                 min-width: 50%;
                 max-width: 90%;
+                width: 100%;
             }
             .msgDesc {
                 min-width: 51%;
@@ -209,8 +211,8 @@
             <!-- Modal -->
             <div class="modal fade" id="upgradeModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
+                    <div class="modal-body modal-dialog modal-dialog-centered">
+                        <div class="border-info modal-content p-3">
                             <button type="button" class="close text-right" style="opacity: 1" data-bs-dismiss="modal"
                                 aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -262,7 +264,6 @@
                                         <span class="available">{{$user->name}}</span>
                                     </a>
                                 </p>
-                                <br>
                                 <p class="member-name {{$item->from_id == auth()->id() ? 'myMsgDesc' : 'msgDesc'}}">
                                     <span class="available">
                                         @if($item->type == 'file')

@@ -1,6 +1,16 @@
 @extends('site.master')
 
 @section('title') {{Translate('الرئيسية')}} @endsection
+
+@section('meta')
+    @include('meta::manager', [
+        'title' => settings('site_name'),
+        'description' => settings('description'),
+        'image' => url('' . settings('logo')),
+        'keywords' => settings('key_words')
+    ])
+@endsection
+
 @section('style')
 
     <style>
@@ -26,7 +36,7 @@
         /*}*/
         /* General styles for the cards */
 .static-card {
-   
+
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -323,7 +333,7 @@
 
         <!-- //about -->
 
-       
+
 
            <!-- advanced search-->
            <section class="about" >

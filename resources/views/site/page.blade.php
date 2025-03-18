@@ -1,5 +1,14 @@
 @extends('site.master')
 @section('title'){!! isset($page) ? $page->title_ar : '' !!}@endsection
+@section('meta')
+    @include('meta::manager', [
+        'title' => settings('site_name')  . ' - ' . isset($page) ? $page->title_ar : '' ,
+        'description' => settings('description'),
+        'image' => url('' . settings('logo')),
+        'keywords' => settings('key_words')
+    ])
+@endsection
+
 @section('style')
 
     <style>
@@ -128,16 +137,16 @@
             <p class="welcome-tit">أهلاً بكم في موقع {{ settings('site_name') }}</p>
         </section>
     @endif
-    
+
     <div class="d-flex justify-content-center my-4">
     <div class="page-title">
-        @if($page->title_ar == 'نصائح واقتراحات') 
+        @if($page->title_ar == 'نصائح واقتراحات')
         <i class="fas fa-lightbulb icon"></i>
-         @elseif($page->title_ar == 'إرشادات الأمان') 
+         @elseif($page->title_ar == 'إرشادات الأمان')
          <i class="fas fa-shield-alt icon"></i>
-          @elseif($page->title_ar == 'شروط الإستخدام') 
+          @elseif($page->title_ar == 'شروط الإستخدام')
           <i class="fas fa-file-contract icon"></i>
-          @elseif($page->title_ar == 'سياسة الخصوصية') 
+          @elseif($page->title_ar == 'سياسة الخصوصية')
            <i class="fas fa-lock icon"></i>
            @else
            @endif
@@ -146,7 +155,7 @@
     </div>
 </div>
 
-    
+
    <div class="container">
     <div class="row">
         <!-- FAQ Content -->

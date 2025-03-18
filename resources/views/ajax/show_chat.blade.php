@@ -8,7 +8,6 @@
                                         <span class="available">{{$user->name}}</span>
                                     </a>
                                 </p>
-                                <br>
                                 <p class="member-name {{$item->from_id == auth()->id() ? 'myMsgDesc' : 'msgDesc'}}">
                                     <span class="available">
                                         @if($item->type == 'file')

@@ -2,6 +2,16 @@
 @section('title')
     الأسئلة المتداولة
 @endsection
+
+@section('meta')
+    @include('meta::manager', [
+        'title' => settings('site_name')  . ' - الأسئلة المتداولة',
+        'description' => settings('description'),
+        'image' => url('' . settings('logo')),
+        'keywords' => settings('key_words')
+    ])
+@endsection
+
 @section('style')
 
     <style>

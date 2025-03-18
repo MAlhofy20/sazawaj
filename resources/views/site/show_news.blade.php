@@ -1,5 +1,13 @@
 @extends('site.master')
 @section('title'){{$data->title}}@endsection
+@section('meta')
+    @include('meta::manager', [
+        'title' => settings('site_name')  . ' - ' . Str::limit(strip_tags($data->title_ar), 43),
+        'description' => Str::limit(strip_tags($data->body), 100),
+        'image' => url('' . settings('logo')),
+        'keywords' => settings('key_words')
+    ])
+@endsection
 @section('style')
     <style>
         .main-btn a {

@@ -207,10 +207,10 @@
     <section class="new-members container">
         <ul style=" margin: 20px auto; border-radius: 10px !important;"   class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a style="border:none !important; z-index: 2;" class="u-hover--sparkle position-relative nav-link active" id="general-members-tab" data-toggle="tab" href="#general-members" role="tab" aria-controls="general-members" aria-selected="true">المعجبون بك</a>
+                <a href="{{ route('site_all_fav_clients') }}?tab=to_data" style="border:none !important; z-index: 2;" class="u-hover--sparkle position-relative nav-link {{ $tab === 'to_data' ? 'active' : '' }}" id="general-members-tab">المعجبون بك</a>
             </li>
             <li class="nav-item">
-                <a style="border:none !important; z-index: 2;" class="u-hover--sparkle position-relative nav-link" id="premium-members-tab" data-toggle="tab" href="#premium-members" role="tab" aria-controls="premium-members" aria-selected="false">المعجب بهم</a>
+                <a href="{{ route('site_all_fav_clients') }}?tab=data" style="border:none !important; z-index: 2;" class="u-hover--sparkle position-relative nav-link {{ $tab === 'data' ? 'active' : '' }}" id="premium-members-tab" >المعجب بهم</a>
             </li>
         </ul>
         <div class="">
@@ -225,28 +225,17 @@
                     <!-- Tabs content -->
                     <div class="tab-content" id="myTabContent">
                         <!-- General members content -->
-                        <div class="tab-pane fade show active" id="general-members" role="tabpanel" aria-labelledby="general-members-tab">
+                        @if($tab === 'to_data')
+                        <div class=" fade show" >
                             <div class="d-flex justify-content-center my-4">
-    <div class="page-title">
-        <i class="fas fa-heart icon"></i>
-        <span class="title-text">المعجبون بك</span>
-        <div class="underline"></div>
-    </div>
-</div>
-                            {{--@if(!checkUserPackage())
-                                <div class="prim-visitor mt-5">
-                                    <span>ﻫﺬه اﻟﺨﺪﻣﺔ ﻣﺘﻮﻓﺮة ﻟﻠﻤﺴﺘﺨﺪﻣﻴﻦ اﻟﺒﺮو</span>
+                                <div class="page-title">
+                                    <i class="fas fa-heart icon"></i>
+                                    <span class="title-text">المعجبون بك</span>
+                                    <div class="underline"></div>
                                 </div>
-                                <div class="buttons">
-                                    <a href="{{url('all_packages')}}" class="next-btn">
-                                        <span style="margin: 5px">ترقيه</span>
-                                        <i class="fa-solid fa-left-long"></i>
-                                    </a>
-                                </div>
-                            @else
-                            @endif--}}
+                            </div>
                             <div class="visitors-table-container">
-                                <strong style="color: #b72dd2">عدد المعجبون بك: {{$to_data->count()}}</strong>
+                                <strong style="color: #b72dd2">عدد المعجبون بك: {{$to_data->total()}}</strong>
                                 <table class="visitors-table">
                                     <thead class="visitors-table-header">
                                     <tr class="all">
@@ -277,91 +266,13 @@
                                     @endforelse
                                     <!-- أضف المزيد من الصفوف هنا -->
                                     </tbody>
+
                                 </table>
                             </div>
-
-                            {{--<div class="mt-4">
-                                <div class="mt-4">
-                                    <div class="row justify-content-center">
-                                        @forelse($to_data as $item)
-                                            <div class="col-lg-4">
-                                                <a href="{{url('show_client/' . $item->user_id)}}">
-                                                    <div class="register-sidebar-content {{$item->user->gender == 'male' ? 'male' : ''}} mb-3">
-                                                        <div class="register-sidebar-head">
-                                                            <h2 class="text-center">{{$item->user->name}}</h2>
-                                                        </div>
-                                                        <div class="register-sidebar-body">
-                                                            <div class="image">
-                                                                <img src="{{url('' . $item->user->avatar)}}" alt="{{$item->user->full_name}}">
-                                                            </div>
-                                                            <div class="desc">
-                                                                <div class="desc-content-register mb-2">
-                                                                    <div class="icon-text">
-                                                                        <div class="icon">
-                                                                            <i class="fa-solid fa-user"></i>
-                                                                        </div>
-                                                                        <div class="text">
-                                                                            العمر
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="value">
-                                                                        {{$item->user->age}}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="desc-content-register mb-2">
-                                                                    <div class="icon-text">
-                                                                        <div class="icon">
-                                                                            <i class="fa-solid fa-location-dot"></i></div>
-                                                                        <div class="text">
-                                                                            الدولة
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="value">
-                                                                        {{$item->user->country}}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="desc-content-register mb-2">
-                                                                    <div class="icon-text">
-                                                                        <div class="icon">
-                                                                            <i class="fa-solid fa-heart"></i>
-                                                                        </div>
-                                                                        <div class="text">
-                                                                            الهدف
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="value">
-                                                                        {{$item->user->goals}}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="desc-content-register mb-2">
-                                                                    <div class="icon-text">
-                                                                        <div class="icon">
-                                                                            <i class="fa-solid fa-calendar-days"></i>
-                                                                        </div>
-                                                                        <div class="text">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="value">
-                                                                        {{date('Y-m-d', strtotime($item->updated_at))}}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        @empty
-                                            <div class="col-lg-auto col-md-12 col-12 wow bounceInRight" data-wow-delay="0.2s">
-                                                <h4 style="color: red"> لا يوجد نتائج </h4>
-                                            </div>
-                                        @endforelse
-                                    </div>
-                                </div>
-                            </div>--}}
+                            {{ $to_data->links('pagination::bootstrap-4', ['paginator' => $to_data, 'pageName' => 'to_page']) }}
                         </div>
-
-                        <!-- Premium members content -->
-                        <div class="tab-pane fade" id="premium-members" role="tabpanel" aria-labelledby="premium-members-tab">
+                        @elseif($tab === 'data')
+                        <div class=" fade show">
                             <div class="d-flex justify-content-center my-4">
                                 <div class="page-title">
                                     <i class="fas fa-heartbeat icon"></i>
@@ -370,7 +281,7 @@
                                 </div>
                             </div>
                             <div class="visitors-table-container">
-                                <strong style="color: #b72dd2">عدد المعجب بهم: {{$data->count()}}</strong>
+                                <strong style="color: #b72dd2">عدد المعجب بهم: {{$data->total()}}</strong>
                                 <table class="visitors-table">
                                     <thead class="visitors-table-header">
                                     <tr class="all">
@@ -402,87 +313,9 @@
                                     </tbody>
                                 </table>
                             </div>
-
-                            {{--<div class="mt-4">
-                                <div class="mt-4">
-                                    <div class="row justify-content-center">
-                                        @forelse($data as $item)
-                                            <div class="col-lg-4">
-                                                <a href="{{url('show_client/' . $item->to_id)}}">
-                                                    <div class="register-sidebar-content {{$item->to->gender == 'male' ? 'male' : ''}} mb-3">
-                                                        <div class="register-sidebar-head">
-                                                            <h2 class="text-center">{{$item->to->name}}</h2>
-                                                        </div>
-                                                        <div class="register-sidebar-body">
-                                                            <div class="image">
-                                                                <img src="{{url('' . $item->to->avatar)}}" alt="{{$item->to->full_name}}">
-                                                            </div>
-                                                            <div class="desc">
-                                                                <div class="desc-content-register mb-2">
-                                                                    <div class="icon-text">
-                                                                        <div class="icon">
-                                                                            <i class="fa-solid fa-user"></i>
-                                                                        </div>
-                                                                        <div class="text">
-                                                                            العمر
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="value">
-                                                                        {{$item->to->age}}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="desc-content-register mb-2">
-                                                                    <div class="icon-text">
-                                                                        <div class="icon">
-                                                                            <i class="fa-solid fa-location-dot"></i></div>
-                                                                        <div class="text">
-                                                                            الدولة
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="value">
-                                                                        {{$item->to->country}}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="desc-content-register mb-2">
-                                                                    <div class="icon-text">
-                                                                        <div class="icon">
-                                                                            <i class="fa-solid fa-heart"></i>
-                                                                        </div>
-                                                                        <div class="text">
-                                                                            الهدف
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="value">
-                                                                        {{$item->to->goals}}
-                                                                    </div>
-                                                                </div>
-                                                                <div class="desc-content-register mb-2">
-                                                                    <div class="icon-text">
-                                                                        <div class="icon">
-                                                                            <i class="fa-solid fa-calendar-days"></i>
-                                                                        </div>
-                                                                        <div class="text">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="value">
-                                                                        {{date('Y-m-d', strtotime($item->updated_at))}}
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        @empty
-                                            <div class="col-lg-auto col-md-12 col-12 wow bounceInRight" data-wow-delay="0.2s">
-                                                <h4 style="color: red"> لا يوجد نتائج </h4>
-                                            </div>
-                                        @endforelse
-                                    </div>
-                                </div>
-                            </div>--}}
-
+                            {{ $data->links('pagination::bootstrap-4', ['paginator' => $data, 'pageName' => 'page']) }}
                         </div>
+                        @endif
                     </div>
                 </div>
 

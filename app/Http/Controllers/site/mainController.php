@@ -5,6 +5,7 @@ namespace App\Http\Controllers\site;
 use Auth;
 use Session;
 use Carbon\Carbon;
+use Stripe\Stripe;
 use App\Models\City;
 use App\Models\Page;
 use App\Models\Role;
@@ -41,8 +42,8 @@ use App\Notifications\ProfileSeenNotification;
 use App\Models\Notification as userNotification;
 use App\Notifications\AddToFavouriteNotification;
 use App\Notifications\SubscripePackageNotification;
-use App\Notifications\NewContactUsMessageNotification;
 
+use App\Notifications\NewContactUsMessageNotification;
 use App\Notifications\ProfilePictureCheckNotification;
 use App\Notifications\ProfilePictureChangeNotification;
 
@@ -104,7 +105,8 @@ class mainController extends Controller
 
     public function package_info()
     {
-        return view('site.package_info');
+        $package = Package::whereId(auth()->user()->package_id)->firstOrFail();
+        return view('site.package_info', compact('package'));
     }
 
     public function notifications()
@@ -261,6 +263,7 @@ class mainController extends Controller
         if(isset( $_SERVER['QUERY_STRING'])){
             parse_str($_SERVER['QUERY_STRING'], $queries);
         }
+        $tab = $request->query('tab', 'to_data'); // القيمة الافتراضية هي 'data'
 
         Favourite::where('to_id', '!=', auth()->id())->where('user_id', auth()->id())->update(['seen' => '1']);
 
@@ -268,9 +271,9 @@ class mainController extends Controller
             ->where('user_id', auth()->id())
             ->where('show_in_list', '1')
             ->latest()
-            ->get();
+            ->paginate(10, ['*'], 'page')->withQueryString();
         $to_data = Favourite::has('user')->has('to')->where('user_id', '!=', auth()->id())->where('to_id', auth()->id())
-        ->latest()->get();
+        ->latest()->paginate(10, ['*'], 'to_page')->withQueryString();
 
         //$favourites = Favourite::where('to_id', '!=', auth()->id())->where('user_id', auth()->id())->orderBy('updated_at', 'desc')->pluck('to_id')->toArray();
         //$to_favourites = Favourite::where('user_id', '!=', auth()->id())->where('to_id', auth()->id())->orderBy('updated_at', 'desc')->pluck('user_id')->toArray();
@@ -292,7 +295,7 @@ class mainController extends Controller
         //$to_query->orderBy('created_at', 'desc');
         $to_data = $to_query->get();*/
 
-        return view('site.all_fav_clients', ['data' => $data, 'to_data' => $to_data]);
+        return view('site.all_fav_clients', ['data' => $data, 'to_data' => $to_data, 'tab' => $tab]);
     }
 
     public function all_blocked_clients(Request $request)
@@ -334,10 +337,10 @@ class mainController extends Controller
         if(isset( $_SERVER['QUERY_STRING'])){
             parse_str($_SERVER['QUERY_STRING'], $queries);
         }
-
+        $tab = $request->query('tab', 'to_data'); // القيمة الافتراضية هي 'data'
         Visitor::where('to_id', auth()->id())->update(['seen' => '1']);
-        $data = Visitor::has('user')->has('to')->where('to_id', '!=', auth()->id())->where('user_id', auth()->id())->latest()->get();
-        $to_data = Visitor::has('user')->has('to')->where('user_id', '!=', auth()->id())->where('to_id', auth()->id())->latest()->get();
+        $data = Visitor::has('user')->has('to')->where('to_id', '!=', auth()->id())->where('user_id', auth()->id())->latest()->paginate(10, ['*'], 'page')->withQueryString();
+        $to_data = Visitor::has('user')->has('to')->where('user_id', '!=', auth()->id())->where('to_id', auth()->id())->latest()->paginate(10, ['*'], 'to_page')->withQueryString();
         //dd($data, $to_data);
         //inRandomOrder()
         /*$query = User::query();
@@ -354,7 +357,7 @@ class mainController extends Controller
         $to_query->whereIn('id', $to_visitor);
         $to_data = $to_query->get();*/
 
-        return view('site.all_visitor_clients', ['data' => $data, 'to_data' => $to_data]);
+        return view('site.all_visitor_clients', ['data' => $data, 'to_data' => $to_data, 'tab' => $tab]);
     }
 
     public function show_client($id)
@@ -403,20 +406,46 @@ class mainController extends Controller
         return view('site.all_packages', ['data' => $data]);
     }
 
-    public function subscripe_package($id)
+    public function subscripe_package(Request $request)
     {
-        #subscripe package
-        $package = Package::whereId($id)->firstOrFail();
-        $amount = (int) $package->amount;
-        $price = (int) $package->price;
+        $package = Package::whereId($request->package_id)->firstOrFail();
+        Stripe::setApiKey(config('stripe.sk'));
+        $session = \Stripe\Checkout\Session::create([
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'usd', // استبدل بالعملة التي تريدها، مثل 'egp' إذا كانت مدعومة
+                    'product_data' => [
+                        'name' => $package->title_ar, // اسم المنتج من قاعدة البيانات
+                    ],
+                    'unit_amount' => $package->price_with_value * 100, // السعر بالسنتات (مثل 1000 لـ 10 دولار)
+                ],
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => route('site_subcripe_package_success', $package->id),
+            'cancel_url' => route('site_all_packages'),
+        ]);
+        auth()->user()->update([
+            'stripe_session_id' => $session->id
+        ]);
+        session()->put('stripe_session_id', $session->id);
+        return redirect()->away($session->url);
+    }
+
+    public function subcripe_package_success($package_id)
+    {
+        if(session()->get('stripe_session_id') != null && session()->get('stripe_session_id') != auth()->user()->stripe_session_id) {
+            return redirect()->route('site_all_packages');
+        }
+        $package = Package::whereId($package_id)->firstOrFail();
         $user = auth()->user();
         $user->update([
-            'package_id' => $id,
+            'package_id' => $package->id,
             'package_title' => $package->title_ar,
-            'price' => $price,
-            'renewal_price' => $price,
+            'price' => $package->price_with_value,
+            'renewal_price' => $package->price_with_value,
             'package_date' => Carbon::now(),
-            'package_end_date' => Carbon::now()->addMonths($amount),
+            'package_end_date' => Carbon::now()->addMonths($package->amount),
         ]);
 
         $data = [
@@ -428,39 +457,40 @@ class mainController extends Controller
             'url' => url('search'),
             'user' => $user,
         ];
+        //shuld in success
         send_notify($user->id, $data['header'], $data['header'], $data['url']);
         $user->notify(new SubscripePackageNotification($data));
 
-        Session::flash('success', 'تم الاشتراك بنجاح');
-        return redirect('/');
+        return redirect()->route('site_package_info');
     }
 
     public function all_rooms()
     {
-        //if(!checkUserPackage()) return redirect('all_packages');
+        $query = Room::query()
+            ->has('chats')
+            ->has('user')
+            ->has('saler')
+            ->where(function ($query) {
+                $query->where('user_id', auth()->id())->where('show_user_id', 1)
+                      ->orWhere(function ($query) {
+                          $query->where('saler_id', auth()->id())->where('show_saler_id', 1);
+                      });
+            })
+            ->select('rooms.*') // حدد الأعمدة اللي فعلاً محتاجها لو ممكن
+            ->with(['chats' => function ($q) {
+                $q->select('id', 'room_id', 'created_at')->latest()->limit(1);
+            }])
+            ->orderByDesc(
+                Room_chat::select('created_at')
+                    ->whereColumn('room_chats.room_id', 'rooms.id')
+                    ->latest()
+                    ->limit(1)
+            );
 
-        #query string
-        #get client
-        $query = Room::query();
-        $query->has('chats');
-        $query->has('user');
-        $query->has('saler');
-        // $query->whereIn('show_ids');
-        $query->where('user_id', auth()->id())->where('show_user_id',1)
-              ->orWhere(function ($query) {
-                  $query->where('saler_id', auth()->id())->where('show_saler_id',1);
-              });
-
-
-
-        $rooms = $query->get();
-        $data = $rooms->sortByDesc(function ($q, $key) {
-            return $q->chats->max('created_at');
-        })->all();
+        $data = $query->paginate(10);
 
         return view('site.all_rooms', ['data' => $data]);
     }
-
     public function show_chat($id)
     {
         if (!checkUserPackage())
@@ -737,6 +767,7 @@ class mainController extends Controller
         }
 
         #success response
+        session(['contact_form_submitted' => true]);
         session()->flash('success', Translate('تم الارسال بنجاح'));
         return back();
     }
@@ -905,7 +936,7 @@ class mainController extends Controller
                 ->paginate(5);
             $messageCounter = Room::where(function($q) { return $q->where('user_id', auth()->id())->orWhere('saler_id', auth()->id());})->whereHas('chats', function ($q) {$q->where('seen', 0)->where('to_id', auth()->id());})->count();
             $visitorCounter = Visitor::has('user')->whereHas('user', function($q) {return $q->where('user_type', 'client');})->where('user_id', '!=', auth()->id())->where('to_id', auth()->id())->where('seen', '0')->count();
-            $likerCounter = Favourite::where('to_id', '!=', auth()->id())->where('user_id', auth()->id())->where('seen', '0')->count();
+            $likerCounter = Favourite::where('to_id', auth()->id())->where('seen', '0')->count();
 
             return view('site.index_after_login', [
                 'random_users' => $random_users,
@@ -1073,6 +1104,7 @@ class mainController extends Controller
             'url' => url('site-active/' . $user->id . '/' . $token),
             'user' => $user,
         ];
+        session()->put('resend_active_email_submitted', true);
         $user->notify(new NewAccountNotification($data));
         return redirect()->back()->with('success', 'تم ارسال بريد تفعيل جديد');
     }

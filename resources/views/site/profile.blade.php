@@ -193,7 +193,7 @@
     <!--  login  -->
     <section class="register prof">
         <div class="container">
-        @if(auth()->user()->active != '1' && !session()->has('success'))
+        @if(auth()->user()->active != '1' && !session()->has('resend_active_email_submitted'))
             <div class="alert-container" style="  max-width: fit-content;">
               <div class="alert-box">
                 يجب تأكيد صحة عنوان بريدك الإلكتروني، لاعادة ارسال بريد التفعيل&nbsp;
@@ -204,7 +204,7 @@
                 </form>
               </div>
             </div>
-        @elseif(session()->has('success'))
+        @elseif(session()->has('success') || session()->has('resend_active_email_submitted'))
             <div class="alert-container" style="  max-width: fit-content;">
               <div class="alert-box bg-info">
                 برجاء قم بمراجعة بريدك الالكتروني {{ auth()->user()->email }} واضغط على زر التفعيل
@@ -532,7 +532,7 @@
                                                 <label for="nationality">المدينة</label>
                                                 <select class="form-control" id="city" name="city_id">
                                                     <option value="">اختر</option>
-                                                    @foreach(App\Models\City::orderBy('title_ar')->get() as $item)
+                                                    @foreach(App\Models\City::get() as $item)
                                                         <option value="{{$item->id}}" {{auth()->user()->city_id == $item->id ? 'selected' : ''}}>{{$item->title}}</option>
                                                     @endforeach
                                                 </select>

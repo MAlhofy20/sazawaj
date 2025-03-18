@@ -6,19 +6,13 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
-    <meta name="description" content="{{ settings('description') }}">
-    <meta name="keywords" content="{{ settings('key_words') }}">
-    <meta name="author" content="Abdelrahman">
-    <meta name="robots" content="index/follow">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"
         content="width=device-width, initial-scale=1,, shrink-to-fit=no, maximum-scale=1, user-scalable=no">
     <meta name="HandheldFriendly" content="true">
-    <meta property="og:title" content="{{ settings('site_name') }}" />
-    <meta property="og:image" content="{{ url('' . settings('logo')) }}" />
-    <meta property="og:description" content="{{ settings('site_name') }}" />
-    <meta property="og:site_name" content="{{ settings('site_name') }}" />
+
+    @yield('meta')
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" type="image/png" href="/site/assets/normal-favicon.png" />
     <title>{{ settings('site_name') }} | @yield('title')</title>
@@ -255,16 +249,28 @@
     }
 }
 
+/* Paination */
+    .page-link {
+        color: #c930e8
+    }
+    .page-item.active .page-link{
+        background-color: #c930e8;
+        border-color: #c930e8
+    }
+    .disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
 
     </style>
     @yield('style')
 
     {!! settings('google_search') !!}
-   
+
     {!! settings('google_tags') !!}
     {!! settings('google_ads') !!}
     @vite(['resources/js/app.js'])
-    
+
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-39TXG0SLE4"></script>
 <script>
@@ -616,7 +622,7 @@
                 <div class="footer-content">
           <p>تأسست منصة سعودي زواج لتسهيل عملية البحث عن شريك الحياة مع توفير بيئة تجمع بين الأمان والثقة، هدفنا هو تمكين الأفراد من بناء حياة زوجية سعيدة ومستقرة بخطوات بسيطة وخدمة متخصصة.</p>
                 </div>
-                
+
 <div class="container-footer2">
 <div class="footer-links">
 <a href="{{ route('contact_us', 'contact') }}">
@@ -697,7 +703,7 @@ Privacy Policy
     // Store original favicon
     let originalFavicon = document.querySelector("link[rel='shortcut icon']").getAttribute("href");
     let notificationFavicon = '{{ url('' . settings('notification-logo')) }}'; // Change to favicon with a red dot
-    //check whether the user having an unread notification 
+    //check whether the user having an unread notification
     $.ajax({
                 type: 'get',
                 url: '{{ route('notificationsCount') }}',
@@ -717,7 +723,7 @@ Privacy Policy
             });
     window.onload = function() {
         @if(Auth::check())
-        
+
             const user = JSON.parse('{!! json_encode(auth()->user()) !!}');
             Echo.private(`App.Models.User.${user.id}`)
                 .listen('.notification', (data) => {

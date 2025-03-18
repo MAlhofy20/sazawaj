@@ -38,6 +38,7 @@ use App\Http\Controllers\admin\shipping_typeController;
 use App\Http\Controllers\admin\CommonQuestionController;
 use App\Http\Controllers\admin\mainController as adminMainController;
 use App\Http\Controllers\admin\orderController as adminOrderController;
+use App\Models\Media_file;
 
 //Auth::loginUsingId(1);
 //Auth::loginUsingId(363);
@@ -50,15 +51,15 @@ Route::middleware('lang')->group(function () {
  Route::get('pages/privacy-en', function(){
             return view('site.privacy-en');
         });
-        
+
          Route::get('pages/condition-en', function(){
             return view('site.terms-en');
         });
-        
+
         Route::get('pages/security-en', function(){
             return view('site.security-en');
         });
-        
+
         Route::any('all_packages', [mainController::class, 'all_packages'])->name('site_all_packages');
 /*
 |--------------------------------------------------------------------------
@@ -199,7 +200,9 @@ Route::group(['namespace' => 'site'], function () {
             Route::any('all_visitor_clients', [mainController::class, 'all_visitor_clients'])->name('site_all_visitor_clients');
            // Route::any('show_client/{id}', [mainController::class, 'show_client'])->name('site_show_client');
             Route::any('all_packages', [mainController::class, 'all_packages'])->name('site_all_packages');
-            Route::any('subscripe_package/{id}', [mainController::class, 'subscripe_package'])->name('site_subscripe_package');
+            Route::post('subscripe_package', [mainController::class, 'subscripe_package'])->name('site_subscripe_package');
+            Route::get('subcripe_package_success/{package_id}', [mainController::class, 'subcripe_package_success'])->name('site_subcripe_package_success');
+            Route::get('subcripe_package_cancel', [mainController::class, 'subcripe_package_cancel'])->name('site_subcripe_package_cancel');
             Route::any('all_rooms', [mainController::class, 'all_rooms'])->name('site_all_rooms');
             Route::any('show_chat/{id}', [mainController::class, 'show_chat'])->name('site_show_chat');
             Route::any('show_room/{id}', [mainController::class, 'show_room'])->name('site_show_room');
@@ -1087,3 +1090,71 @@ Route::any('artisana/{command}', function($command){
     dd(Artisan::output());
 
 })->name('artisan');
+
+
+Route::get('/sitemap.xml', function () {
+    $content = '<?xml version="1.0" encoding="UTF-8"?>';
+    $content .= '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+
+    $content .= '<sitemap>';
+    $content .= '<loc>' . url('/sitemap-static.xml') . '</loc>';
+    $content .= '<lastmod>' . now()->toAtomString() . '</lastmod>';
+    $content .= '</sitemap>';
+
+    $content .= '<sitemap>';
+    $content .= '<loc>' . url('/sitemap-blogs.xml') . '</loc>';
+    $content .= '<lastmod>' . now()->toAtomString() . '</lastmod>';
+    $content .= '</sitemap>';
+
+    $content .= '</sitemapindex>';
+
+    return response($content, 200)
+        ->header('Content-Type', 'application/xml');
+});
+Route::get('/sitemap-static.xml', function () {
+    $content = '<?xml version="1.0" encoding="UTF-8"?>';
+    $content .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+
+    $staticPages = [
+        ['url' => url('/'), 'priority' => '1.0'],
+        ['url' => url('/page/about'), 'priority' => '0.9'],
+        ['url' => url('/contact-us/contact'), 'priority' => '0.7'],
+        ['url' => url('/questions'), 'priority' => '0.6'],
+        ['url' => url('/page/advices'), 'priority' => '0.5'],
+        ['url' => url('/register'), 'priority' => '0.4'],
+        ['url' => url('/log-in'), 'priority' => '0.4'],
+        ['url' => url('/media-center/news'), 'priority' => '0.4'],
+    ];
+
+    foreach ($staticPages as $page) {
+        $content .= '<url>';
+        $content .= '<loc>' . $page['url'] . '</loc>';
+        $content .= '<changefreq>monthly</changefreq>';
+        $content .= '<priority>' . $page['priority'] . '</priority>';
+        $content .= '</url>';
+    }
+
+    $content .= '</urlset>';
+
+    return response($content, 200)
+        ->header('Content-Type', 'application/xml');
+});
+
+Route::get('/sitemap-blogs.xml', function () {
+    $content = '<?xml version="1.0" encoding="UTF-8"?>';
+    $content .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+
+    $blogs = Media_file::where('type', 'news')->latest()->get();
+    foreach ($blogs as $blog) {
+        $content .= '<url>';
+        $content .= '<loc>' . url("/show_media/{$blog->id}") . '</loc>';
+        $content .= '<changefreq>daily</changefreq>';
+        $content .= '<priority>1.0</priority>';
+        $content .= '</url>';
+    }
+
+    $content .= '</urlset>';
+
+    return response($content, 200)
+        ->header('Content-Type', 'application/xml');
+});

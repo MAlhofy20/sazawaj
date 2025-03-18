@@ -2,6 +2,15 @@
 @section('title')
     تسجيل جديد
 @endsection
+@section('meta')
+    @include('meta::manager', [
+        'title' => settings('site_name')  . ' - تسجيل جديد',
+        'description' => settings('description'),
+        'image' => url('' . settings('logo')),
+        'keywords' => settings('key_words')
+    ])
+@endsection
+
 @section('style')
     <style>
         .hint-label {
@@ -899,8 +908,8 @@
 
                                 <div class="labelform-content">
                                     <label class="labelform" for="username">اسم المستخدم:</label>
-                                    <input type="text" id="username" name="username" required
-                                        placeholder="أدخل اسم المستخدم"
+                                    <input type="text" id="username" name="username" value="{{ old('username') }}" required
+                                        placeholder="اسم المستخدم"
                                         oninvalid="this.setCustomValidity('الرجاء ادخال هذا العنصر')"
                                         oninput="setCustomValidity('')">
 
@@ -912,7 +921,7 @@
                                 <!-- البريد الإلكتروني -->
                                 <div class="labelform-content">
                                     <label class="labelform" for="email">البريد الإلكتروني:</label>
-                                    <input type="email" id="email" name="email" required
+                                    <input type="email" id="email" name="email" value="{{ old('email') }}" required
                                         placeholder="أدخل البريد الإلكتروني"
                                         oninvalid="this.setCustomValidity('الرجاء ادخال هذا العنصر')"
                                         oninput="setCustomValidity('')">

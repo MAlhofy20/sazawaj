@@ -1,5 +1,13 @@
 @extends('site.master')
 @section('title') تسجيل الدخول @endsection
+@section('meta')
+    @include('meta::manager', [
+        'title' => settings('site_name')  . ' - تسجيل الدخول',
+        'description' => settings('description'),
+        'image' => url('' . settings('logo')),
+        'keywords' => settings('key_words')
+    ])
+@endsection
 @section('style')
 
     <style>
@@ -29,7 +37,7 @@
         transform: translateY(-50%);
         cursor: pointer;
         color: #888;
-       
+
     }
 
     .password-container i:hover {
@@ -47,7 +55,7 @@
             width: 750px;
             margin-left: 20%;
         }
-        
+
         /* Container for the links */
 .auth-links {
     display: flex;                /* Enable flexbox */
@@ -99,7 +107,7 @@
 }
 
 
-       
+
     </style>
 @endsection
 
@@ -109,8 +117,8 @@
         <div class="welcome-img">
             <img src="{{ site_path() }}/assets/img/welcome.png" alt="">
         </div>
-    
-    
+
+
 <p class="welcome-tit"> حياك الله معنا فى مجتمع  <span class='text-center' style="color:#2492a8"> {{ settings('site_name') }} </span></p>
 
 
@@ -131,6 +139,15 @@
 
     <!--  login  -->
     <section class="login">
+        @if (session('danger'))
+        <div style="max-width: 90%;
+            padding: 30px 15px;
+            border-radius: 20px;" class="mx-auto text-center font-weight-bold">
+            <p style="font-size: x-large;">عليك بتسجيل الدخول حتى تتمكن من الاستفادة من خدمات الموقع</p>
+            <p>اذا لم يكن لك حساب لدينا اضغط <a href="{{ route('site_register') }}">لانشاء حساب جديد</a> </p>
+        </div>
+
+        @endif
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-12">
@@ -143,12 +160,12 @@
                 <form action="{{route('site_post_login')}}" method="POST">
                     @csrf
                     <input type="hidden" name="device_id" id="device_id">
-                    
+
                     <div class="form-group">
                         <label for="login">اسم المستخدم / البريد الإلكتروني</label>
                         <input type="text" class="form-control" id="login" name="login" placeholder="أدخل البريد الإلكتروني أو اسم المستخدم" required>
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="password">ادخل كلمة المرور</label>
                         <div class="password-container">
@@ -156,12 +173,12 @@
                             <i id="eye-icon" class="fas fa-eye" onclick="togglePassword()"></i>
                         </div>
                     </div>
-                    
+
                     <button type="submit" class="main-btn custom_form">
                         دخول
                         <img src="{{ site_path() }}/assets/img/left-arrow.png" alt="Login Image" class="img-fluid">
                     </button>
-                    
+
                     <div class="auth-links">
                         <a href="{{ route('site_forget_password') }}" class="auth-link">هل نسيت كلمة المرور؟</a>
                         <a href="{{ route('site_register') }}" class="auth-link">ليس لديك حساب معنا؟</a>
@@ -169,11 +186,6 @@
                 </form>
 
                 </div>
-{{--                <div class="col-lg-6 col-12">--}}
-{{--                    <div class="login-img">--}}
-{{--                        <img src="{{ site_path() }}/assets/img/login-img.png" alt="Login Image" class="img-fluid">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
             </div>
         </div>
     </section>

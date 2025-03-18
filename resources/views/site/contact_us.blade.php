@@ -2,6 +2,15 @@
 @section('title')
     راسل إدارة الموقع
 @endsection
+@section('meta')
+    @include('meta::manager', [
+        'title' => settings('site_name')  . ' - راسل إدارة الموقع',
+        'description' => settings('description'),
+        'image' => url('' . settings('logo')),
+        'keywords' => settings('key_words')
+    ])
+@endsection
+
 @section('style')
     <style>
     .page-title {
@@ -177,6 +186,8 @@
                     وسيتم الرد عليك في أقرب فرصة ممكنة.<br>
                     يجب أن تكون الرسالة واضحة ودقيقة مع توفير جميع المعلومات المهمة لذلك.
                 </p>
+
+                @if (!session()->has('contact_form_submitted'))
                 <form action="{{ route('post_contact_us') }}" id="formRegister" method="POST"
                     enctype="multipart/form-data">
                     @csrf
@@ -190,7 +201,7 @@
                             value="{{ auth()->check() ? auth()->user()->first_name : '' }}">
                     </div>
                     <div class="form-group">
-                        <label for="email">البريد الإلكتروني:</label> 
+                        <label for="email">البريد الإلكتروني:</label>
                         <input class='input-label' type="email" id="email" name="email"
                             value="{{ auth()->check() ? auth()->user()->email : '' }}">
                     </div>
@@ -212,6 +223,11 @@
                         <button class='main-btn-reg2' type="button" onclick="history.back()">رجوع</button>
                     </div>
                 </form>
+                @else
+                    <div class="bg-white py-2 rounded text-center">
+                        <p class="font-weight-bold text-success mb-0" style="font-size: 18px;">تم ارسال رسالتك بنجاح - سيقوم فريقنا بمراجعتها والرد عليها في أقرب وقت ممكن</p>
+                    </div>
+                @endif
             </div>
             <!-- Sidebar Column -->
             @include('site.static_sidebar')
