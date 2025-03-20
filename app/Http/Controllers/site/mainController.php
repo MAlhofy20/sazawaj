@@ -413,7 +413,7 @@ class mainController extends Controller
         $session = \Stripe\Checkout\Session::create([
             'line_items' => [[
                 'price_data' => [
-                    'currency' => 'usd', // استبدل بالعملة التي تريدها، مثل 'egp' إذا كانت مدعومة
+                    'currency' => 'sar', // تغيير العملة إلى الريال السعودي
                     'product_data' => [
                         'name' => $package->title_ar, // اسم المنتج من قاعدة البيانات
                     ],

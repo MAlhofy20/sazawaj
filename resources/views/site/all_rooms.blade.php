@@ -577,7 +577,7 @@
                                                             </span>
                                                             <div class="cont">
                                                                 <span class="name" >
-                                                                    <a href="{{url('show_client/' . $item->saler_id)}}">{{$item->saler->name}}</a>
+                                                                    <a href="{{url('show_client/' . $user->id)}}">{{$user->name}}</a>
                                                                 </span>
                                                                 <span class=" msg visitor-cell" style="justify-self: flex-start;">
                                                                     <i style="color:#2492a8;" class="fa-solid fa-envelope-open-text"></i>
