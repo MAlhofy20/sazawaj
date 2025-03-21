@@ -269,7 +269,9 @@
 
                                 </table>
                             </div>
-                            {{ $to_data->links('pagination::bootstrap-4', ['paginator' => $to_data, 'pageName' => 'to_page']) }}
+                            <div class="d-flex justify-content-center my-4">
+                                {{ $to_data->links('pagination::bootstrap-4', ['paginator' => $to_data, 'pageName' => 'to_page']) }}
+                            </div>
                         </div>
                         @elseif($tab === 'data')
                         <div class=" fade show">
@@ -313,7 +315,9 @@
                                     </tbody>
                                 </table>
                             </div>
-                            {{ $data->links('pagination::bootstrap-4', ['paginator' => $data, 'pageName' => 'page']) }}
+                            <div class="d-flex justify-content-center my-4">
+                                {{ $data->links('pagination::bootstrap-4', ['paginator' => $data, 'pageName' => 'page']) }}
+                            </div>
                         </div>
                         @endif
                     </div>

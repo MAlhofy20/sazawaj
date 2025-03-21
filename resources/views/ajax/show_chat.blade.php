@@ -11,7 +11,8 @@
                                 <p class="member-name {{$item->from_id == auth()->id() ? 'myMsgDesc' : 'msgDesc'}}">
                                     <span class="available">
                                         @if($item->type == 'file')
-                                            <audio src="{{url('' . $item->message)}}" class="audio-playback" controls></audio>
+                                            <audio src="{{url('' . str_replace('\\', '', $item->message))}}" class="audio-playback" controls></audio>
+
                                         @else
                                             {{$item->message}}
                                         @endif

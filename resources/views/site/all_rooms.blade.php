@@ -465,11 +465,15 @@
 
                             .marg {
                                 margin-left: 40px;
+                                display: none;
                             }
 
                             @media(max-width:992px) {
                                 .visitors-table-header {
                                     display: none;
+                                }
+                                .marg{
+                                    display: block;
                                 }
 
                                 .mainFlexes .flexes .portrait {
@@ -547,66 +551,63 @@
                                     </span>
                                 </div>
                                 <!-- Desktop View -->
-                                <div class=>
-                                    <div class="visitors-table messages-table">
-                                        <thead class="visitors-table-header">
-                                            <ul class="visitors-table-header">
-                                                <li>
-                                                    <span style="padding-right: 83px;" class="name">الأسم</span>
-                                                    <span style="padding-left: 61px;" class="msg visitors-header-cell">الرسالة</span>
-                                                    <div style="display: flex;margin-left:40px;width: 176px;">
-                                                        <span style="font-size: 14px; margin-left: 20px" class="  visitors-header-cell">تاريخ الرسالة</span>
-                                                        {{-- <span class="visitors-header-cell"><input type="checkbox" class="select-room"   id="select-all"></span> --}}
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                            <ul class="visitors-table-body" id="message-list">
-                                                @forelse($data as $item)
-                                                @php
-                                                $id = auth()->id() == $item->user_id ? (int) $item->saler_id : (int) $item->user_id;
-                                                $user = App\Models\User::whereId($id)->first();
-                                                @endphp
+                                <div class="visitors-table messages-table">
+                                        <ul class="visitors-table-header">
+                                            <li>
+                                                <span style="padding-right: 83px;" class="name visitors-header-cell">الاسم</span>
+                                                <span style="padding-left: 61px;" class="msg visitors-header-cell">الرسالة</span>
+                                                <div style="display: flex;margin-left:40px;width: 176px;">
+                                                    <span style="font-size: 14px; margin-left: 20px" class="  visitors-header-cell">تاريخ الرسالة</span>
+                                                    <span class="visitors-header-cell"><input type="checkbox" class="select-room"   id="select-all"></span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <ul class="visitors-table-body" id="message-list">
+                                            @forelse($data as $item)
+                                            @php
+                                            $id = auth()->id() == $item->user_id ? (int) $item->saler_id : (int) $item->user_id;
+                                            $user = App\Models\User::whereId($id)->first();
+                                            @endphp
 
 
-                                                <li style="cursor:pointer; border-bottom: 1px solid white;" class="visitor-row"
-                                                    onclick="window.location.href='{{url('show_room/' . $item->id)}}'">
-                                                    <div class="mainFlexes">
-                                                        <div class="flexes">
-                                                            <span class="portrait">
-                                                                <img src="{{url('' . $user->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
+                                            <li style="cursor:pointer; border-bottom: 1px solid white;" class="visitor-row"
+                                                onclick="window.location.href='{{url('show_room/' . $item->id)}}'">
+                                                <div class="mainFlexes">
+                                                    <div class="flexes">
+                                                        <span class="portrait">
+                                                            <img src="{{url('' . $user->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
+                                                        </span>
+                                                        <div class="cont">
+                                                            <span class="name" >
+                                                                <a href="{{url('show_client/' . $user->id)}}">{{$user->name}}</a>
                                                             </span>
-                                                            <div class="cont">
-                                                                <span class="name" >
-                                                                    <a href="{{url('show_client/' . $user->id)}}">{{$user->name}}</a>
-                                                                </span>
-                                                                <span class=" msg visitor-cell" style="justify-self: flex-start;">
-                                                                    <i style="color:#2492a8;" class="fa-solid fa-envelope-open-text"></i>
-                                                                    <!-- <i class="fa-solid fa-envelope"></i> -->
-                                                                    <span class="visitor-cell-msg">{{!is_null($item->chats_desc) &&     last_room_chat  ($item->id)['type'] ==  'text' ? last_room_chat($item->id)   ['last_message'] :   'رسالة صوتية'}}</span>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="flexes2">
-                                                            <span class="visitor-cell">
-                                                                <span style=" ">
-                                                                    {{--{{!is_null($item->chats_desc) ? last_room_chat($item->id)   ['duration'] : ''}}--}}
-                                                                    {{ !is_null($item->chats_desc) && isset(last_room_chat($item->id)    ['duration_format']) ? last_room_chat($item->id)['duration_format'] : '' }}
-                                                                </span>
-                                                            </span>
-                                                            <span class="visitor-cell checkbox">
-                                                                <input type="checkbox" name="room_ids[]" value="{{ $item->id }}" class="select-room  select-room-btn select-room-btn-desktop">
+                                                            <span class=" msg visitor-cell" style="justify-self: flex-start;">
+                                                                <i style="color:#2492a8;" class="fa-solid fa-envelope-open-text"></i>
+                                                                <!-- <i class="fa-solid fa-envelope"></i> -->
+                                                                <span class="visitor-cell-msg">{{!is_null($item->chats_desc) &&     last_room_chat  ($item->id)['type'] ==  'text' ? last_room_chat($item->id)   ['last_message'] :   'رسالة صوتية'}}</span>
                                                             </span>
                                                         </div>
                                                     </div>
-                                                </li>
-                                                @empty
-                                                <tr>
-                                                    <span colspan="4"> لا يوجد نتائج</span>
-                                                </tr>
-                                                @endforelse
-                                                <!-- أضف المزيد من الصفوف هنا -->
-                                            </ul>
-                                    </div>
+                                                    <div class="flexes2">
+                                                        <span class="visitor-cell">
+                                                            <span style=" ">
+                                                                {{--{{!is_null($item->chats_desc) ? last_room_chat($item->id)   ['duration'] : ''}}--}}
+                                                                {{ !is_null($item->chats_desc) && isset(last_room_chat($item->id)    ['duration_format']) ? last_room_chat($item->id)['duration_format'] : '' }}
+                                                            </span>
+                                                        </span>
+                                                        <span class="visitor-cell checkbox">
+                                                            <input type="checkbox" name="room_ids[]" value="{{ $item->id }}" class="select-room  select-room-btn select-room-btn-desktop">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            @empty
+                                            <tr>
+                                                <span colspan="4"> لا يوجد نتائج</span>
+                                            </tr>
+                                            @endforelse
+                                            <!-- أضف المزيد من الصفوف هنا -->
+                                        </ul>
                                 </div>
                                 <!-- Mobile View -->
                                 <!-- <div class="mobile-view">
@@ -636,8 +637,9 @@
                                 <div class="delete-button">
                                     <button type="submit" class="btn btn-danger" id="delete-btn" disabled>حذف المحدد</button>
                                 </div>
-                                {{ $data->links('pagination::bootstrap-4', ['paginator' => $data]) }}
-
+                                <div class="d-flex justify-content-center">
+                                    {{ $data->links('pagination::bootstrap-4', ['paginator' => $data]) }}
+                                </div>
                             </form>
 
                         </div>

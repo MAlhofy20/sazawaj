@@ -267,7 +267,7 @@
                                 <p class="member-name {{$item->from_id == auth()->id() ? 'myMsgDesc' : 'msgDesc'}}">
                                     <span class="available">
                                         @if($item->type == 'file')
-                                            <audio src="{{url('' . $item->message)}}" class="audio-playback" controls></audio>
+                                            <audio src="{{url('' . str_replace('\\', '', $item->message))}}" class="audio-playback" controls></audio>
                                         @else
                                             {{$item->message}}
                                         @endif
@@ -300,7 +300,7 @@
                             $end   = Carbon\Carbon::parse(auth()->user()->package_end_date);
                             $monthsDifference = $start->diffInMonths($end);
                         @endphp
-                        @if(auth()->user()->gender === 'female' || auth()->user()->package_id === 2 || auth()->user()->package_id === 6)
+                        @if(auth()->user()->gender === 'female' || auth()->user()->package_id != 1)
                             <div class="icon-micro" id="mic-container">
                                 <div id="record-btn">
                                     <i class="fa-solid fa-microphone"></i>

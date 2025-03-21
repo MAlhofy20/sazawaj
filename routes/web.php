@@ -1158,3 +1158,7 @@ Route::get('/sitemap-blogs.xml', function () {
     return response($content, 200)
         ->header('Content-Type', 'application/xml');
 });
+
+// Route::get('set_users', function(){
+//     $user = User::where('email', '')
+// })

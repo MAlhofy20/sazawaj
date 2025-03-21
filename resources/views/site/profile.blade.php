@@ -274,7 +274,9 @@
                     @if(auth()->user()->gender == 'male')
                         <div class="{{ checkUserPackage() ? 'checkUserPackag' : 'notcheckUserPackag' }} col-lg-6">
                             <a href="{{checkUserPackage() ? url('package_info') : url('all_packages')}}" class="gold-prof prof-gold">
-                                <span class="toggle-text" onclick="toggleCollapse(this)">ترقيه العضوية</span>
+                                <span class="toggle-text" onclick="toggleCollapse(this)">
+                                    {{auth()->user()->package_id != null ? 'تفاصيل العضوية' : 'ترقيه العضوية'}}
+                                </span>
                             </a>
                         </div>
                     @endif
@@ -340,10 +342,10 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="form-group">
-                                                <label for="username">اسم المستخدم</label>
+                                                <label for="username">الاسم</label>
                                                 <input type="text" class="form-control" id="first_name"
                                                        name="first_name" value="{{auth()->user()->first_name}}"
-                                                       placeholder="أدخل اسم المستخدم" required>
+                                                       placeholder="الاسم" required>
                                             </div>
                                             <div class="form-group">
                                                 <label>العمر:</label>
@@ -542,7 +544,7 @@
                                                 <select class="form-control" id="nationality" name="nationality"
                                                         required>
                                                     <option value="" disabled selected>اختر الجنسية</option>
-                                                    @foreach(App\Models\Media_file::where('type', 'nationality')->orderBy('title_ar')->get() as $item)
+                                                    @foreach(App\Models\Media_file::where('type', 'nationality')->get() as $item)
                                                         <option value="{{$item->title_ar}}" {{auth()->user()->nationality == $item->title_ar ? 'selected' : ''}}>{{$item->title}}</option>
                                                     @endforeach
                                                 </select>
@@ -1022,7 +1024,7 @@
                                             <label for="nationality">الجنسية</label>
                                             <select class="form-control" id="nationality" name="nationality" required>
                                                 <option value="" disabled selected>اختر الجنسية</option>
-                                                @foreach(App\Models\Media_file::where('type', 'nationality')->orderBy('title_ar')->get() as $item)
+                                                @foreach(App\Models\Media_file::where('type', 'nationality'))->get() as $item)
                                                     <option value="{{$item->title_ar}}" {{auth()->user()->nationality == $item->title_ar ? 'selected' : ''}}>{{$item->title}}</option>
                                                 @endforeach
                                             </select>

@@ -265,7 +265,7 @@ class mainController extends Controller
         }
         $tab = $request->query('tab', 'to_data'); // القيمة الافتراضية هي 'data'
 
-        Favourite::where('to_id', '!=', auth()->id())->where('user_id', auth()->id())->update(['seen' => '1']);
+        Favourite::where('user_id', '!=', auth()->id())->where('to_id', auth()->id())->update(['seen' => '1']);
 
         $data = Favourite::has('user')->has('to')->where('to_id', '!=', auth()->id())
             ->where('user_id', auth()->id())
@@ -424,6 +424,11 @@ class mainController extends Controller
             'mode' => 'payment',
             'success_url' => route('site_subcripe_package_success', $package->id),
             'cancel_url' => route('site_all_packages'),
+            // 'billing_address_collection' => 'auto',
+            'phone_number_collection' => [
+                'enabled' => false,
+            ],
+            'customer_email' => auth()->user()->email ?? 'default@example.com', // استخدام بريد العميل أو قيمة افتراضية
         ]);
         auth()->user()->update([
             'stripe_session_id' => $session->id
@@ -598,6 +603,8 @@ class mainController extends Controller
 
         if ($request->hasFile('file_path')) {
             $file = upload_image($request->file('file_path'), 'images/users');
+            // remove '\' from $file
+            $file = str_replace('\\', '', $file);
             $request->request->add([
                 'message' => $file,
                 'type' => 'file',

@@ -1114,7 +1114,7 @@
                                                         oninvalid="this.setCustomValidity('الرجاء ادخال هذا العنصر')"
                                                         oninput="setCustomValidity('')">
                                                     <option value="">اختار</option>
-                                                    @foreach (App\Models\Media_file::where('type', 'nationality')->orderBy('title_ar')->get() as $item)
+                                                    @foreach (App\Models\Media_file::where('type', 'nationality')->get() as $item)
                                                         <option value="{{$item->title_ar}}" {{isset($user) && $user->nationality == $item->title_ar ? 'selected' : ''}}>{{$item->title}}</option>
                                                     @endforeach
                                                 </select>
