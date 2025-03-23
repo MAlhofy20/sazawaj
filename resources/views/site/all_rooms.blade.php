@@ -547,7 +547,7 @@
                                         <p style="color:#b72dd2">عدد الرسائل :<span style="font-weight:bold">{{ $data->total() }}</span></p>
                                     </div>
                                     <span class="marg visitors-header-cell">
-                                        <input type="checkbox" class="select-room" id="select-all">
+                                        <input type="checkbox" class="select-room" id="select-all-mobile">
                                     </span>
                                 </div>
                                 <!-- Desktop View -->
@@ -555,7 +555,7 @@
                                         <ul class="visitors-table-header">
                                             <li>
                                                 <span style="padding-right: 83px;" class="name visitors-header-cell">الاسم</span>
-                                                <span style="padding-left: 61px;" class="msg visitors-header-cell">الرسالة</span>
+                                                <span style="padding-left: 120px;" class="msg visitors-header-cell">الرسالة</span>
                                                 <div style="display: flex;margin-left:40px;width: 176px;">
                                                     <span style="font-size: 14px; margin-left: 20px" class="  visitors-header-cell">تاريخ الرسالة</span>
                                                     <span class="visitors-header-cell"><input type="checkbox" class="select-room"   id="select-all"></span>
@@ -571,32 +571,38 @@
 
 
                                             <li style="cursor:pointer; border-bottom: 1px solid white;" class="visitor-row"
-                                                onclick="window.location.href='{{url('show_room/' . $item->id)}}'">
+                                                onclick="goToShowShat(`{{$item->id}}`)">
                                                 <div class="mainFlexes">
                                                     <div class="flexes">
                                                         <span class="portrait">
                                                             <img src="{{url('' . $user->avatar)}}" alt="" class="visitor-image" width="100px" height="75px">
                                                         </span>
                                                         <div class="cont">
-                                                            <span class="name" >
+                                                            <span class="name w-50" >
                                                                 <a href="{{url('show_client/' . $user->id)}}">{{$user->name}}</a>
                                                             </span>
-                                                            <span class=" msg visitor-cell" style="justify-self: flex-start;">
+                                                            <span class=" msg visitor-cell w-25 d-flex justify-content-start" >
+                                                                @if($item->have_unseen_message)
+                                                                <i style="color:#2492a8;" class="fa-solid fa-envelope"></i>
+
+                                                                @else
                                                                 <i style="color:#2492a8;" class="fa-solid fa-envelope-open-text"></i>
-                                                                <!-- <i class="fa-solid fa-envelope"></i> -->
+
+                                                                @endif
                                                                 <span class="visitor-cell-msg">{{!is_null($item->chats_desc) &&     last_room_chat  ($item->id)['type'] ==  'text' ? last_room_chat($item->id)   ['last_message'] :   'رسالة صوتية'}}</span>
                                                             </span>
                                                         </div>
                                                     </div>
                                                     <div class="flexes2">
                                                         <span class="visitor-cell">
-                                                            <span style=" ">
+                                                            <span>
                                                                 {{--{{!is_null($item->chats_desc) ? last_room_chat($item->id)   ['duration'] : ''}}--}}
                                                                 {{ !is_null($item->chats_desc) && isset(last_room_chat($item->id)    ['duration_format']) ? last_room_chat($item->id)['duration_format'] : '' }}
                                                             </span>
                                                         </span>
-                                                        <span class="visitor-cell checkbox">
-                                                            <input type="checkbox" name="room_ids[]" value="{{ $item->id }}" class="select-room  select-room-btn select-room-btn-desktop">
+                                                        <!-- onclick do nothing -->
+                                                        <span  class="visitor-cell checkbox">
+                                                            <input type="checkbox" name="room_ids[]" value="{{ $item->id }}" class="select-room  select-room-btn select-room-btn-desktop ml-1">
                                                         </span>
                                                     </div>
                                                 </div>
@@ -690,6 +696,41 @@
         }
 
     });
+    document.getElementById('select-all-mobile').addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.select-room-btn-desktop');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = this.checked;
+        });
+        if (document.getElementById('delete-btn').hasAttribute('disabled')) {
+            let checked = 0;
+            for (var counter = 0; counter < checkboxes.length; counter++) {
+                if (checkboxes[counter].checked == true) {
+                    checked = 1;
+                    break;
+                } else {
+                    checked = -1;
+                }
+            }
+            if (checked != 1) {} else {
+                document.getElementById('delete-btn').removeAttribute('disabled');
+            }
+
+        } else {
+            let checked = 0;
+            for (var counter = 0; counter < checkboxes.length; counter++) {
+                if (checkboxes[counter].checked == true) {
+                    checked = 1;
+                    break;
+                } else {
+                    checked = -1;
+                }
+            }
+            if (checked != 1) {
+                document.getElementById('delete-btn').setAttribute('disabled', true);
+            }
+        }
+
+    });
     //----------desktop-select-buttons-----------------------------------------------//
     let selectbtns = document.querySelectorAll(".select-room-btn-desktop")
     selectbtns.forEach(selectbtn => {
@@ -713,65 +754,14 @@
             }
         });
     });
-    //----------mobile-select-all-----------------------------------------------//
-    document.getElementById('select-all-mobile').addEventListener('change', function() {
-        const checkboxesMobile = document.querySelectorAll('.select-room-btn-mobile');
-        checkboxesMobile.forEach(checkbox => {
-            checkbox.checked = this.checked;
-        });
-        let checked = 0;
-        let size = checkboxesMobile.length;
-        if (document.getElementById('delete-btn').hasAttribute('disabled')) {
 
-            for (var counter = 0; counter < size; counter++) {
-                if (checkboxesMobile[counter].checked == true) {
-                    checked = 1;
-                    break;
-                } else {
-                    checked = -1;
-                }
-            }
-            if (checked != 1) {} else {
-                document.getElementById('delete-btn').removeAttribute('disabled');
-            }
 
-        } else {
-            for (var counter = 0; counter < size; counter++) {
-                if (checkboxesMobile[counter].checked == true) {
-                    checked = 1;
-                    break;
-                } else {
-                    checked = -1;
-                }
-            }
-            if (checked != 1) {
-                document.getElementById('delete-btn').setAttribute('disabled', true);
-            }
+    function goToShowShat(id) {
+        // if el type = checkbox
+        if (event.target.type === 'checkbox') {
+            return;
         }
-
-    });
-    //----------mobile-select-buttons-----------------------------------------------//
-    let selectbtnsMobile = document.querySelectorAll(".select-room-btn-mobile")
-    selectbtnsMobile.forEach(selectbtn => {
-        selectbtn.addEventListener('change', function() {
-            if (document.getElementById('delete-btn').hasAttribute('disabled')) {
-                document.getElementById('delete-btn').removeAttribute('disabled');
-            } else {
-                let checked = 0;
-                let size = selectbtnsMobile.length;
-                for (var counter = 0; counter < size; counter++) {
-                    if (selectbtnsMobile[counter].checked == true) {
-                        checked = 1;
-                        break;
-                    } else {
-                        checked = -1;
-                    }
-                }
-                if (checked != 1) {
-                    document.getElementById('delete-btn').setAttribute('disabled', true);
-                }
-            }
-        });
-    });
+        window.location.href = "{{ url('show_room') }}" + '/' + id;
+    }
 </script>
 @endsection

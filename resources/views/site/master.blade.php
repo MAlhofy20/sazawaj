@@ -40,7 +40,6 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.slick/1.5.9/slick-theme.css">
 
     <link rel="stylesheet" href="{{ site_path() }}/assets/css/style.css" />
-    <link rel="stylesheet" href="{{ site_path() }}/assets/css/mainAhmed.css"/>
 
 
 
@@ -48,7 +47,6 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- sweetalert2 -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.15.10/dist/sweetalert2.min.css" rel="stylesheet">
-
     <style>
         /* Position the sidebar absolutely to overlay the body content */
         /* Position the sidebar absolutely to overlay the body content */
@@ -726,7 +724,8 @@ Privacy Policy
     window.onload = function() {
         @if(Auth::check())
 
-            const user = JSON.parse('{!! json_encode(auth()->user()) !!}');
+            // const user = JSON.parse('{!! json_encode(auth()->user()) !!}');
+            const user = {!! json_encode(auth()->user()) !!};
             Echo.private(`App.Models.User.${user.id}`)
                 .listen('.notification', (data) => {
                     notificationSound.play(); // Play sound

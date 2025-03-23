@@ -339,7 +339,7 @@ function agoraApi()
 function getFavCount()
 {
     $fav_count = (int) Favourite::where('user_id', auth()->id())->count();
-
+    
     return 2 - $fav_count;
 }
 

@@ -258,8 +258,8 @@
                                     @endif
                                     @if (auth()->id() != $data->id && auth()->user()->gender != $data->gender && !checkUserPackage())
                                         <p style="color: red">العدد المتبقي لرسائل الاعجاب
-                                            {{ convertToArabicNumbers(getFavCount()) }}</p>
-                                        @if (getFavCount() == 0)
+                                            {{ getFavCount() <= 0 ? convertToArabicNumbers(0) : convertToArabicNumbers(getFavCount()) }}</p>
+                                        @if (getFavCount() <= 0)
                                             <p>
                                                 <span style="color: red">لارسال رسائل اعجاب جديدة قم بـ </span>
                                                 <a href="{{ url('all_packages') }}"

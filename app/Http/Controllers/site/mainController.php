@@ -698,15 +698,19 @@ class mainController extends Controller
     public function add_to_favourite($id)
     {
         //if(!checkUserPackage()) return redirect('all_packages');
-
-        #check Favourite
         $fav = Favourite::where('user_id', auth()->id())->where('to_id', $id)->first();
+
+        if(getFavCount() <= 0){
+            if((isset($fav) && $fav->show_in_list == 0) || !isset($fav)){
+                return redirect()->back()->with('danger', 'لا يمكن ارسال رسائل اعجاب جديدة');
+            }
+        }
+        #check Favourite
         $user = auth()->user();
         $favourited = User::find($id);
         if (isset($fav))
             // toggle show_in_list
             $fav->update(['show_in_list' => $fav->show_in_list == 0 ? 1 : 0]);
-
         else {
             $fav_count = Favourite::where('user_id', auth()->id())->count();
             if (!checkUserPackage() && $fav_count == 2)

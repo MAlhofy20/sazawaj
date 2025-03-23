@@ -367,9 +367,9 @@
             $('#audio-file').val('');
         });
 
-        //  setInterval(function() {
-        //      updateChat();
-        //  }, 10000);
+         setInterval(function() {
+             updateChat();
+         }, 10000);
 
         function updateChat() {
             $.ajax({
@@ -380,8 +380,8 @@
                 }
             });
 
-            //var section = document.getElementById("roomChats");
-            //section.scrollTop = section.scrollHeight;
+            // var section = document.getElementById("roomChats");
+            // section.scrollTop = section.scrollHeight;
         }
     </script>
     <script>
